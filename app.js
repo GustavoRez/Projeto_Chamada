@@ -13,18 +13,21 @@ app.get('/home', function (req, res) { //Rota principal. Talvez mudar para a rot
     res.render('index.ejs')
 })
 
-app.get('/show', function (req, res) { //Testes para linkar o bd com o resto
-    let sql = "SELECT nm_aluno FROM aluno";
+app.get('/show', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
+    let sql = "SELECT * FROM aluno";
+    var ra = [];
+    var nomes = [];
     connection.query(sql, function (err, results) {
         if (err) throw err;
-        //res.send(results);        
-        var teste = JSON.stringify(results)    
-        teste = teste.replace(/[^A-Za-z0-9]/g, ''); //remoção de caracteres não alfanumericos
-        res.render("show", { teste });
-
+        for(var i = 0; i < results.length; i++){
+            ra[i]= results[i].id_ra;
+            nomes [i]= results[i].nm_aluno;
+            
+        }     
+        res.render("show", { ra, nomes });
     });
 
-})/**/
+})
 
 app.listen(3000, function () { //Iniciando o serivdor
     console.log("Aplicativo rodando na porta 3000");
