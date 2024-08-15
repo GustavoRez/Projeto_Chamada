@@ -13,16 +13,18 @@ app.get('/home', function (req, res) { //Rota principal. Talvez mudar para a rot
     res.render('index.ejs')
 })
 
-/*app.get('/show', function (req, res) { //Testes para linkar o bd com o resto
-    let sql = "SELECT * FROM aluno";
+app.get('/show', function (req, res) { //Testes para linkar o bd com o resto
+    let sql = "SELECT nm_aluno FROM aluno";
     connection.query(sql, function (err, results) {
         if (err) throw err;
-        for (var i = 0; i < 20; i++) {
-            var aluno = [results];
-        }
+        //res.send(results);        
+        var teste = JSON.stringify(results)    
+        teste = teste.replace(/[^A-Za-z0-9]/g, ''); //remoção de caracteres não alfanumericos
+        res.render("show", { teste });
+
     });
-    res.render("show.ejs");
-})*/
+
+})/**/
 
 app.listen(3000, function () { //Iniciando o serivdor
     console.log("Aplicativo rodando na porta 3000");
