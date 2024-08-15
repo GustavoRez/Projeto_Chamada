@@ -8,9 +8,12 @@
 </head>
 
 <body>
-    <ul>
-        <li><%= teste %>
-    </ul>
+    <h1>RA e nome dos alunos:</h1>
+    <ul> <!--RA e Nomes aparecendo em uma lista-->
+        <% for(var i = 0; i < 20; i++){
+            %><li> RA: <%= ra[i] %> | Nome: <%= nomes[i] %> </li>
+        <%}%>
+    </ul>    
 </body>
 
 </html>
