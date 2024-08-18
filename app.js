@@ -3,11 +3,13 @@ const ejs = require('ejs')
 var app = express();
 var connection = require('./database');
 
-app.get('/', function (req, res) { //Rota 'index'. Quando abrir o localhost:3000 manda essa função
-    res.send("<h1>Fatec Praia Grande</h1><br>");
-});
-
 app.set('view engine', 'ejs'); //Configurando o EJS
+
+app.use(express.static('public'));
+
+app.get('/', function (req, res) { //Rota 'index'. Quando abrir o localhost:3000 manda essa função
+    res.render('index.ejs')
+});
 
 app.get('/home', function (req, res) { //Rota principal. Talvez mudar para a rota 'index'?
     res.render('index.ejs')
