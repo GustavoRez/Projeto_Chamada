@@ -1,55 +1,110 @@
-body{
-    background-image: url("../img/fachada.png");
-    background-repeat: no-repeat;
-    background-position: 50% 15%;
-    background-size: cover;
-    background-attachment: fixed;
+body {
+  background-image: url("../img/fachada.png");
+  background-repeat: no-repeat;
+  background-position: 50% 15%;
+  background-size: cover;
+  background-attachment: fixed;
 }
-.logo{
+.logo {
   position: relative;
   top: 4%;
   left: 50%;
-  translate: -50%;    
+  translate: -50%;
 }
-ul{
-    background: rgb(184, 4, 4);
-    border-radius: 10px;    
-    margin: 0% 20%;
+
+div {
+  background: rgb(184, 4, 4);
+  margin: 0% 20%;
+  border-radius: 15px;
+  padding: 5px;
 }
-ul li{
-    background: rgb(167, 50, 50);
-    border-radius: 10px;
-    font-size: 20px;
-    margin: 10px;
-    padding: 7px;
+
+p {
+  background: rgb(167, 50, 50);
+  border-radius: 10px;
+  font-size: 20px;
+  margin: 10px;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.slider {
-    appearance: none;
-    width: 25%;
-    height: 15px;
-    border-radius: 10px;  
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-    
-  }
-  
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%; 
-    background: #04AA6D;
-    cursor: pointer;
-  }
-  
-  .slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #04AA6D;
-    cursor: pointer;
-  }
+
+input[type="range"]:disabled {
+  filter: grayscale(1);
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+input[type="range"]:disabled::-webkit-slider-thumb {
+  cursor: not-allowed;
+}
+input[type="range"]:disabled:hover::-webkit-slider-thumb {
+  cursor: not-allowed;
+}
+input[type="range"] {
+  font-size: 1.5rem;
+  width: 12.5em;
+  color: #f07167;
+  background: #fff0;
+  overflow: hidden;
+  --track-color: rgba(255, 255, 255, 0.1);
+  --thumb-height: 1.125em;
+  --track-height: 0.125em;
+  --brightness-hover: 180%;
+  --brightness-down: 80%;
+  --clip-edges: 0.125em;
+}
+input[type="range"]:active {
+  cursor: grabbing;
+}
+
+input[type="range"],
+input[type="range"]::-webkit-slider-runnable-track,
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  transition: all ease 100ms;
+  height: var(--thumb-height);
+}
+
+input[type="range"]::-webkit-slider-runnable-track,
+input[type="range"]::-webkit-slider-thumb {
+  position: relative;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  --thumb-radius: calc((var(--thumb-height) * 0.5) - 1px);
+  --clip-top: calc((var(--thumb-height) - var(--track-height)) * 0.5 - 0.5px);
+  --clip-bottom: calc(var(--thumb-height) - var(--clip-top));
+  --clip-further: calc(100% + 1px);
+  --box-fill: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0 100vmax currentColor;
+
+  width: var(--thumb-width, var(--thumb-height));
+  background: linear-gradient(currentColor 0 0) scroll no-repeat left center / 50% calc(var(--track-height) + 1px);
+  background-color: currentColor;
+  box-shadow: var(--box-fill);
+  border-radius: var(--thumb-width, var(--thumb-height));
+
+  filter: brightness(100%);
+  clip-path: polygon(100% -1px,
+      var(--clip-edges) -1px,
+      0 var(--clip-top),
+      -100vmax var(--clip-top),
+      -100vmax var(--clip-bottom),
+      0 var(--clip-bottom),
+      var(--clip-edges) 100%,
+      var(--clip-further) var(--clip-further));
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+  filter: brightness(var(--brightness-hover));
+  cursor: grab;
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+  filter: brightness(var(--brightness-down));
+  cursor: grabbing;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center / 100% calc(var(--track-height) + 1px);
+}

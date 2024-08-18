@@ -1,87 +1,127 @@
-body{
+body {
     background-image: url("../img/fachada.png");
     background-repeat: no-repeat;
     background-position: 50% 15%;
-    background-size: 100%;
+    background-size: cover;
 }
-.logo{
-    position: absolute;
+
+.logo {
+    position: relative;
     top: 4%;
     left: 50%;
-    translate: -50%;    
+    translate: -50%;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
-.pq{    
-    color: rgb(245, 245, 205); font-size: 30px; text-align: center; font-family: American Typewriter, serif;
+a {
+    color: white
+}
+a:link{
+    text-decoration: none;
+}
+.coluna {
+    flex: 0 1 auto;
+}
+.linha {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.pq {
+    color: rgb(245, 245, 205);
+    font-size: 30px;
+    text-align: center;
+    font-family: American Typewriter, serif;
+    padding: 37px;
+    margin: 10px;
 
     background-image: url(../img/lousa.png);
-    background-size: 150%; background-position: 50%; background-repeat: no-repeat;
+    background-size: 150%;
+    background-position: 50%;
+    background-repeat: no-repeat;
 
     border-radius: 1rem;
-    position: absolute;
 
-    top: 22.5%; left: 17.5%;
-
-    width: 220px; height: 175px;
-
-    padding: 37px 10px; margin: 10px;
+    width: 220px;
+    height: 175px;    
 }
-.comex{    
-    color: rgb(245, 245, 205); font-size: 30px; text-align: center; font-family: American Typewriter, serif;
+
+.comex {
+    color: rgb(245, 245, 205);
+    font-size: 30px;
+    text-align: center;
+    font-family: American Typewriter, serif;    
 
     background-image: url(../img/lousa.png);
-    background-size: 150%; background-position: 50%; background-repeat: no-repeat;
+    background-size: 150%;
+    background-position: 50%;
+    background-repeat: no-repeat;
 
     border-radius: 1rem;
-    position: absolute;
 
-    top: 22.5%; left: 41%;
+    width: 220px;
+    height: 175px;
 
-    width: 220px; height: 175px;
-
-    padding: 37px 10px; margin: 10px;
+    padding: 37px 10px;
+    margin: 10px;
 }
-.ge{    
-    color: rgb(245, 245, 205); font-size: 30px; text-align: center; font-family: American Typewriter, serif;
+
+.ge {
+    color: rgb(245, 245, 205);
+    font-size: 30px;
+    text-align: center;
+    font-family: American Typewriter, serif;    
 
     background-image: url(../img/lousa.png);
-    background-size: 150%; background-position: 50%; background-repeat: no-repeat;
+    background-size: 150%;
+    background-position: 50%;
+    background-repeat: no-repeat;
 
     border-radius: 1rem;
-    position: absolute;
 
-    top: 22.5%; right: 17.5%;
+    width: 220px;
+    height: 175px;
 
-    width: 220px; height: 175px;
-
-    padding: 37px 10px; margin: 10px;
+    padding: 37px 10px;
+    margin: 10px;
 }
-.ads{    
-    color: rgb(245, 245, 205); font-size: 23px; text-align: center; font-family: American Typewriter, serif;
+
+.ads {
+    color: rgb(245, 245, 205);
+    font-size: 23px;
+    text-align: center;
+    font-family: American Typewriter, serif;
 
     background-image: url(../img/lousa.png);
-    background-size: 150%; background-position: 50%; background-repeat: no-repeat;
+    background-size: 150%;
+    background-position: 50%;
+    background-repeat: no-repeat;
 
     border-radius: 1rem;
-    position: absolute;
 
-    top: 57%; left: 29%;
+    width: 220px;
+    height: 175px;
 
-    width: 220px; height: 175px;
-
-    padding: 37px 10px; margin: 10px;
+    padding: 37px 10px;
+    margin: 10px;
 }
-.dsm{    
-    color: rgb(245, 245, 205); font-size: 23px; text-align: center; font-family: American Typewriter, serif;
+
+.dsm {
+    color: rgb(245, 245, 205);
+    font-size: 23px;
+    text-align: center;
+    font-family: American Typewriter, serif;
 
     background-image: url(../img/lousa.png);
-    background-size: 150%; background-position: 50%; background-repeat: no-repeat;
+    background-size: 150%;
+    background-position: 50%;
+    background-repeat: no-repeat;
 
     border-radius: 1rem;
-    position: absolute;
 
-    top: 57%; left: 52.5%;
+    width: 220px;
+    height: 175px;
 
-    width: 220px; height: 175px;
-
-    padding: 37px 10px; margin: 10px;
+    padding: 37px 10px;
+    margin: 10px;
 }
