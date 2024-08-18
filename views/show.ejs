@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -18,31 +18,33 @@
     </center>
     <form class="form-inline" action="/home">
         <!--RA e Nomes aparecendo em uma lista-->
-        <div>
+        <div class="fundo">
             <% for(var i=0; i < nomes.length; i++){ %>
                 <p>RA: <%= ra[i] %> | Nome: <%= nomes[i] %>
-                    <span id="value-<%= i %>">0</span>
-                    <input type="range" min="0" max="4" value="0" id="range-<%= i %>" />
+                            <input type="range" min="0" max="4" value="0" id="range-<%= i %>" />
+                            <span>Faltas: <strong id="value-<%= i %>">0</strong></span>
                 </p>
-            <% } %>
-            
-            <button type="submit" class="btn btn-danger">Enviar</button>
-            
-            <script>            
-                var ranges = document.querySelectorAll('input[type="range"]');
-                        
-                ranges.forEach(function(range, index) {
-                    var span = document.getElementById('value-' + index);
-                    range.addEventListener('input', function () {
-                        span.textContent = this.value;
-                    });
+                <% } %>
+        </div>
+
+
+        <button type="submit" class="btn btn-danger">Enviar</button>
+
+        <script>
+            var ranges = document.querySelectorAll('input[type="range"]');
+
+            ranges.forEach(function (range, index) {
+                var span = document.getElementById('value-' + index);
+                range.addEventListener('input', function () {
+                    span.textContent = this.value;
                 });
-            </script>
+            });
+        </script>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>
