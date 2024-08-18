@@ -5,6 +5,7 @@ body {
   background-size: cover;
   background-attachment: fixed;
 }
+
 .logo {
   position: relative;
   top: 4%;
@@ -12,7 +13,7 @@ body {
   translate: -50%;
 }
 
-div {
+.fundo {
   background: rgb(184, 4, 4);
   margin: 0% 20%;
   border-radius: 15px;
@@ -35,13 +36,17 @@ input[type="range"]:disabled {
   opacity: 0.3;
   cursor: not-allowed;
 }
+
 input[type="range"]:disabled::-webkit-slider-thumb {
   cursor: not-allowed;
 }
+
 input[type="range"]:disabled:hover::-webkit-slider-thumb {
   cursor: not-allowed;
 }
+
 input[type="range"] {
+  justify-self: end;
   font-size: 1.5rem;
   width: 12.5em;
   color: #f07167;
@@ -54,6 +59,7 @@ input[type="range"] {
   --brightness-down: 80%;
   --clip-edges: 0.125em;
 }
+
 input[type="range"]:active {
   cursor: grabbing;
 }
