@@ -16,17 +16,19 @@ app.get('/home', function (req, res) { //Rota principal. Talvez mudar para a rot
 })
 
 app.get('/show', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
-    let sql = "SELECT * FROM aluno";
+    let sql = "SELECT * FROM aluno NATURAL JOIN falta";
     var ra = [];
     var nomes = [];
+    var faltas = [];
     connection.query(sql, function (err, results) {
         if (err) throw err;
         for(var i = 0; i < results.length; i++){
-            ra[i]= results[i].id_ra;
-            nomes [i]= results[i].nm_aluno;
+            ra[i] = results[i].id_ra;
+            nomes [i] = results[i].nm_aluno;
+            faltas [i] = results[i].qt_falta;
             
         }     
-        res.render("show", { ra, nomes });
+        res.render("show", { ra, nomes, faltas });
     });
 
 })
