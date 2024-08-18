@@ -11,38 +11,33 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <a href="/home">
-            <div>
-                <img src="img/logo.png" alt="Logo Fatec-PG" width="230" height="85.57" class="logo">
-            </div>
-        </a>
-    </div>
+
+    <a href="/home"> <img src="img/logo.png" alt="Logo Fatec-PG" width="230" height="85.57" class="logo"></a>
     <center>
         <h1>RA e nome dos alunos:</h1>
     </center>
     <form class="form-inline" action="/home">
-        <ul> <!--RA e Nomes aparecendo em uma lista-->
+        <!--RA e Nomes aparecendo em uma lista-->
+        <div>
             <% for(var i=0; i < nomes.length; i++){ %>
-                <li> RA: <%= ra[i] %> | Nome: <%= nomes[i] %>
-                    <input type="range" min="0" max="4" value="0" class="slider" id="atualRange">
-                    Presenças: <span id="valor"></span>
-                </li>
-                <%}%>
-
-                    <button type="submit" class="btn btn-danger">Enviar</button>
-
-        </ul>
-    </form>
-    <script>
-        var slider = document.getElementById("atualRange");
-        var output = document.getElementById("valor");
-        output.innerHTML = slider.value;
-
-        slider.oninput = function () {
-            output.innerHTML = this.value;
-        }
-    </script>
+                <p>RA: <%= ra[i] %> | Nome: <%= nomes[i] %>
+                    <span id="value-<%= i %>">0</span>
+                    <input type="range" min="0" max="4" value="0" id="range-<%= i %>" />
+                </p>
+            <% } %>
+            
+            <button type="submit" class="btn btn-danger">Enviar</button>
+            
+            <script>            
+                var ranges = document.querySelectorAll('input[type="range"]');
+                        
+                ranges.forEach(function(range, index) {
+                    var span = document.getElementById('value-' + index);
+                    range.addEventListener('input', function () {
+                        span.textContent = this.value;
+                    });
+                });
+            </script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
