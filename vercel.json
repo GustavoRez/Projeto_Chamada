@@ -1,0 +1,4 @@
+{
+    "outputDirectory": "build",
+    "buildCommand": "node app.js"
+}
