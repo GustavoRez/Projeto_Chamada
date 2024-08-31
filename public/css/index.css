@@ -1,3 +1,8 @@
+:root{
+    --cor--primaria: #f5f5cd;
+}
+
+
 body {
     background-image: url("../img/fachada.png");
     background-repeat: no-repeat;
@@ -14,9 +19,7 @@ body {
     margin-bottom: 40px;
 }
 a {
-    color: white
-}
-a:link{
+    color: #ffffff;
     text-decoration: none;
 }
 .coluna {
@@ -28,7 +31,7 @@ a:link{
     justify-content: center;
 }
 .pq {
-    color: rgb(245, 245, 205);
+    color: var(--cor--primaria);
     font-size: 30px;
     text-align: center;
     font-family: American Typewriter, serif;
@@ -42,12 +45,12 @@ a:link{
 
     border-radius: 1rem;
 
-    width: 220px;
-    height: 175px;    
+    width: 13.75rem;
+    height: 11rem;   
 }
 
 .comex {
-    color: rgb(245, 245, 205);
+    color: var(--cor--primaria);
     font-size: 30px;
     text-align: center;
     font-family: American Typewriter, serif;    
@@ -59,15 +62,15 @@ a:link{
 
     border-radius: 1rem;
 
-    width: 220px;
-    height: 175px;
+    width: 13.75rem;
+    height: 11rem;
 
     padding: 37px 10px;
     margin: 10px;
 }
 
 .ge {
-    color: rgb(245, 245, 205);
+    color: var(--cor--primaria);
     font-size: 30px;
     text-align: center;
     font-family: American Typewriter, serif;    
@@ -79,15 +82,15 @@ a:link{
 
     border-radius: 1rem;
 
-    width: 220px;
-    height: 175px;
+    width: 13.75rem;
+    height: 11rem;
 
     padding: 37px 10px;
     margin: 10px;
 }
 
 .ads {
-    color: rgb(245, 245, 205);
+    color: var(--cor--primaria);
     font-size: 23px;
     text-align: center;
     font-family: American Typewriter, serif;
@@ -99,16 +102,16 @@ a:link{
 
     border-radius: 1rem;
 
-    width: 220px;
-    height: 175px;
+    width: 13.75rem;
+    height: 11rem;
 
     padding: 37px 10px;
     margin: 10px;
 }
 
 .dsm {
-    color: rgb(245, 245, 205);
-    font-size: 23px;
+    color: var(--cor--primaria);
+    font-size: 1.5rem;
     text-align: center;
     font-family: American Typewriter, serif;
 
@@ -119,8 +122,8 @@ a:link{
 
     border-radius: 1rem;
 
-    width: 220px;
-    height: 175px;
+    width: 13.75rem;
+    height: 11rem;
 
     padding: 37px 10px;
     margin: 10px;

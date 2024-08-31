@@ -1,3 +1,7 @@
+:root{
+
+}
+
 body {
   background-image: url("../img/fachada.png");
   background-repeat: no-repeat;
@@ -14,14 +18,14 @@ body {
 }
 
 .fundo {
-  background: rgb(184, 4, 4);
+  background: #b80404;
   margin: 0% 20%;
   border-radius: 15px;
   padding: 5px;
 }
 
 p {
-  background: rgb(167, 50, 50);
+  background: #a73232;
   border-radius: 10px;
   font-size: 20px;
   margin: 10px;
@@ -52,7 +56,7 @@ input[type="range"] {
   color: #f07167;
   background: #fff0;
   overflow: hidden;
-  --track-color: rgba(255, 255, 255, 0.1);
+  --track-color:  #ffffff;
   --thumb-height: 1.125em;
   --track-height: 0.125em;
   --brightness-hover: 180%;
