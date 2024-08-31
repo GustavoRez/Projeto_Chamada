@@ -1,0 +1,33 @@
+body {
+    background-image: url("../img/fachada.png");
+    background-repeat: no-repeat;
+    background-position: 50% 15%;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.logo {
+    position: relative;
+    top: 4%;
+    left: 50%;
+    translate: -50%;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.fundo {
+    background: rgba(214, 32, 32, 0.904);
+    height: 50%;
+}
+
+.botao {
+    display: flex;
+    margin-top: 15px;
+}
