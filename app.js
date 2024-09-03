@@ -40,30 +40,132 @@ app.post('/login', function (req, res) {
         });
 
 });
+app.post('/quit', function (req, res) {
+    req.session.loggedin = false;
+    res.redirect('/')
+})
 
 app.get('/home', function (req, res) { //Rota principal.
     if (req.session.loggedin) {
         res.render('index.ejs')
-    } else{
+    } else {
         res.render('not_logged.ejs')
     }
 })
 
-app.get('/show', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
-    let sql = "SELECT * FROM aluno NATURAL JOIN falta";
-    var ra = [];
-    var nomes = [];
-    var faltas = [];
-    connection.query(sql, function (err, results) {
-        if (err) throw err;
-        for (var i = 0; i < results.length; i++) {
-            ra[i] = results[i].id_ra;
-            nomes[i] = results[i].nm_aluno;
-            faltas[i] = results[i].qt_falta;
+app.get('/disciplinasPQ', function (req, res) { //Rota que mostra as materias cadastradas em PQ
+    if (req.session.loggedin) {
+        let sql = "SELECT nm_materia, nm_mestrante, nm_curso FROM materia NATURAL JOIN curso WHERE sg_curso = 'PQ';";
+        var materia = [];
+        var mestrante = [];
+        var curso = [];
+        connection.query(sql, function (err, results) {
+            if (err) throw err;
+            for (var i = 0; i < results.length; i++) {
+                materia[i] = results[i].nm_materia;
+                mestrante[i] = results[i].nm_mestrante;
+                curso[i] = results[i].nm_curso;
 
-        }
-        res.render("show", { ra, nomes, faltas });
-    });
+            }
+            res.render("disciplinas.ejs", { materia, mestrante, curso });
+        });
+    } else res.render('not_logged.ejs')
+
+})
+app.get('/disciplinasCOMEX', function (req, res) { //Rota que mostra as materias cadastradas em COMEX
+    if (req.session.loggedin) {
+        let sql = "SELECT nm_materia, nm_mestrante, nm_curso FROM materia NATURAL JOIN curso WHERE sg_curso = 'COMEX';";
+        var materia = [];
+        var mestrante = [];
+        var curso = [];
+        connection.query(sql, function (err, results) {
+            if (err) throw err;
+            for (var i = 0; i < results.length; i++) {
+                materia[i] = results[i].nm_materia;
+                mestrante[i] = results[i].nm_mestrante;
+                curso[i] = results[i].nm_curso;
+
+            }
+            res.render("disciplinas.ejs", { materia, mestrante, curso });
+        });
+    } else res.render('not_logged.ejs')
+
+})
+app.get('/disciplinasGE', function (req, res) { //Rota que mostra as materias cadastradas em GE
+    if (req.session.loggedin) {
+        let sql = "SELECT nm_materia, nm_mestrante, nm_curso FROM materia NATURAL JOIN curso WHERE sg_curso = 'GE';";
+        var materia = [];
+        var mestrante = [];
+        var curso = [];
+        connection.query(sql, function (err, results) {
+            if (err) throw err;
+            for (var i = 0; i < results.length; i++) {
+                materia[i] = results[i].nm_materia;
+                mestrante[i] = results[i].nm_mestrante;
+                curso[i] = results[i].nm_curso;
+
+            }
+            res.render("disciplinas.ejs", { materia, mestrante, curso });
+        });
+    } else res.render('not_logged.ejs')
+
+})
+app.get('/disciplinasADS', function (req, res) { //Rota que mostra as materias cadastradas em ADS
+    if (req.session.loggedin) {
+        let sql = "SELECT nm_materia, nm_mestrante, nm_curso FROM materia NATURAL JOIN curso WHERE sg_curso = 'ADS';";
+        var materia = [];
+        var mestrante = [];
+        var curso = [];
+        connection.query(sql, function (err, results) {
+            if (err) throw err;
+            for (var i = 0; i < results.length; i++) {
+                materia[i] = results[i].nm_materia;
+                mestrante[i] = results[i].nm_mestrante;
+                curso[i] = results[i].nm_curso;
+
+            }
+            res.render("disciplinas.ejs", { materia, mestrante, curso });
+        });
+    } else res.render('not_logged.ejs')
+
+})
+app.get('/disciplinasDSM', function (req, res) { //Rota que mostra as materias cadastradas em DSM
+    if (req.session.loggedin) {
+        let sql = "SELECT nm_materia, nm_mestrante, nm_curso FROM materia NATURAL JOIN curso WHERE sg_curso = 'DSM';";
+        var materia = [];
+        var mestrante = [];
+        var curso = [];
+        connection.query(sql, function (err, results) {
+            if (err) throw err;
+            for (var i = 0; i < results.length; i++) {
+                materia[i] = results[i].nm_materia;
+                mestrante[i] = results[i].nm_mestrante;
+                curso[i] = results[i].nm_curso;
+
+            }
+            res.render("disciplinas.ejs", { materia, mestrante, curso });
+        });
+    } else res.render('not_logged.ejs')
+
+})
+
+app.get('/show', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
+    if (req.session.loggedin) {
+        let sql = "SELECT * FROM aluno NATURAL JOIN falta";
+        var ra = [];
+        var nomes = [];
+        var faltas = [];
+        connection.query(sql, function (err, results) {
+            if (err) throw err;
+            for (var i = 0; i < results.length; i++) {
+                ra[i] = results[i].id_ra;
+                nomes[i] = results[i].nm_aluno;
+                faltas[i] = results[i].qt_falta;
+
+            }
+            res.render("show", { ra, nomes, faltas });
+        });
+    } else res.render('not_logged.ejs')
 
 })
 
