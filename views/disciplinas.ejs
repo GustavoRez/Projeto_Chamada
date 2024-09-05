@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= curso %></title>
+    <title>
+        <%= curso[0] %>
+    </title>
 </head>
+
 <body>
-    
-    <% for(var i=0; i < materia.length; i++){%>
-        <%=materia[i]%> | <%= mestrante[i]%> | <%= curso[i]%>
-    <% } %>
+    <a href="/home">Voltar</a>
+    <br>
+
+    <% for(var i=0; i < disciplina.length; i++){%>
+        <%=disciplina[i]%> | <%= curso[i] %><br>
+                <% } %>
 </body>
+
 </html>
