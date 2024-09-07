@@ -14,7 +14,7 @@
     <br>
 
     <% for(var i=0; i < disciplina.length; i++){%>
-        <%=disciplina[i]%> | <%= curso[i] %><br>
+        <a href="/alunos<%=urlDisciplina[i]%>"><div><%=disciplina[i]%> | <%= curso[i] %></div><br></a>
                 <% } %>
 </body>
 
