@@ -21,25 +21,52 @@
         <div class="fundo">
             <% for(var i=0; i < nomes.length; i++){ %>
                 <p>RA: <%= ra[i] %> | Nome: <%= nomes[i] %>
-                            <input type="range" min="0" max="4" value="0" id="range-<%= i %>" />
-                            <span>Faltas: <strong id="value-<%= i %>">0</strong></span>
+                            <input type="range" min="0" max="4" RA="<%= ra[i]%>" value="0"  id="range-<%= ra[i] %>" />
+                            <span>Faltas: <strong id="value-<%= ra[i] %>">0</strong></span>
+                            <span>Total: <strong><%= faltas[i]%></strong></span>
                 </p>
                 <% } %>
         </div>
 
 
-        <button type="submit" class="btn btn-danger">Enviar</button>
+        <button type="submit" onclick="enviarValores()" class="btn btn-danger">Enviar</button>
     </form>
 
     <script>
         var ranges = document.querySelectorAll('input[type="range"]');
+        var faltasAlunos = {};
 
         ranges.forEach(function (range, index) {
-            var span = document.getElementById('value-' + index);
+            var RA = range.getAttribute('RA');
+            var span = document.getElementById('value-' + RA);
+            faltasAlunos[RA] = range.value;
+
             range.addEventListener('input', function () {
                 span.textContent = this.value;
+                faltasAlunos[RA] = this.value;
+
             });
         });
+
+        function enviarValores() {
+            fetch('/adicionarFaltas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body:
+                    JSON.stringify(faltasAlunos)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Valores salvos com sucesso!');
+                    } else {
+                        alert('Erro ao salvar os valores');
+                    }
+                })
+                .catch(error => console.error('Erro ao salvar:', error));
+        }
     </script>
 
 

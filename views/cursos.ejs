@@ -12,27 +12,39 @@
 
 <body>
 
+    <div>
     <a href="/home"><img src="img/logo.png" alt="Logo Fatec-PG" width="230" height="85.57" class="logo"></a>
-    <form action="/quit" method="post">
-        <input type="submit" value="Sair">
-    </form>
 
+    
 
-    <div class="container">
-        <div class="linha">
-            <a href="/disciplinasPQ" class="pq coluna"> Processos Químicos </a>
-            <a href="/disciplinasCOMEX" class="comex coluna"> Comércio Exterior </a>
-            <a href="/disciplinasGE" class="ge coluna"> Gestão Empresarial </a>
-        </div>
-        <div class="linha">
-            <a href="/disciplinasADS" class="ads coluna"> Análise e Desenvolvimento de Sistemas </a>
-            <a href="/disciplinasDSM" class="dsm coluna"> Desenvolvimento de Software Multiplataforma </a>
-        </div>
+    <div class="btn-group dropstart">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="<%= imgPerfil %>" style="width: 3rem; height: 3rem;" alt="Perfil de <%= username %>"> Olá, <%= username %>!
+        </button>
+        <ul class="dropdown-menu">
+            <form action="/quit" method="post">
+                <input type="submit" value="Sair">
+            </form>
+        </ul>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+    </div>
+
+        <div class="container">
+            <div class="linha">
+                <a href="/disciplinasPQ" class="pq coluna"> Processos Químicos </a>
+                <a href="/disciplinasCOMEX" class="comex coluna"> Comércio Exterior </a>
+                <a href="/disciplinasGE" class="ge coluna"> Gestão Empresarial </a>
+            </div>
+            <div class="linha">
+                <a href="/disciplinasADS" class="ads coluna"> Análise e Desenvolvimento de Sistemas </a>
+                <a href="/disciplinasDSM" class="dsm coluna"> Desenvolvimento de Software Multiplataforma </a>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>
