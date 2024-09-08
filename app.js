@@ -3,10 +3,12 @@ const session = require('express-session'); //Módulo mediador do express. Guard
 var app = express(); //Define rotas, middlewares e configurações da sua aplicação web.
 const path = require('path'); //Ajuda a manipular e trabalhar com caminhos de arquivos e diretórios
 var connection = require('./database'); //Importa a conexão do banco de dados para a variável
+const bodyParser = require('body-parser');
 const ejs = require('ejs') //Permite gerar páginas HTML dinâmicas a partir de variáveis JS
 
 app.set('view engine', 'ejs'); //Configurando o EJS
 
+app.use(bodyParser.json());// Middleware para processar JSON
 app.use(express.static('public')); //Define uma pasta para ser o diretório de arquivos estáticos
 app.use(express.urlencoded({ extended: true })); //Permite que o express interprete dados de formulários
 app.use(express.static(path.join(__dirname, 'static'))); //garante que o caminho para a pasta static seja corretamente gerado
@@ -33,9 +35,12 @@ app.post('/login', function (req, res) { //Rota login
         connection.query("SELECT * FROM usuario WHERE nome_usuario = ? AND senha_usuario = ?",
             [username, senha], function (err, results, fields) {
                 if (err) throw err;
-                if (results.length > 0) {
+                if (results.length) {
                     req.session.loggedin = true;
                     req.session.username = username;
+                    const avatar = results[0].imgPerfil.toString('base64');
+                    const imgPerfil = `data:image/jpg;base64,${avatar}`;
+                    req.session.avatar = imgPerfil;
                     res.redirect('/home');
                 } else {
                     res.render('loginError.ejs');
@@ -52,7 +57,9 @@ app.post('/quit', function (req, res) { //Rota logout
 
 app.get('/home', function (req, res) { //Rota principal.
     if (req.session.loggedin) {
-        res.render('cursos.ejs')
+        const username = req.session.username;
+        const imgPerfil = req.session.avatar;
+        res.render('cursos.ejs', { username, imgPerfil });
     } else {
         res.render('not_logged.ejs')
     }
@@ -157,7 +164,7 @@ app.get('/disciplinasDSM', function (req, res) { //Rota que mostra as disciplina
 app.get('/alunosAlgoritmos', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
     let curso = req.body.curso;
     if (req.session.loggedin) {
-        let sql = "SELECT id_ra, nm_aluno, qt_falta FROM aluno NATURAL JOIN aluno_disciplina NATURAL JOIN disciplina NATURAL JOIN curso WHERE nm_disciplina = 'Algoritmos' AND nm_curso = 'Análise e Desenvolvimento de Sistemas'";
+        let sql = "SELECT id_ra, nm_aluno, qt_falta FROM aluno NATURAL JOIN grade NATURAL JOIN disciplina NATURAL JOIN curso WHERE nm_disciplina = 'Algoritmos' AND nm_curso = 'Análise e Desenvolvimento de Sistemas'";
         var ra = [];
         var nomes = [];
         var faltas = [];
@@ -178,7 +185,7 @@ app.get('/alunosAlgoritmos', function (req, res) { //Rota que mostra o nome e RA
 app.get('/alunosEconomia', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
     let curso = req.body.curso;
     if (req.session.loggedin) {
-        let sql = "SELECT id_ra, nm_aluno, qt_falta FROM aluno NATURAL JOIN aluno_disciplina NATURAL JOIN disciplina NATURAL JOIN curso WHERE nm_disciplina = 'Economia' AND nm_curso = 'Comércio Exterior'";
+        let sql = "SELECT id_ra, nm_aluno, qt_falta FROM aluno NATURAL JOIN grade NATURAL JOIN disciplina NATURAL JOIN curso WHERE nm_disciplina = 'Economia' AND nm_curso = 'Comércio Exterior'";
         var ra = [];
         var nomes = [];
         var faltas = [];
@@ -196,8 +203,51 @@ app.get('/alunosEconomia', function (req, res) { //Rota que mostra o nome e RA d
 
 })
 
-app.post('/falta', function(req, res){
-    let ra = req.body.ra
+app.post('/adicionarFaltas', function (req, res) {
+    const faltas = req.body;
+
+    let sql = "UPDATE aluno SET qt_falta = qt_falta + CASE";
+
+    for (let RA in faltas) {
+        sql += ' WHEN id_ra = ' + RA + ' THEN ' + faltas[RA];
+    }
+
+    sql += ' END WHERE id_ra IN (' + Object.keys(faltas).map(reg => `'${reg}'`).join(', ') + ')';
+
+    connection.query(sql, function (err, result) {
+        if (err) {
+            console.log(err);
+            res.json({ success: false });
+        } else {
+            console.log(result);
+            res.json({ success: true });
+        }
+    })
+})
+
+app.get('/mostrarFaltas', function (req, res) {
+    const faltas = req.body;
+    var ra = [];
+    var nomes = [];
+    var falta = [];
+
+    let sql = "SELECT * FROM aluno";
+
+    for (let RA in faltas) {
+        sql += "WHERE id_ra = " + RA;
+    }
+
+    connection.query(sql, function (err, results) {
+        if (err) throw err;
+        else {
+            for (var i = 0; i < results.length; i++) {
+                ra[i] = results[i].id_ra;
+                nomes[i] = results[i].nm_aluno;
+                falta[i] = results[i].qt_falta;
+
+            }
+        }
+    })
 })
 
 app.listen(3000, function () { //Iniciando o serivdor
