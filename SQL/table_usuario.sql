@@ -1,27 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: chamada_database
--- ------------------------------------------------------
--- Server version	5.5.5-10.4.32-MariaDB
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `usuario`
---
-
 DROP TABLE IF EXISTS `usuario`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuario` (
   `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
   `nome_usuario` varchar(45) DEFAULT NULL,
@@ -30,14 +7,8 @@ CREATE TABLE `usuario` (
   `imgPerfil` longblob DEFAULT 'LOAD_FILE(\'C:/Users/User/Downloads/avatar.jpg\'',
   PRIMARY KEY (`id_usuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `usuario`
---
 
 LOCK TABLES `usuario` WRITE;
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` VALUES (1,'Gustavo Rezende','1234','ADMIN',_binary ' \  \ \0JFIF\0,,\0\0 \ \0 Exif\0\0II*\0\0\0\0\0\0P\0\0\02\0\0\0\Z\0\0\0\0 \0\0\0\0\0\0\0 \0\0\0\0\0\0\0Default Avatar Profile Icon Vector. Social Media User Image. Vector Illustration,\0\0\0\0\0,\0\0\0\0\0 \ \ http://ns.adobe.com/xap/1.0/\0<?xpacket begin=\"﻿\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?>\n<x:xmpmeta xmlns:x=\"adobe:ns:meta/\">\n	<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n		<rdf:Description rdf:about=\"\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmlns:Iptc4xmpCore=\"http://iptc.org/std/Iptc4xmpCore/1.0/xmlns/\"   xmlns:GettyImagesGIFT=\"http://xmp.gettyimages.com/gift/1.0/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:plus=\"http://ns.useplus.org/ldf/xmp/1.0/\"  xmlns:iptcExt=\"http://iptc.org/std/Iptc4xmpExt/2008-02-29/\" xmlns:xmpRights=\"http://ns.adobe.com/xap/1.0/rights/\" photoshop:Credit=\"Getty Images\" GettyImagesGIFT:AssetID=\"1337144146\" xmpRights:WebStatement=\"https://www.istockphoto.com/legal/license-agreement?utm_medium=organic&amp;utm_source=google&amp;utm_campaign=iptcurl\" plus:DataMining=\"http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED-EXCEPTSEARCHENGINEINDEXING\" >\n<dc:creator><rdf:Seq><rdf:li>Maria Shapilova</rdf:li></rdf:Seq></dc:creator><dc:description><rdf:Alt><rdf:li xml:lang=\"x-default\">Default Avatar Profile Icon Vector. Social Media User Image. Vector Illustration</rdf:li></rdf:Alt></dc:description>\n<plus:Licensor><rdf:Seq><rdf:li rdf:parseType=\'Resource\'><plus:LicensorURL>https://www.istockphoto.com/photo/license-gm1337144146-?utm_medium=organic&amp;utm_source=google&amp;utm_campaign=iptcurl</plus:LicensorURL></rdf:li></rdf:Seq></plus:Licensor>\n		</rdf:Description>\n	</rdf:RDF>\n</x:xmpmeta>\n<?xpacket end=\"w\"?>\n \ \0 Photoshop 3.0\08BIM\0\0\0\0\0zP\0Maria Shapilovax\0PDefault Avatar Profile Icon Vector. Social Media User Image. Vector Illustrationn\0Getty Images \ \0C\0\n   \n
 \n\n
 \r\r#%$\"\"!&+7/&)4)!\"0A149;>>>%.DIC<H7=>; \ \0
@@ -677,16 +648,3 @@ C > p2:  O4M\0\ \' K2n>i  X  y s{)D  偨ֵhP\ pb\" ? D G\'呋q_\ &!rM 
  Z2  s)\ 0e\  %I _\"\ 鏇E <  \ @ ݓ  m -\ \ 1  I    \ \ \ M\ @\0\0@co  \ u?>`? zI`  VV c\ 49c\ [zCS p      z  \ Xz  Y      \0~ \ _  \ \ \0  6 U mx~\'   ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ ^\ K,     զW \ \r\0 s) + Gc w 3  \ \ lS hVt \ X\ \ Vn\ u`\ n7\r \n,i 7\ { \ 4- 2 \  \ l F \   \"X i , K \ Zt oل\ 8/\ L 7 h++V ?cJ     ߈*O9Mi Γ\ P!1F7   Cݗp2\ P 6u#\ a擕^ e  \ u\Z pY\ \0\0 
   \ KN\r:a \0 ʟ 7 SU\ !-Au
    w:P\0\0\ \ R \  ڦ \ a S \' d  \ \"0  \nC Ʈ ՟ @\"hU Q/#]\n\   \0  W\Z @\'\ Bp/ S+  \ \   U\ \ e \ cA@ \  \ ');
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2024-09-11  8:43:54
