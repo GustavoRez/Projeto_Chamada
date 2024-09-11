@@ -27,27 +27,22 @@ app.get('/', function (req, res) { //Rota 'index'. Quando abrir o localhost:3000
 app.post('/login', function (req, res) { //Rota login
     let username = req.body.username;
     let senha = req.body.senha;
-    if (username == 'adm') { //HACK PRA ENTRAR MAIS RÁPIDO 100% DE GRATIS SEM PAGAR NADA
-        req.session.loggedin = true;
-        req.session.username = "Heitor Pedro";
-        req.session.cargo = "ALUNO";
-        res.redirect('/home');
-    } else { //sem hack...
-        connection.query("SELECT * FROM usuario WHERE nome_usuario = ? AND senha_usuario = ?",
-            [username, senha], function (err, results, fields) {
-                if (err) throw err;
-                if (results.length) {
-                    req.session.loggedin = true;
-                    req.session.username = username;
-                    req.session.avatar = `data:image/jpg;base64,${results[0].imgPerfil.toString('base64')}`;
-                    req.session.cargo = results[0].cargo_usuario;
-                    res.redirect('/home');
-                } else {
-                    res.render('loginError');
-                }
-                res.end();
-            });
-    } //TIRAR ESSES "HACKS" DEPOIS
+
+    connection.query("SELECT * FROM usuario WHERE nome_usuario = ? AND senha_usuario = md5(?)",
+        [username, senha], function (err, results, fields) {
+            if (err) throw err;
+            if (results.length) {
+                req.session.loggedin = true;
+                req.session.username = username;
+                req.session.avatar = `data:image/jpg;base64,${results[0].imgPerfil.toString('base64')}`;
+                req.session.cargo = results[0].cargo_usuario;
+                res.redirect('/home');
+            } else {
+                res.render('loginError');
+            }
+            res.end();
+        });
+
 
 });
 app.post('/quit', function (req, res) { //Rota logout
@@ -294,7 +289,7 @@ app.post('/editarNome', function (req, res) {
 })
 app.post('/editarSenha', function (req, res) {
     const username = req.session.username;
-    const nvPass = req.body.nvPass;    
+    const nvPass = req.body.nvPass;
     let sql = "UPDATE usuario SET senha_usuario = '" + nvPass + "' WHERE nome_usuario = '" + username + "'";
 
     connection.query(sql, function (err, results) {
@@ -312,9 +307,9 @@ app.post('/editarImagem', function (req, res) { //parei aqui
     const rawImg = req.body.fileData;
     const nvImg = rawImg.replace(/^data:.*,/, '');
 
-    console.log(new Blob([nvImg.value] , {type: 'plain/text'}));
+    console.log(new Blob([nvImg.value], { type: 'plain/text' }));
 
-    let sql = "UPDATE usuario SET imgPerfil = '" + new Blob([nvImg] , {type: 'plain/text'}) + "' WHERE nome_usuario = '" + username + "'";
+    let sql = "UPDATE usuario SET imgPerfil = '" + new Blob([nvImg], { type: 'plain/text' }) + "' WHERE nome_usuario = '" + username + "'";
 
     connection.query(sql, function (err, results) {
         if (err) {
