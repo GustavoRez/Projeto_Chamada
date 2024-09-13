@@ -13,14 +13,17 @@
 <body>
 
     <a href="/home"><img src="<%= imgPerfil %>" style="width: 3rem; height: 3rem;" alt="Perfil de <%= username %>"></a>
-    <form>
+
+    <form action="/editarImagem" method="post" enctype="multipart/form-data">
         <h1>Foto de Perfil</h1>
         <label>Foto Antiga:</label>
         <img src="<%= imgPerfil %>" style="width: 5rem; height: 5rem;" alt="Perfil de <%= username %>">
         <label>Foto Atual:</label>
-        <input type="file" id="fileInput" accept="image/jpg">
+
+        <input type="file" id="newImage" name="newImage" accept="image/*">
         <div id="preview"></div>
-        <button type="button" onclick="alterarImagem()">Alterar</button>
+        <button onclick="confirma()" type="submit">Alterar</button>
+
     </form>
 
     <form>
@@ -109,53 +112,26 @@
                 .catch(error => console.error('Erro ao salvar:', error));
         }
 
-        document.getElementById('fileInput').addEventListener('change', function (event) {
-            var file = event.target.files[0];
-            var preview = document.getElementById('preview');
+        var file;
+        var preview;
+        document.getElementById('newImage').addEventListener('change', function (event) {
+            file = event.target.files[0];
+            preview = document.getElementById('preview');
 
             if (!file.type.match('image.*')) {
-                alert("erro");
+                alert("Erro!");
                 file = null
             }
 
             if (file) {
                 preview.innerHTML = `<img src="${URL.createObjectURL(file)}" style="height: 100px; display: block; margin-bottom: 10px;">`;
             }
-        });
-
-        function alterarImagem() {
-            const file = event.target.files[0];
-
-            if (file) {
-                var reader = new FileReader();
-
-                reader.readAsDataURL(file);
-
-                reader.onload = function () {
-                    var fileData = reader.result;
 
 
+        });    
 
-                    fetch('/editarImagem', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body:
-                            JSON.stringify({ fileData })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                alert('Imagem alterada com sucesso!');
-
-                            } else {
-                                alert('Erro ao alterar imagem!');
-                            }
-                        })
-                        .catch(error => console.error('Erro ao salvar:', error));
-                }
-            }
+        function confirma(){
+            confirm('Para atualizar a foto, será necessário reiniciar sua sessão!')
         }
 
     </script>
