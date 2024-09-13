@@ -44,8 +44,8 @@ app.post('/login', function (req, res) { //Rota login
     let senha = req.body.senha;
     if (username == 'adm') { //HACK PRA ENTRAR MAIS RÁPIDO 100% DE GRATIS SEM PAGAR NADA
         req.session.loggedin = true;
-        req.session.username = "Heitor Pedro";
-        req.session.cargo = "ALUNO";
+        req.session.username = "adm";
+        req.session.cargo = 'ADMIN'
         req.session.avatar = 'uploads/1726149312658-127124321-avatar.jpg';
         res.redirect('/home');
     } else { //sem hack...
@@ -73,156 +73,98 @@ app.post('/quit', function (req, res) { //Rota logout
     req.session.cargo = null;
     res.redirect('/')
 })
-
 app.get('/home', function (req, res) { //Rota principal.
     if (req.session.loggedin) {
+
         const username = req.session.username;
         const imgPerfil = req.session.avatar;
 
         if (req.session.cargo == 'ALUNO') {
-            res.redirect('/inicio')
-        } else {
-            const username = req.session.username;
-            const imgPerfil = req.session.avatar;
+            var ra;
+            var faltas = [];
+            var disciplinas = [];
+            var semestre = [];
 
-            res.render('cursos', { username, imgPerfil });
+            let sql = "SELECT id_ra, nm_aluno, qt_falta, nm_disciplina, qt_semestre ";
+            sql += "FROM grade NATURAL JOIN aluno NATURAL JOIN disciplina WHERE nm_aluno = ? ORDER BY qt_semestre";
+
+            connection.query(sql, [username], function (err, results) {
+                if (err) throw err;
+                else {
+                    for (var i = 0; i < results.length; i++) {
+                        ra = results[0].id_ra;
+                        faltas[i] = results[i].qt_falta;
+                        disciplinas[i] = results[i].nm_disciplina;
+                        semestre[i] = results[i].qt_semestre;
+
+                    }
+                    res.render('Alunos/home', { username, imgPerfil, ra, faltas, disciplinas, semestre })
+                }
+            })
+
+        } else {
+            var nm_curso = [];
+            var sg_curso = [];
+            connection.query("SELECT nm_curso, sg_curso FROM curso", function (err, results) {
+                if (err) throw err;
+                for (var i = 0; i < results.length; i++) {
+                    nm_curso[i] = results[i].nm_curso;
+                    sg_curso[i] = results[i].sg_curso;
+                }
+
+                res.render('cursos', { username, imgPerfil, nm_curso, sg_curso });
+            });
+
         }
 
     } else {
         res.render('not_logged')
     }
 })
-app.get('/inicio', function (req, res) { //Rota principal ALUNO
-    if (req.session.loggedin && req.session.cargo == "ALUNO") {
-        var username = req.session.username;
-        const imgPerfil = req.session.avatar;
-        var ra;
-        var faltas = [];
-        var disciplinas = [];
-        var semestre = [];
 
-        let sql = "SELECT id_ra, nm_aluno, qt_falta, nm_disciplina, qt_semestre ";
-        sql += "FROM grade NATURAL JOIN aluno NATURAL JOIN disciplina WHERE nm_aluno = '" + username + "' ORDER BY qt_semestre";
-
-        connection.query(sql, function (err, results) {
+// ADM's
+app.get('/disciplina-:SG', function (req, res) {
+    if (req.session.loggedin && req.session.cargo != "ALUNO") {
+        const sgCurso = req.params.SG;
+        let sql = "SELECT nm_disciplina, nm_curso, url_disciplina FROM disciplina NATURAL JOIN curso WHERE sg_curso = ? ORDER BY qt_semestre";
+        var disciplina = [];
+        var URL = [];
+        var curso = [];
+        connection.query(sql, [sgCurso], function (err, results) {
             if (err) throw err;
-            else {
-                for (var i = 0; i < results.length; i++) {
-                    ra = results[0].id_ra;
-                    faltas[i] = results[i].qt_falta;
-                    disciplinas[i] = results[i].nm_disciplina;
-                    semestre[i] = results[i].qt_semestre;
+            for (var i = 0; i < results.length; i++) {
+                disciplina[i] = results[i].nm_disciplina;
+                URL[i] = results[i].url_disciplina;
+                curso[i] = results[0].nm_curso;
 
-                }
-                res.render('Alunos/home', { username, imgPerfil, ra, faltas, disciplinas, semestre })
-            }
+            }                
+            if( req.session.cargo == "ADMIN") res.render("ADM/disciplinas", { disciplina, curso, URL });
+            else res.render("disciplinas", { disciplina, curso, URL });
         });
     } else res.render('not_logged')
-});
-/*app.get('/adm', function (req, res) {
+})
+app.get('/presencas-:URL', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD    
+    const URL = req.params.URL;
     if (req.session.loggedin && req.session.cargo == "ADMIN") {
-        var username = req.session.username;
-        const imgPerfil = req.session.avatar;
-
-    } else res.render('not_logged')
-});*/
-
-app.get('/disciplinasPQ', function (req, res) { //Rota que mostra as disciplinas cadastradas em PQ
-    if (req.session.loggedin && req.session.cargo != "ALUNO") {
-        let sql = "SELECT nm_disciplina, nm_curso, url_disciplina FROM disciplina NATURAL JOIN curso WHERE sg_curso = 'PQ' ORDER BY qt_semestre";
-        var disciplina = [];
-        var URL = [];
-        var curso = [];
-        connection.query(sql, function (err, results) {
+        let sql = "SELECT id_ra, nm_aluno, qt_falta, id_disciplina FROM aluno NATURAL JOIN grade NATURAL JOIN disciplina WHERE url_disciplina = ?";
+        var ra = [];
+        var nomes = [];
+        var faltas = [];
+        var idDisciplina;
+        connection.query(sql, [URL], function (err, results) {
             if (err) throw err;
             for (var i = 0; i < results.length; i++) {
-                disciplina[i] = results[i].nm_disciplina;
-                URL[i] = results[i].url_disciplina;
-                curso[i] = results[i].nm_curso;
-
+                ra[i] = results[i].id_ra;
+                nomes[i] = results[i].nm_aluno;
+                faltas[i] = results[i].qt_falta;
+                idDisciplina = results[0].id_disciplina
             }
-            res.render("disciplinas", { disciplina, curso, URL });
+            res.render("ADM/presencas", { ra, nomes, faltas, idDisciplina });
         });
     } else res.render('not_logged')
-
-})
-app.get('/disciplinasCOMEX', function (req, res) { //Rota que mostra as disciplinas cadastradas em COMEX
-    if (req.session.loggedin && req.session.cargo != "ALUNO") {
-        let sql = "SELECT nm_disciplina, nm_curso, url_disciplina FROM disciplina NATURAL JOIN curso WHERE sg_curso = 'COMEX' ORDER BY qt_semestre;";
-        var disciplina = [];
-        var URL = [];
-        var curso = [];
-        connection.query(sql, function (err, results) {
-            if (err) throw err;
-            for (var i = 0; i < results.length; i++) {
-                disciplina[i] = results[i].nm_disciplina;
-                URL[i] = results[i].url_disciplina;
-                curso[i] = results[i].nm_curso;
-
-            }
-            res.render("disciplinas", { disciplina, curso, URL });
-        });
-    } else res.render('not_logged')
-
-})
-app.get('/disciplinasGE', function (req, res) { //Rota que mostra as disciplinas cadastradas em GE
-    if (req.session.loggedin && req.session.cargo != "ALUNO") {
-        let sql = "SELECT nm_disciplina, nm_curso, url_disciplina FROM disciplina NATURAL JOIN curso WHERE sg_curso = 'GE' ORDER BY qt_semestre;";
-        var disciplina = [];
-        var URL = [];
-        var curso = [];
-        connection.query(sql, function (err, results) {
-            if (err) throw err;
-            for (var i = 0; i < results.length; i++) {
-                disciplina[i] = results[i].nm_disciplina;
-                URL[i] = results[i].url_disciplina;
-                curso[i] = results[i].nm_curso;
-
-            }
-            res.render("disciplinas", { disciplina, curso, URL });
-        });
-    } else res.render('not_logged')
-
-})
-app.get('/disciplinasADS', function (req, res) { //Rota que mostra as disciplinas cadastradas em ADS
-    if (req.session.loggedin && req.session.cargo != "ALUNO") {
-        let sql = "SELECT nm_disciplina, nm_curso, url_disciplina FROM disciplina NATURAL JOIN curso WHERE sg_curso = 'ADS' ORDER BY qt_semestre;";
-        var disciplina = [];
-        var URL = [];
-        var curso = [];
-        connection.query(sql, function (err, results) {
-            if (err) throw err;
-            for (var i = 0; i < results.length; i++) {
-                disciplina[i] = results[i].nm_disciplina;
-                URL[i] = results[i].url_disciplina;
-                curso[i] = results[i].nm_curso;
-
-            }
-            res.render("disciplinas", { disciplina, curso, URL });
-        });
-    } else res.render('not_logged')
-
-})
-app.get('/disciplinasDSM', function (req, res) { //Rota que mostra as disciplinas cadastradas em DSM
-    if (req.session.loggedin && req.session.cargo != "ALUNO") {
-        let sql = "SELECT nm_disciplina, nm_curso, url_disciplina FROM disciplina NATURAL JOIN curso WHERE sg_curso = 'DSM' ORDER BY qt_semestre;";
-        var disciplina = [];
-        var URL = [];
-        var curso = [];
-        connection.query(sql, function (err, results) {
-            if (err) throw err;
-            for (var i = 0; i < results.length; i++) {
-                disciplina[i] = results[i].nm_disciplina;
-                URL[i] = results[i].url_disciplina;
-                curso[i] = results[i].nm_curso;
-
-            }
-            res.render("disciplinas", { disciplina, curso, URL });
-        });
-    } else res.render('not_logged')
-
 })
 
+// Professores
 app.get('/alunos-:URL', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD    
     const URL = req.params.URL;
     if (req.session.loggedin && req.session.cargo != "ALUNO") {
@@ -266,7 +208,7 @@ app.post('/adicionarFaltas', function (req, res) { //Rota que adiciona falta aos
     })
 })
 
-
+// Alunos
 app.get('/editar', function (req, res) {
     if (req.session.loggedin && req.session.cargo == "ALUNO") {
         const username = req.session.username;
