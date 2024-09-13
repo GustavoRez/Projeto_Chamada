@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= curso[0] %>
+    </title>
+</head>
+
+<body>
+    <button onclick="history.back()">Voltar</button>
+    <br>
+
+    <% for(var i=0; i < disciplina.length; i++){%>
+        <a href="/presencas-<%=URL[i]%>">
+            <div>
+                <%=disciplina[i]%> | <%= curso[i] %>
+            </div><br>
+        </a>
+        <% } %>
+</body>
+
+</html>
