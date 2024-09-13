@@ -4,7 +4,22 @@ var app = express(); //Define rotas, middlewares e configurações da sua aplica
 const path = require('path'); //Ajuda a manipular e trabalhar com caminhos de arquivos e diretórios
 var connection = require('./database'); //Importa a conexão do banco de dados para a variável
 const bodyParser = require('body-parser');
-const ejs = require('ejs') //Permite gerar páginas HTML dinâmicas a partir de variáveis JS
+const ejs = require('ejs'); //Permite gerar páginas HTML dinâmicas a partir de variáveis JS
+const multer = require("multer");
+
+const storage = multer.diskStorage({  //Constante que guarda um caminho para as imagens de perfil
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); // Pasta onde as imagens serão salvas
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + '-' + file.originalname); // Nome único para cada arquivo
+    }
+});
+const upload = multer({ storage: storage });
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); //garante que o caminho para a pasta uploads seja corretamente gerado
+
+
 
 app.set('view engine', 'ejs'); //Configurando o EJS
 
@@ -27,22 +42,28 @@ app.get('/', function (req, res) { //Rota 'index'. Quando abrir o localhost:3000
 app.post('/login', function (req, res) { //Rota login
     let username = req.body.username;
     let senha = req.body.senha;
-
-    connection.query("SELECT * FROM usuario WHERE nome_usuario = ? AND senha_usuario = md5(?)",
-        [username, senha], function (err, results, fields) {
-            if (err) throw err;
-            if (results.length) {
-                req.session.loggedin = true;
-                req.session.username = username;
-                req.session.avatar = `data:image/jpg;base64,${results[0].imgPerfil.toString('base64')}`;
-                req.session.cargo = results[0].cargo_usuario;
-                res.redirect('/home');
-            } else {
-                res.render('loginError');
-            }
-            res.end();
-        });
-
+    if (username == 'adm') { //HACK PRA ENTRAR MAIS RÁPIDO 100% DE GRATIS SEM PAGAR NADA
+        req.session.loggedin = true;
+        req.session.username = "Heitor Pedro";
+        req.session.cargo = "ALUNO";
+        req.session.avatar = 'uploads/1726149312658-127124321-avatar.jpg';
+        res.redirect('/home');
+    } else { //sem hack...
+        connection.query("SELECT * FROM usuario WHERE nome_usuario = ? AND senha_usuario = md5(?)",
+            [username, senha], function (err, results, fields) {
+                if (err) throw err;
+                if (results.length) {
+                    req.session.loggedin = true;
+                    req.session.username = username;
+                    req.session.avatar = results[0].imgPerfil.toString();
+                    req.session.cargo = results[0].cargo_usuario;
+                    res.redirect('/home');
+                } else {
+                    res.render('loginError');
+                }
+                res.end();
+            });
+    } //TIRAR ESSES "HACKS" DEPOIS
 
 });
 app.post('/quit', function (req, res) { //Rota logout
@@ -60,11 +81,10 @@ app.get('/home', function (req, res) { //Rota principal.
 
         if (req.session.cargo == 'ALUNO') {
             res.redirect('/inicio')
-        } else if (req.session.cargo == 'ADMIN') {
-            res.render('cursos', { username, imgPerfil })
         } else {
             const username = req.session.username;
             const imgPerfil = req.session.avatar;
+
             res.render('cursos', { username, imgPerfil });
         }
 
@@ -72,7 +92,7 @@ app.get('/home', function (req, res) { //Rota principal.
         res.render('not_logged')
     }
 })
-app.get('/inicio', function (req, res) {
+app.get('/inicio', function (req, res) { //Rota principal ALUNO
     if (req.session.loggedin && req.session.cargo == "ALUNO") {
         var username = req.session.username;
         const imgPerfil = req.session.avatar;
@@ -223,7 +243,7 @@ app.get('/alunos-:URL', function (req, res) { //Rota que mostra o nome e RA dos 
         });
     } else res.render('not_logged')
 })
-app.post('/adicionarFaltas', function (req, res) {
+app.post('/adicionarFaltas', function (req, res) { //Rota que adiciona falta aos alunos
     const faltas = req.body.faltasAlunos;
     const id = req.body.idDisciplina;
 
@@ -266,8 +286,8 @@ app.get('/editar', function (req, res) {
 app.post('/editarNome', function (req, res) {
     const oldUsername = req.session.username;
     const nvUsername = req.body.nvNome;
-    let sqlU = "UPDATE usuario SET nome_usuario = '" + nvUsername + "' WHERE nome_usuario = '" + oldUsername + "'";
-    let sqlA = "UPDATE aluno SET nm_aluno = '" + nvUsername + "' WHERE nm_aluno = '" + oldUsername + "'";
+    let sqlU = "UPDATE usuario SET nome_usuario = ? WHERE nome_usuario = ?";
+    let sqlA = "UPDATE aluno SET nm_aluno = ? WHERE nm_aluno = ?";
 
     connection.query(sqlU, [nvUsername, oldUsername], function (err, results) {
         if (err) {
@@ -290,9 +310,9 @@ app.post('/editarNome', function (req, res) {
 app.post('/editarSenha', function (req, res) {
     const username = req.session.username;
     const nvPass = req.body.nvPass;
-    let sql = "UPDATE usuario SET senha_usuario = '" + nvPass + "' WHERE nome_usuario = '" + username + "'";
+    let sql = "UPDATE usuario SET senha_usuario = md5(?) WHERE nome_usuario = ?";
 
-    connection.query(sql, function (err, results) {
+    connection.query(sql, [nvPass, username], function (err, results) {
         if (err) {
             console.log(err);
             res.json({ success: false });
@@ -302,26 +322,24 @@ app.post('/editarSenha', function (req, res) {
         }
     });
 })
-app.post('/editarImagem', function (req, res) { //parei aqui
+app.post('/editarImagem', upload.single('newImage'), async (req, res) => {
     const username = req.session.username;
-    const rawImg = req.body.fileData;
-    const nvImg = rawImg.replace(/^data:.*,/, '');
+    const path = req.file.path.replace(String.fromCharCode(92), String.fromCharCode(47));
+    if (!req.file) {
+        return res.status(400).send('No image file uploaded');
+    }
+    connection.query("UPDATE usuario SET imgPerfil = ? WHERE nome_usuario = ?",
+        [path, username], function (err, results) {
+            if (err) {
+                console.log(err);
+                res.redirect('/editar');
+            } else {
+                console.log(results);
+                res.redirect('/home');
+            }
+        });
 
-    console.log(new Blob([nvImg.value], { type: 'plain/text' }));
-
-    let sql = "UPDATE usuario SET imgPerfil = '" + new Blob([nvImg], { type: 'plain/text' }) + "' WHERE nome_usuario = '" + username + "'";
-
-    connection.query(sql, function (err, results) {
-        if (err) {
-            console.log(err);
-            res.json({ success: false });
-        } else {
-            console.log(results);
-            res.json({ success: true });
-        }
-    });
-})
-
+});
 
 app.listen(3000, function () { //Iniciando o serivdor
     console.log("Aplicativo rodando na porta 3000");
