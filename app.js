@@ -27,6 +27,7 @@ app.use(bodyParser.json());// Middleware para processar JSON
 app.use(express.static('public')); //Define uma pasta para ser o diretório de arquivos estáticos
 app.use(express.urlencoded({ extended: true })); //Permite que o express interprete dados de formulários
 app.use(express.static(path.join(__dirname, 'static'))); //garante que o caminho para a pasta static seja corretamente gerado
+app.use(express.json());
 
 app.use(session({ // Configurando a sessão
     secret: 'secret',
@@ -191,23 +192,70 @@ app.get('/criar', function (req, res) { //Rota que mostra o nome e RA dos alunos
 app.post('/criarUsuario', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
     const { nome, pass, role } = req.body;
 
+    if (!nome || !pass || !role) {
+        return res.json({ success: false, message: 'Por favor, preencha todos os campos!' });
+    }
+
     let sql = "INSERT INTO usuario (nm_usuario, senha_usuario, cargo_usuario) VALUES (?, ?, ?);"
-    if (role == 'ALUNO') var sql2 = "INSERT INTO aluno (nm_aluno) VALUES (?);"
 
     connection.query(sql, [nome, pass, role], function (err, results) {
         if (err) {
             console.log(err);
-            res.json({ success: false });
+            return res.json({ success: false, message: 'Erro ao criar o usuário.' });
         } else {
             console.log(results);
-            res.json({ success: true });
+            if (role == 'ALUNO') {
+                var sql2 = "INSERT INTO aluno (nm_aluno) VALUES (?);"
+                connection.query(sql2, [nome], function (err, results) {
+                    if (err) {
+                        console.log(err);
+                        return res.json({ success: false, message: 'Erro ao registrar o aluno.' });
+                    } else {
+                        console.log(results);
+                        return res.json({ success: true, message: 'Usuário e aluno criados com sucesso!' });
+                    }
+                });
+            } else {
+                return res.json({ success: true, message: 'Usuário criado com sucesso!' });
+            }
         }
     });
-    connection.query(sql2, [nome], function (err, results) {
+})
+app.post('/criarCurso', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
+    const { nomeC, sigla, descricao } = req.body;
+
+    if (!nomeC || !sigla) {
+        return res.json({ success: false, message: 'Por favor, preencha todos os campos necessários!' });
+    }
+
+    let sql = "INSERT INTO curso (nm_curso, sg_curso, ds_curso) VALUES (?, ?, ?);"
+
+    connection.query(sql, [nomeC, sigla, descricao], function (err, results) {
         if (err) {
-            console.log(err);            
+            console.log(err);
+            return res.json({ success: false, message: 'Erro ao criar curso.' });
         } else {
-            console.log(results);            
+            console.log(results);
+            return res.json({ success: true, message: 'Curso criado com sucesso!' })            
+        }
+    });
+})
+app.post('/criarDisciplina', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
+    const { nomeD, curso, semestre, professor } = req.body;
+
+    if (!nomeD || !curso || !semestre) {
+        return res.json({ success: false, message: 'Por favor, preencha todos os campos necessários!' });
+    }
+
+    let sql = "INSERT INTO disciplina (nm_disciplina, qt_semestre, id_curso, url_disciplina, nm_professor) VALUES (?,?, ?, REPLACE(?, ' ', '-'), ?);"
+
+    connection.query(sql, [nomeD, semestre, curso, nomeD, professor], function (err, results) {
+        if (err) {
+            console.log(err);
+            return res.json({ success: false, message: 'Erro ao criar curso.' });
+        } else {
+            console.log(results);
+            return res.json({ success: true, message: 'Curso criado com sucesso!' })            
         }
     });
 })
