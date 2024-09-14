@@ -53,13 +53,14 @@
         });
 
         function enviarValores() {
+            const data = new Date();
             fetch('/adicionarFaltas', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body:
-                    JSON.stringify({faltasAlunos, idDisciplina})
+                    JSON.stringify({faltasAlunos, idDisciplina, data})
             })
                 .then(response => response.json())
                 .then(data => {
