@@ -49,7 +49,7 @@ app.post('/login', function (req, res) { //Rota login
         req.session.avatar = 'uploads/1726149312658-127124321-avatar.jpg';
         res.redirect('/home');
     } else { //sem hack...
-        connection.query("SELECT * FROM usuario WHERE nome_usuario = ? AND senha_usuario = md5(?)",
+        connection.query("SELECT * FROM usuario WHERE nm_usuario = ? AND senha_usuario = md5(?)",
             [username, senha], function (err, results, fields) {
                 if (err) throw err;
                 if (results.length) {
@@ -75,17 +75,18 @@ app.post('/quit', function (req, res) { //Rota logout
 })
 app.get('/home', function (req, res) { //Rota principal.
     if (req.session.loggedin) {
-
         const username = req.session.username;
         const imgPerfil = req.session.avatar;
+        const cargo = req.session.cargo;
 
         if (req.session.cargo == 'ALUNO') {
             var ra;
             var faltas = [];
+            var dtFaltas = [];
             var disciplinas = [];
             var semestre = [];
 
-            let sql = "SELECT id_ra, nm_aluno, qt_falta, nm_disciplina, qt_semestre ";
+            let sql = "SELECT id_ra, nm_aluno, qt_falta, nm_disciplina, qt_semestre, DATE_FORMAT(dt_falta, '%d/%m/%Y') datas ";
             sql += "FROM grade NATURAL JOIN aluno NATURAL JOIN disciplina WHERE nm_aluno = ? ORDER BY qt_semestre";
 
             connection.query(sql, [username], function (err, results) {
@@ -94,15 +95,16 @@ app.get('/home', function (req, res) { //Rota principal.
                     for (var i = 0; i < results.length; i++) {
                         ra = results[0].id_ra;
                         faltas[i] = results[i].qt_falta;
+                        dtFaltas[i] = results[i].datas
                         disciplinas[i] = results[i].nm_disciplina;
                         semestre[i] = results[i].qt_semestre;
 
                     }
-                    res.render('Alunos/home', { username, imgPerfil, ra, faltas, disciplinas, semestre })
+                    res.render('Alunos/home', { username, imgPerfil, ra, faltas, disciplinas, semestre, dtFaltas })
                 }
             })
 
-        } else {
+        } else if (req.session.cargo == 'ADMIN') {
             var nm_curso = [];
             var sg_curso = [];
             connection.query("SELECT nm_curso, sg_curso FROM curso", function (err, results) {
@@ -111,8 +113,19 @@ app.get('/home', function (req, res) { //Rota principal.
                     nm_curso[i] = results[i].nm_curso;
                     sg_curso[i] = results[i].sg_curso;
                 }
-
-                res.render('cursos', { username, imgPerfil, nm_curso, sg_curso });
+                res.render('cursos', { username, imgPerfil, nm_curso, sg_curso, cargo });
+            });
+        }
+        else {
+            var nm_curso = [];
+            var sg_curso = [];
+            connection.query("SELECT DISTINCT nm_curso, sg_curso FROM curso NATURAL JOIN disciplina WHERE nm_professor = ?", [username], function (err, results) {
+                if (err) throw err;
+                for (var i = 0; i < results.length; i++) {
+                    nm_curso[i] = results[i].nm_curso;
+                    sg_curso[i] = results[i].sg_curso;
+                }
+                res.render('cursos', { username, imgPerfil, nm_curso, sg_curso, cargo });
             });
 
         }
@@ -122,27 +135,30 @@ app.get('/home', function (req, res) { //Rota principal.
     }
 })
 
-// ADM's
+
 app.get('/disciplina-:SG', function (req, res) {
     if (req.session.loggedin && req.session.cargo != "ALUNO") {
+        var username = req.session.username;
+        if (req.session.cargo == "ADMIN") { var sql = "SELECT nm_disciplina, nm_curso, url_disciplina FROM disciplina NATURAL JOIN curso WHERE sg_curso = ? ORDER BY qt_semestre"; }
+        else { var sql = "SELECT nm_disciplina, nm_curso, url_disciplina FROM disciplina NATURAL JOIN curso WHERE  sg_curso = ? AND nm_professor = ? ORDER BY qt_semestre"; }
         const sgCurso = req.params.SG;
-        let sql = "SELECT nm_disciplina, nm_curso, url_disciplina FROM disciplina NATURAL JOIN curso WHERE sg_curso = ? ORDER BY qt_semestre";
         var disciplina = [];
         var URL = [];
         var curso = [];
-        connection.query(sql, [sgCurso], function (err, results) {
+        connection.query(sql, [sgCurso, username], function (err, results) {
             if (err) throw err;
             for (var i = 0; i < results.length; i++) {
                 disciplina[i] = results[i].nm_disciplina;
                 URL[i] = results[i].url_disciplina;
                 curso[i] = results[0].nm_curso;
 
-            }                
-            if( req.session.cargo == "ADMIN") res.render("ADM/disciplinas", { disciplina, curso, URL });
+            }
+            if (req.session.cargo == "ADMIN") res.render("ADM/disciplinas", { disciplina, curso, URL });
             else res.render("disciplinas", { disciplina, curso, URL });
         });
     } else res.render('not_logged')
 })
+// ADM's
 app.get('/presencas-:URL', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD    
     const URL = req.params.URL;
     if (req.session.loggedin && req.session.cargo == "ADMIN") {
@@ -162,6 +178,38 @@ app.get('/presencas-:URL', function (req, res) { //Rota que mostra o nome e RA d
             res.render("ADM/presencas", { ra, nomes, faltas, idDisciplina });
         });
     } else res.render('not_logged')
+})
+app.get('/criar', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD        
+    if (req.session.loggedin && req.session.cargo == "ADMIN") {
+        const username = req.session.username;
+        const imgPerfil = req.session.avatar;
+
+        res.render('ADM/criar', { username, imgPerfil });
+
+    } else res.render('not_logged')
+})
+app.post('/criarUsuario', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
+    const { nome, pass, role } = req.body;
+
+    let sql = "INSERT INTO usuario (nm_usuario, senha_usuario, cargo_usuario) VALUES (?, ?, ?);"
+    if (role == 'ALUNO') var sql2 = "INSERT INTO aluno (nm_aluno) VALUES (?);"
+
+    connection.query(sql, [nome, pass, role], function (err, results) {
+        if (err) {
+            console.log(err);
+            res.json({ success: false });
+        } else {
+            console.log(results);
+            res.json({ success: true });
+        }
+    });
+    connection.query(sql2, [nome], function (err, results) {
+        if (err) {
+            console.log(err);            
+        } else {
+            console.log(results);            
+        }
+    });
 })
 
 // Professores
@@ -195,7 +243,7 @@ app.post('/adicionarFaltas', function (req, res) { //Rota que adiciona falta aos
         sql += ' WHEN id_ra = ' + RA + ' THEN ' + faltas[RA];
     }
 
-    sql += ' END WHERE id_ra IN (' + Object.keys(faltas).map(reg => `'${reg}'`).join(', ') + ') AND id_disciplina = ' + id;
+    sql += ' END, dt_falta = CURDATE() WHERE id_ra IN (' + Object.keys(faltas).map(reg => `'${reg}'`).join(', ') + ') AND id_disciplina = ' + id;
 
     connection.query(sql, function (err, results) {
         if (err) {
@@ -214,7 +262,7 @@ app.get('/editar', function (req, res) {
         const username = req.session.username;
         const imgPerfil = req.session.avatar;
 
-        connection.query("SELECT * FROM usuario WHERE nome_usuario = '" + username + "';",
+        connection.query("SELECT * FROM usuario WHERE nm_usuario = ?;", [username],
             function (err, results, fields) {
                 if (err) throw err;
                 if (results.length) {
@@ -228,7 +276,7 @@ app.get('/editar', function (req, res) {
 app.post('/editarNome', function (req, res) {
     const oldUsername = req.session.username;
     const nvUsername = req.body.nvNome;
-    let sqlU = "UPDATE usuario SET nome_usuario = ? WHERE nome_usuario = ?";
+    let sqlU = "UPDATE usuario SET nm_usuario = ? WHERE nm_usuario = ?";
     let sqlA = "UPDATE aluno SET nm_aluno = ? WHERE nm_aluno = ?";
 
     connection.query(sqlU, [nvUsername, oldUsername], function (err, results) {
@@ -252,7 +300,7 @@ app.post('/editarNome', function (req, res) {
 app.post('/editarSenha', function (req, res) {
     const username = req.session.username;
     const nvPass = req.body.nvPass;
-    let sql = "UPDATE usuario SET senha_usuario = md5(?) WHERE nome_usuario = ?";
+    let sql = "UPDATE usuario SET senha_usuario = md5(?) WHERE nm_usuario = ?";
 
     connection.query(sql, [nvPass, username], function (err, results) {
         if (err) {
@@ -270,7 +318,7 @@ app.post('/editarImagem', upload.single('newImage'), async (req, res) => {
     if (!req.file) {
         return res.status(400).send('No image file uploaded');
     }
-    connection.query("UPDATE usuario SET imgPerfil = ? WHERE nome_usuario = ?",
+    connection.query("UPDATE usuario SET imgPerfil = ? WHERE nm_usuario = ?",
         [path, username], function (err, results) {
             if (err) {
                 console.log(err);
