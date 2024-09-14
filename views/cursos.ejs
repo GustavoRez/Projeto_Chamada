@@ -24,9 +24,14 @@
                 Olá, <%=username %>!
             </button>
             <ul class="dropdown-menu">
-                <form action="/quit" method="post">
-                    <input type="submit" value="Sair">
-                </form>
+                <% if( cargo=='ADMIN' ){ %>
+                    <form action="/criar" method="get">
+                        <input type="submit" value="Criar">
+                    </form>
+                    <% } %>
+                        <form action="/quit" method="post">
+                            <input type="submit" value="Sair">
+                        </form>
             </ul>
         </div>
 
