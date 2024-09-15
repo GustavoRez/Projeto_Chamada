@@ -324,6 +324,11 @@ app.get('/editar', function (req, res) {
 app.post('/editarNome', function (req, res) {
     const oldUsername = req.session.username;
     const nvUsername = req.body.nvNome;
+    
+    if (!nvUsername) {
+        return res.json({ success: false, message: 'Nomes nulos não são aceitos!' });
+    }
+    
     let sqlU = "UPDATE usuario SET nm_usuario = ? WHERE nm_usuario = ?";
     let sqlA = "UPDATE aluno SET nm_aluno = ? WHERE nm_aluno = ?";
 
@@ -348,6 +353,11 @@ app.post('/editarNome', function (req, res) {
 app.post('/editarSenha', function (req, res) {
     const username = req.session.username;
     const nvPass = req.body.nvPass;
+
+    if (!nvPass) {
+        return res.json({ success: false, message: 'Senhas nulas não são aceitas!' });
+    }
+
     let sql = "UPDATE usuario SET senha_usuario = md5(?) WHERE nm_usuario = ?";
 
     connection.query(sql, [nvPass, username], function (err, results) {
@@ -363,9 +373,11 @@ app.post('/editarSenha', function (req, res) {
 app.post('/editarImagem', upload.single('newImage'), async (req, res) => {
     const username = req.session.username;
     const path = req.file.path.replace(String.fromCharCode(92), String.fromCharCode(47));
+    
     if (!req.file) {
-        return res.status(400).send('No image file uploaded');
+        return res.status(400).send('Nenhuma imagem foi detectada!');
     }
+
     connection.query("UPDATE usuario SET imgPerfil = ? WHERE nm_usuario = ?",
         [path, username], function (err, results) {
             if (err) {
