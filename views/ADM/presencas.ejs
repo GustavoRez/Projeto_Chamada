@@ -16,16 +16,41 @@
     <center>
         <h1>RA e nome dos alunos:</h1>
     </center>
-    <button onclick="history.back()">Voltar</button>
-
+    <button type="button" onclick="history.back()">Voltar</button>
 
     <!--RA e Nomes aparecendo em uma lista-->
-    <div class="fundo">
-        <% for(var i=0; i < nomes.length; i++){ %>
-            <p>RA: <%= ra[i] %> | Nome: <%= nomes[i] %> | Faltas: <%= faltas[i]%>
-            </p>
-            <% } %>
+
+    <input id="userInput" type="text" autocomplete="off" placeholder="Procurar..." />
+    <button onclick="showResult()">Procurar</button>
+
+    <div class="results-container>
+        <ul class=" results-list" id="list">
+
+        </ul>
     </div>
+
+    <ul class="fundo">
+        <% for(var i=0; i < nomes.length; i++){ %>
+            <li id="list">RA: <%= ra[i] %> | Nome: <%= nomes[i] %> | Faltas: <%= faltas[i]%>
+            </li>
+            <% } %>
+    </ul>
+    <!--<p id="demo"></p>-->
+
+    <script>
+        /*const data = [2, 26, 48, 6, 89, 15, 5]
+
+        function showResult() {
+            var el = document.getElementById('userInput');
+            var val = el.value;            
+            if (!val) {
+                window.alert("O campo está vazio!");
+            } else {
+                for(let i = 0; i< data.length; i++)
+                    if (data[i] == val) window.alert(val);
+            }
+        } */
+    </script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
