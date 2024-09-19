@@ -29,18 +29,27 @@
     </form>
     <div id="messageUser"></div>
 
-    <form id="criarCurso">
-        <h1>Criar curso:</h1>
-        <label for="nomeC">Nome: <span style="color: red;">*</span></label>
-        <input type="text" id="nomeC" name="nomeC" required>
-        <label for="sigla">Sigla: <span style="color: red;">*</span></label>
-        <input type="text" id="sigla" name="sigla" required>
-        <label for="descricao">Descrição:</label>
-        <textarea name="descricao" id="descricao" rows="1" cols="30"></textarea>
+    <div>
+        <form id="criarCurso">
+            <h1>Criar curso:</h1>
+            <label for="nomeC">Nome: <span style="color: red;">*</span></label>
+            <input type="text" id="nomeC" name="nomeC" required>
+            <label for="sigla">Sigla: <span style="color: red;">*</span></label>
+            <input type="text" id="sigla" name="sigla" required>
+            <label for="descricao">Descrição:</label>
+            <textarea name="descricao" id="descricao" rows="1" cols="30"></textarea>
+
+            <button type="submit">Enviar</button>
+        </form>
+
+        <form id="editarCurso"></form>
+        <h1>Editar curso:</h1>
+        
 
         <button type="submit">Enviar</button>
-    </form>
-    <div id="messageCurso"></div>
+        </form>
+        <div id="messageCurso"></div>
+    </div>
 
     <form id="criarDisciplina">
         <h1>Criar materia:</h1>
@@ -57,7 +66,7 @@
         <label for="semestre">Semestre:</label>
         <input type="number" name="semestre" id="semestre" min="0" max="6">
         <label for="professor">Mestrante:</label>
-        <input type="text" name="professor" id="professor">        
+        <input type="text" name="professor" id="professor">
 
         <button type="submit">Enviar</button>
     </form>
@@ -93,8 +102,9 @@
                     document.getElementById('message').innerHTML = `<p style="color: red;">Erro inesperado.</p>`;
                 });
         });
+
         document.getElementById('criarCurso').addEventListener('submit', function (e) {
-            
+
             e.preventDefault();
 
             const formData = new FormData(this);
@@ -123,12 +133,13 @@
                     document.getElementById('message').innerHTML = `<p style="color: red;">Erro inesperado.</p>`;
                 });
         });
+
         document.getElementById('criarDisciplina').addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const formData = new FormData(this);    
+            const formData = new FormData(this);
             const formObject = {};
-            formData.forEach((value, key) => formObject[key] = value);            
+            formData.forEach((value, key) => formObject[key] = value);
 
             fetch('/criarDisciplina', {
                 method: 'POST',
