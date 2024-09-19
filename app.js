@@ -48,7 +48,7 @@ app.post('/login', function (req, res) { //Rota login
         req.session.username = "adm";
         req.session.cargo = 'ADMIN'
         req.session.avatar = 'uploads/1726149312658-127124321-avatar.jpg';
-        res.redirect('/home');
+        return res.json({ success: true, message: 'Login concluído! Redirecionando...' });
     } else { //sem hack...
         connection.query("SELECT * FROM usuario WHERE nm_usuario = ? AND senha_usuario = md5(?)",
             [username, senha], function (err, results, fields) {
@@ -58,9 +58,9 @@ app.post('/login', function (req, res) { //Rota login
                     req.session.username = username;
                     req.session.avatar = results[0].imgPerfil.toString();
                     req.session.cargo = results[0].cargo_usuario;
-                    res.redirect('/home');
-                } else {
-                    res.render('loginError');
+                    return res.json({ success: true, message: 'Login concluído! Redirecionando...' });
+                } else {                    
+                    return res.json({ success: false, message: 'Senha incorreta.' });
                 }
                 res.end();
             });
@@ -87,8 +87,8 @@ app.get('/home', function (req, res) { //Rota principal.
             var disciplinas = [];
             var semestre = [];
 
-            let sql = "SELECT id_ra, nm_aluno, qt_falta, nm_disciplina, qt_semestre, DATE_FORMAT(dt_falta, '%d/%m/%Y') datas ";
-            sql += "FROM grade NATURAL JOIN aluno NATURAL JOIN disciplina WHERE nm_aluno = ? ORDER BY qt_semestre";
+            let sql = "SELECT a.id_ra, a.nm_aluno, g.qt_falta, d.nm_disciplina, d.qt_semestre, DATE_FORMAT(f.dt_falta, '%d/%m/%Y') datas ";
+            sql += "FROM grade g NATURAL JOIN aluno a NATURAL JOIN disciplina d LEFT JOIN faltas f ON f.id_ra = a.id_ra WHERE nm_aluno = ? ORDER BY qt_semestre";
 
             connection.query(sql, [username], function (err, results) {
                 if (err) throw err;
@@ -184,8 +184,19 @@ app.get('/criar', function (req, res) { //Rota que mostra o nome e RA dos alunos
     if (req.session.loggedin && req.session.cargo == "ADMIN") {
         const username = req.session.username;
         const imgPerfil = req.session.avatar;
+        var cursos = [];
+        var disciplinas = [];
 
-        res.render('ADM/criar', { username, imgPerfil });
+        sql =   "SELECT * FROM curso NATURAL JOIN disciplina"
+
+        connection.query(sql, function(err, results){
+            for(var i = 0; i < results.length; i++){
+                cursos[i] = results[i].nm_curso;
+                disciplinas[i] = results[i].nm_disciplina;
+            }
+        })
+
+        res.render('ADM/criar', { username, imgPerfil, cursos, disciplinas });
 
     } else res.render('not_logged')
 })
@@ -236,7 +247,26 @@ app.post('/criarCurso', function (req, res) { //Rota que mostra o nome e RA dos 
             return res.json({ success: false, message: 'Erro ao criar curso.' });
         } else {
             console.log(results);
-            return res.json({ success: true, message: 'Curso criado com sucesso!' })            
+            return res.json({ success: true, message: 'Curso criado com sucesso!' })
+        }
+    });
+})
+app.post('/editarCurso', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
+    const { nomeC, sigla, descricao } = req.body;
+
+    if (!nomeC || !sigla) {
+        return res.json({ success: false, message: 'Por favor, preencha todos os campos necessários!' });
+    }
+
+    let sql = "INSERT INTO curso (nm_curso, sg_curso, ds_curso) VALUES (?, ?, ?);"
+
+    connection.query(sql, [nomeC, sigla, descricao], function (err, results) {
+        if (err) {
+            console.log(err);
+            return res.json({ success: false, message: 'Erro ao criar curso.' });
+        } else {
+            console.log(results);
+            return res.json({ success: true, message: 'Curso criado com sucesso!' })
         }
     });
 })
@@ -255,7 +285,7 @@ app.post('/criarDisciplina', function (req, res) { //Rota que mostra o nome e RA
             return res.json({ success: false, message: 'Erro ao criar curso.' });
         } else {
             console.log(results);
-            return res.json({ success: true, message: 'Curso criado com sucesso!' })            
+            return res.json({ success: true, message: 'Curso criado com sucesso!' })
         }
     });
 })
@@ -324,11 +354,11 @@ app.get('/editar', function (req, res) {
 app.post('/editarNome', function (req, res) {
     const oldUsername = req.session.username;
     const nvUsername = req.body.nvNome;
-    
+
     if (!nvUsername) {
         return res.json({ success: false, message: 'Nomes nulos não são aceitos!' });
     }
-    
+
     let sqlU = "UPDATE usuario SET nm_usuario = ? WHERE nm_usuario = ?";
     let sqlA = "UPDATE aluno SET nm_aluno = ? WHERE nm_aluno = ?";
 
@@ -373,7 +403,7 @@ app.post('/editarSenha', function (req, res) {
 app.post('/editarImagem', upload.single('newImage'), async (req, res) => {
     const username = req.session.username;
     const path = req.file.path.replace(String.fromCharCode(92), String.fromCharCode(47));
-    
+
     if (!req.file) {
         return res.status(400).send('Nenhuma imagem foi detectada!');
     }
