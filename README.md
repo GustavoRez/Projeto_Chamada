@@ -41,10 +41,17 @@ Projeto Chamada para o Trabalho de Graduação da Fatec Praia Grande 2º Semestr
 <ol>
   <li><a href="https://dev.mysql.com/downloads/workbench/">Site MySQL Workbench</a>
   <li>Execute o instalador e siga as instruções na tela.
-  <li>Crie uma conexão e importe os dados do diretório <b>SQL</b>
+  <li>Crie uma conexão,dê um nome a conexação,  em hostname coloque "localhost"
+  <li> Crie um esquema com o nome que você colocou
+  <li>Defina o esquema como padrão
+  <li>Cllque em "data importe", importe os dados do diretório <b>SQL</b>
+  <li> Defina o esquema para importar
+  <li> Após importar todos, teste com um Desc
 </ol>
 <h2> Instalando bibliotecas: </h2>
 <ol>
   <li> Abra sua IDE de preferência
   <li> No terminal, digite <b>npm install ejs express express-session mysql multer --save</b>
+  <li> Digite node app.js, abra o localhost e digite o numero da porta fornecida
 </ol>
+
