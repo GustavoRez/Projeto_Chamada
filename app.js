@@ -59,7 +59,7 @@ app.post('/login', function (req, res) { //Rota login
                     req.session.avatar = results[0].imgPerfil.toString();
                     req.session.cargo = results[0].cargo_usuario;
                     return res.json({ success: true, message: 'Login concluído! Redirecionando...' });
-                } else {                    
+                } else {
                     return res.json({ success: false, message: 'Senha incorreta.' });
                 }
                 res.end();
@@ -137,7 +137,7 @@ app.get('/home', function (req, res) { //Rota principal.
 })
 
 
-app.get('/disciplina-:SG', function (req, res) {
+app.get('/disciplina-:SG', function (req, res) { //Rota que mostra as disciplinas, tanto para os ADM's como para professores
     if (req.session.loggedin && req.session.cargo != "ALUNO") {
         var username = req.session.username;
         if (req.session.cargo == "ADMIN") { var sql = "SELECT nm_disciplina, nm_curso, url_disciplina FROM disciplina NATURAL JOIN curso WHERE sg_curso = ? ORDER BY qt_semestre"; }
@@ -159,8 +159,9 @@ app.get('/disciplina-:SG', function (req, res) {
         });
     } else res.render('not_logged')
 })
-// ADM's
-app.get('/presencas-:URL', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD    
+
+// Para ADM's
+app.get('/presencas-:URL', function (req, res) { // Rota que mostra o nome, RA e faltas dos alunos cadastrados no BD
     const URL = req.params.URL;
     if (req.session.loggedin && req.session.cargo == "ADMIN") {
         let sql = "SELECT id_ra, nm_aluno, qt_falta, id_disciplina FROM aluno NATURAL JOIN grade NATURAL JOIN disciplina WHERE url_disciplina = ?";
@@ -180,27 +181,22 @@ app.get('/presencas-:URL', function (req, res) { //Rota que mostra o nome e RA d
         });
     } else res.render('not_logged')
 })
-app.get('/criar', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD        
+app.get('/criar', function (req, res) { // Rota que leva a tela de edição/criação
     if (req.session.loggedin && req.session.cargo == "ADMIN") {
         const username = req.session.username;
         const imgPerfil = req.session.avatar;
-        var cursos = [];
-        var disciplinas = [];
 
-        sql =   "SELECT * FROM curso NATURAL JOIN disciplina"
-
-        connection.query(sql, function(err, results){
-            for(var i = 0; i < results.length; i++){
-                cursos[i] = results[i].nm_curso;
-                disciplinas[i] = results[i].nm_disciplina;
-            }
-        })
-
-        res.render('ADM/criar', { username, imgPerfil, cursos, disciplinas });
+        res.render('ADM/criar', { username, imgPerfil });
 
     } else res.render('not_logged')
 })
-app.post('/criarUsuario', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
+app.get('/criarUsuario', function (req, res) {
+    const username = req.session.username;
+    const ftPerfil = req.session.avatar;
+
+    res.render('ADM/criarUsuario', { username, ftPerfil })
+})
+app.post('/criarUsuario', function (req, res) { // Rota que cria um novo usuário e, se for o caso, aluno também
     const { nome, pass, role } = req.body;
 
     if (!nome || !pass || !role) {
@@ -232,7 +228,13 @@ app.post('/criarUsuario', function (req, res) { //Rota que mostra o nome e RA do
         }
     });
 })
-app.post('/criarCurso', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
+app.get('/criarCurso', function (req, res) {
+    const username = req.session.username;
+    const ftPerfil = req.session.avatar;
+
+    res.render('ADM/criarCurso', { username, ftPerfil })
+})
+app.post('/criarCurso', function (req, res) { // Rota que cria um novo curso
     const { nomeC, sigla, descricao } = req.body;
 
     if (!nomeC || !sigla) {
@@ -251,7 +253,25 @@ app.post('/criarCurso', function (req, res) { //Rota que mostra o nome e RA dos 
         }
     });
 })
-app.post('/editarCurso', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
+app.get('/editarCurso', function (req, res) {
+    if (req.session.loggedin && req.session.cargo == 'ADMIN') {
+        const username = req.session.username;
+        const imgPerfil = req.session.avatar;
+        var nm_curso = [];
+        var sg_curso = [];
+        connection.query("SELECT nm_curso, sg_curso FROM curso", function (err, results) {
+            if (err) throw err;
+            for (var i = 0; i < results.length; i++) {
+                nm_curso[i] = results[i].nm_curso;                
+            }
+            res.render('ADM/editarCurso', { username, imgPerfil, nm_curso });
+        });
+    } else {
+        res.render('not_logged')
+    }
+
+})
+app.post('/editarCurso', function (req, res) { // Rota que edita os dados de um curso
     const { nomeC, sigla, descricao } = req.body;
 
     if (!nomeC || !sigla) {
@@ -270,7 +290,7 @@ app.post('/editarCurso', function (req, res) { //Rota que mostra o nome e RA dos
         }
     });
 })
-app.post('/criarDisciplina', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
+app.post('/criarDisciplina', function (req, res) { // Rota que cria uma nova disciplina
     const { nomeD, curso, semestre, professor } = req.body;
 
     if (!nomeD || !curso || !semestre) {
@@ -290,8 +310,8 @@ app.post('/criarDisciplina', function (req, res) { //Rota que mostra o nome e RA
     });
 })
 
-// Professores
-app.get('/alunos-:URL', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD    
+// Para Professores
+app.get('/alunos-:URL', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
     const URL = req.params.URL;
     if (req.session.loggedin && req.session.cargo != "ALUNO") {
         let sql = "SELECT id_ra, nm_aluno, qt_falta, id_disciplina FROM aluno NATURAL JOIN grade NATURAL JOIN disciplina WHERE url_disciplina = ?";
@@ -335,7 +355,7 @@ app.post('/adicionarFaltas', function (req, res) { //Rota que adiciona falta aos
 })
 
 // Alunos
-app.get('/editar', function (req, res) {
+app.get('/editar', function (req, res) { // Rota que exibe a página de edição de perfil do aluno
     if (req.session.loggedin && req.session.cargo == "ALUNO") {
         const username = req.session.username;
         const imgPerfil = req.session.avatar;
@@ -351,7 +371,7 @@ app.get('/editar', function (req, res) {
 
     } else res.render('not_logged')
 })
-app.post('/editarNome', function (req, res) {
+app.post('/editarNome', function (req, res) { // Rota que permite a um aluno alterar seu nome de usuário
     const oldUsername = req.session.username;
     const nvUsername = req.body.nvNome;
 
@@ -380,7 +400,7 @@ app.post('/editarNome', function (req, res) {
         }
     });
 })
-app.post('/editarSenha', function (req, res) {
+app.post('/editarSenha', function (req, res) { // Rota que permite a um aluno alterar sua senha de acesso
     const username = req.session.username;
     const nvPass = req.body.nvPass;
 
@@ -400,7 +420,7 @@ app.post('/editarSenha', function (req, res) {
         }
     });
 })
-app.post('/editarImagem', upload.single('newImage'), async (req, res) => {
+app.post('/editarImagem', upload.single('newImage'), async (req, res) => { // Rota que permite a um aluno atualizar sua imagem de perfil
     const username = req.session.username;
     const path = req.file.path.replace(String.fromCharCode(92), String.fromCharCode(47));
 
