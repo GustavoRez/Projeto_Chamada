@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f9;
+}
+
+.slider {
+    width: 300px;
+    height: 100px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: height 0.3s ease;
+    margin: 2rem;
+}
+
+.slider:hover {
+    height: 200px;
+}
+
+.slider-options {
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    padding-top: 10px;
+    width: 100%;
+}
+
+.slider:hover .slider-options {
+    display: flex;
+}
+
+.slider:hover .slider-text {
+    display: none;
+}
+
+.slider-text {
+    font-size: 18px;
+    color: #333;
+}
+
+.slider-options a {
+    text-decoration: none;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    margin: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.slider-options a:hover {
+    background-color: #0056b3;
+}
