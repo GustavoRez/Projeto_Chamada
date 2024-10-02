@@ -1,13 +1,15 @@
-:root{
+:root {
     --cor--primaria: #f5f5cd;
 }
 
 
 body {
-    background-image: url("../img/fachada.png");
-    background-repeat: no-repeat;
-    background-position: 50% 15%;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: url("../img/fachada.png") no-repeat center center fixed;        
     background-size: cover;
+    font-family: Arial, sans-serif;
 }
 
 .logo {
@@ -18,19 +20,19 @@ body {
     margin-top: 20px;
     margin-bottom: 40px;
 }
+
 a {
     color: #ffffff;
     text-decoration: none;
 }
-.coluna {
-    flex: 0 1 auto;
-}
+
 .linha {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-.pq {
+
+.PQ {
     color: var(--cor--primaria);
     font-size: 30px;
     text-align: center;
@@ -46,14 +48,14 @@ a {
     border-radius: 1rem;
 
     width: 13.75rem;
-    height: 11rem;   
+    height: 11rem;
 }
 
-.comex {
+.COMEX {
     color: var(--cor--primaria);
     font-size: 30px;
     text-align: center;
-    font-family: American Typewriter, serif;    
+    font-family: American Typewriter, serif;
 
     background-image: url(../img/lousa.png);
     background-size: 150%;
@@ -69,11 +71,11 @@ a {
     margin: 10px;
 }
 
-.ge {
+.GE {
     color: var(--cor--primaria);
     font-size: 30px;
     text-align: center;
-    font-family: American Typewriter, serif;    
+    font-family: American Typewriter, serif;
 
     background-image: url(../img/lousa.png);
     background-size: 150%;
@@ -89,7 +91,7 @@ a {
     margin: 10px;
 }
 
-.ads {
+.ADS {
     color: var(--cor--primaria);
     font-size: 23px;
     text-align: center;
@@ -109,7 +111,7 @@ a {
     margin: 10px;
 }
 
-.dsm {
+.DSM {
     color: var(--cor--primaria);
     font-size: 1.5rem;
     text-align: center;
