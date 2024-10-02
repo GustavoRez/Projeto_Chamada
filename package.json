@@ -2,6 +2,7 @@
   "name": "projeto-tcc",
   "main": "app.js",
   "scripts": {
+    "vercel-build": "npm install mysql",
     "start": "node app.js"
   },
   "dependencies": {
