@@ -2,7 +2,11 @@
   "name": "projeto-tcc",
   "main": "app.js",
   "scripts": {    
-    "vercel-build": "npm install ejs express express-session multer mysql",
+    "vercel-build": "npm install ejs --save",
+    "vercel-build": "npm install express --save",
+    "vercel-build": "npm install express-session --save",
+    "vercel-build": "npm install multer --save",
+    "vercel-build": "npm install mysql --save",
     "start": "node app.js"
   },
   "dependencies": {
