@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/materia.css">
+    <title>Chamada</title>
+</head>
+
+<body>
+
+    <a href="/home"> <img src="img/logo.png" alt="Logo Fatec-PG" width="230" height="85.57" class="logo"></a>
+    <center>
+        <h1>RA e nome dos alunos:</h1>
+    </center>
+    <button type="button" onclick="history.back()">Voltar</button>
+
+    <!--RA e Nomes aparecendo em uma lista-->
+
+    <input id="userInput" type="text" autocomplete="off" placeholder="Procurar..." />
+    <button onclick="showResult()">Procurar</button>
+
+    <div class="results-container>
+        <ul class=" results-list" id="list">
+
+        </ul>
+    </div>
+
+    <ul class="fundo">
+        <% for(var i=0; i < nomes.length; i++){ %>
+            <li id="list">RA: <%= ra[i] %> | Nome: <%= nomes[i] %> | Faltas: <%= faltas[i]%>
+            </li>
+            <% } %>
+    </ul>
+    <!--<p id="demo"></p>-->
+
+    <script>
+        /*const data = [2, 26, 48, 6, 89, 15, 5]
+
+        function showResult() {
+            var el = document.getElementById('userInput');
+            var val = el.value;            
+            if (!val) {
+                window.alert("O campo está vazio!");
+            } else {
+                for(let i = 0; i< data.length; i++)
+                    if (data[i] == val) window.alert(val);
+            }
+        } */
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <title>Edite seu perfil!</title>
+</head>
+
+<body>
+
+    <a href="/home"><img src="<%= imgPerfil %>" style="width: 3rem; height: 3rem;" alt="Perfil de <%= username %>"></a>
+
+    <form action="/editarImagem" method="post" enctype="multipart/form-data">
+        <h1>Foto de Perfil</h1>
+        <label>Foto Antiga:</label>
+        <img src="<%= imgPerfil %>" style="width: 5rem; height: 5rem;" alt="Perfil de <%= username %>">
+        <label>Foto Atual:</label>
+
+        <input type="file" id="newImage" name="newImage" accept="image/*">
+        <div id="preview"></div>
+        <button onclick="confirma()" type="submit">Alterar</button>
+
+    </form>
+
+    <form>
+        <h1>Nome de Usuário</h1>
+        <label for="nmAntigo">Nome Antigo:</label>
+        <input type="text" id="nmAntigo" value="<%= username %>" disabled />
+        <label for="nmAtual">Nome Atual:</label>
+        <input type="text" id="nmAtual">
+        <button type="button" onclick="alterarNome()">Alterar</button>
+    </form>
+
+    <form>
+        <h1>Senha do Usuário</h1>
+        <label for="passAntiga">Senha Antiga:</label>
+        <input type="password" id="passAntiga" value="<%= senha %>" disabled />
+        <label for="passAtual">Senha Atual:</label>
+        <input type="password" id="passAtual">
+        <button onclick="verSenha()"><i class="bi bi-eye"></i></button>
+        <button type="button" onclick="alterarSenha()">Alterar</button>
+    </form>
+
+    <script>
+        nvNome = document.getElementById('nmAtual').value;
+        function verSenha() {
+            var oldPass = document.getElementById('passAntiga');
+            var newPass = document.getElementById('passAtual');
+            var icon = document.querySelector('button i');
+
+            if (oldPass.type == 'text') {
+                document.getElementById('passAntiga').type = 'password';
+                document.getElementById('passAtual').type = 'password';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            }
+            else {
+                document.getElementById('passAntiga').type = 'text';
+                document.getElementById('passAtual').type = 'text';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            }
+        }
+
+        function alterarNome() {
+            var nvNome = document.getElementById('nmAtual').value;
+
+            fetch('/editarNome', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body:
+                    JSON.stringify({ nvNome })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Nome alterado com sucesso!');
+
+                    } else {
+                        alert('Erro ao alterar o nome!');
+                    }
+                })
+                .catch(error => console.error('Erro ao salvar:', error));
+        }
+
+        function alterarSenha() {
+            var nvPass = document.getElementById('passAtual').value;
+
+            fetch('/editarSenha', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body:
+                    JSON.stringify({ nvPass })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Senha alterado com sucesso!');
+
+                    } else {
+                        alert('Erro ao alterar a senha!');
+                    }
+                })
+                .catch(error => console.error('Erro ao salvar:', error));
+        }
+
+        var file;
+        var preview;
+        document.getElementById('newImage').addEventListener('change', function (event) {
+            file = event.target.files[0];
+            preview = document.getElementById('preview');
+
+            if (!file.type.match('image.*')) {
+                alert("Erro!");
+                file = null
+            }
+
+            if (file) {
+                preview.innerHTML = `<img src="${URL.createObjectURL(file)}" style="height: 100px; display: block; margin-bottom: 10px;">`;
+            }
+
+
+        });    
+
+        function confirma(){
+            confirm('Para atualizar a foto, será necessário reiniciar sua sessão!')
+        }
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
