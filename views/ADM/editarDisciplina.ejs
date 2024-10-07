@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Curso</title>
+    <style>
+        /* informações ao passar o mouse por cima!
+        Colocar em uma pagína CSS e estilizar melhor */
+        .disciplina .editar {
+            visibility: hidden;
+            position: absolute;
+        }
+
+        .disciplina .editar.mostrar {
+            visibility: visible;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="history.back()">Voltar</button>
+
+    <input type="text" id="procura" onkeyup="myFunction()" placeholder="Insira o nome da disciplina:">
+
+    <ul id="disciplinas">
+        <% for(var i=0; i < nm_disciplina.length; i++){%>
+            <li>
+                <div style="display:inline" class="disciplina">
+                    <a><%= nm_disciplina[i] %> | <%= sg_curso[i] %></a> <button class="alternarVisib">&#9998</button>
+                        <span class="editar">
+                            <form id="editarDisciplina<%=i%>">
+                                <h1>Editar Disciplina <%= nm_disciplina[i] %>:</h1>
+                                <input id="id" name="id" value="<%= id_disciplina[i]%>" hidden>
+                                <label for="nomeD">Nome: <span style="color: red;">*</span></label>
+                                <input type="text" value="<%= nm_disciplina[i] %>" disabled>
+                                <input type="text" id="nomeD" name="nomeD" required>
+
+                                <label for="semestre">Semestre: <span style="color: red;">*</span></label>
+                                <input type="text" value="<%= qt_semestre[i] %>" disabled>
+                                <input type="text" id="semestre" name="semestre" required>
+
+                                <label for="curso">Curso:</label>
+                                <input type="text" value="<%= sg_curso[i] %>" disabled>
+                                <input type="text" name="curso" id="curso" required>
+
+                                <label for="professor">Professor: <span style="color: red;">*</span></label>
+                                <input type="text" value="<%= nm_professor[i] %>" disabled>
+                                <input type="text" id="professor" name="professor" required>
+
+                                <button type="submit">Enviar</button>
+
+                                <div class="messageCurso"></div>
+                            </form>
+                        </span>
+                        
+                </div>
+            </li><br>
+            <% } %>
+    </ul>
+
+    <script>
+        function myFunction() {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById('procura');
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("disciplinas");
+            li = ul.getElementsByTagName('li');
+
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+
+        document.querySelectorAll('.alternarVisib').forEach(button => {
+            button.addEventListener('click', function () {
+                const editarDiv = this.nextElementSibling;
+
+                document.querySelectorAll('.editar').forEach(div => {
+                    if (div !== editarDiv)
+                        div.classList.remove('mostrar');
+                });
+
+                editarDiv.classList.toggle('mostrar');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const forms = document.querySelectorAll('form[id^="editarDisciplina"]');
+            forms.forEach(function (form) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(this);
+                    const formObject = {};
+                    formData.forEach((value, key) => formObject[key] = value);
+
+                    fetch('/editarDisciplina', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formObject)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            const messageDiv = this.querySelector('.messageCurso');
+                            if (data.success) {
+                                console.log('for')
+                                messageDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
+                                alert('Atualize a página para ver os resultados!')
+                            } else {
+                                console.log('numfor')
+                                messageDiv.innerHTML = `<p style="color: red;">${data.message}</p>`;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro ao enviar o formulário:', error);
+                            document.getElementById('message').innerHTML = `<p style="color: red;">Erro inesperado.</p>`;
+                        });
+                });
+            });
+        });
+
+
+    </script>
+
+</body>
+
+</html>
