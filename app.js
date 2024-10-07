@@ -257,14 +257,19 @@ app.get('/editarCurso', function (req, res) {
     if (req.session.loggedin && req.session.cargo == 'ADMIN') {
         const username = req.session.username;
         const imgPerfil = req.session.avatar;
+        var id_curso = [];
         var nm_curso = [];
         var sg_curso = [];
-        connection.query("SELECT nm_curso, sg_curso FROM curso", function (err, results) {
+        var ds_curso = [];
+        connection.query("SELECT id_curso, nm_curso, sg_curso, ds_curso FROM curso", function (err, results) {
             if (err) throw err;
             for (var i = 0; i < results.length; i++) {
-                nm_curso[i] = results[i].nm_curso;                
+                id_curso[i] = results[i].id_curso;
+                nm_curso[i] = results[i].nm_curso;
+                sg_curso[i] = results[i].sg_curso;
+                ds_curso[i] = results[i].ds_curso;
             }
-            res.render('ADM/editarCurso', { username, imgPerfil, nm_curso });
+            res.render('ADM/editarCurso', { username, imgPerfil, nm_curso, sg_curso, ds_curso, id_curso });
         });
     } else {
         res.render('not_logged')
@@ -272,6 +277,75 @@ app.get('/editarCurso', function (req, res) {
 
 })
 app.post('/editarCurso', function (req, res) { // Rota que edita os dados de um curso
+    const { id, nomeC, sigla, descricao } = req.body;    
+
+    if (!nomeC || !sigla) {
+        return res.json({ success: false, message: 'Por favor, preencha todos os campos necessários!' });
+    }
+
+    let sql = "UPDATE curso SET sg_curso = ?, nm_curso = ?, ds_curso = ? WHERE id_curso = ?;"
+
+    connection.query(sql, [sigla, nomeC, descricao, id], function (err, results) {
+        if (err) {
+            console.log(err);
+            return res.json({ success: false, message: 'Erro ao editar curso.' });
+        } else {
+            console.log(results);
+            return res.json({ success: true, message: 'Curso editado com sucesso!' })
+        }
+    });
+})
+app.get('/criarDisciplina', function (req, res) {
+    const username = req.session.username;
+    const ftPerfil = req.session.avatar;
+
+    res.render('ADM/criarDisciplina', { username, ftPerfil })
+})
+app.post('/criarDisciplina', function (req, res) { // Rota que cria uma nova disciplina
+    const { nomeD, curso, semestre, professor } = req.body;
+
+    if (!nomeD || !curso || !semestre) {
+        return res.json({ success: false, message: 'Por favor, preencha todos os campos necessários! (Marcados com *)' });
+    }
+
+    let sql = "INSERT INTO disciplina (nm_disciplina, qt_semestre, id_curso, url_disciplina, nm_professor) VALUES (?,?, ?, REPLACE(?, ' ', '-'), ?);"
+
+    connection.query(sql, [nomeD, semestre, curso, nomeD, professor], function (err, results) {
+        if (err) {
+            console.log(err);
+            return res.json({ success: false, message: 'Erro ao criar disciplina.' });
+        } else {
+            console.log(results);
+            return res.json({ success: true, message: 'Disciplina criada com sucesso!' })
+        }
+    });
+})
+app.get('/editarDisciplina', function (req, res) {
+    if (req.session.loggedin && req.session.cargo == 'ADMIN') {
+        const username = req.session.username;
+        const imgPerfil = req.session.avatar;
+        var id_disciplina = [];
+        var nm_disciplina = [];
+        var qt_semestre = [];
+        var nm_professor = [];
+        var sg_curso = [];
+        connection.query("SELECT id_disciplina, nm_disciplina, qt_semestre, nm_professor, sg_curso FROM disciplina NATURAL JOIN curso", function (err, results) {
+            if (err) throw err;
+            for (var i = 0; i < results.length; i++) {
+                id_disciplina[i] = results[i].id_disciplina;
+                nm_disciplina[i] = results[i].nm_disciplina;
+                qt_semestre[i] = results[i].qt_semestre;
+                nm_professor[i] = results[i].nm_professor;
+                sg_curso[i] = results[i].sg_curso;
+            }
+            res.render('ADM/editarDisciplina', { username, imgPerfil, id_disciplina, nm_disciplina, qt_semestre, nm_professor, sg_curso });
+        });
+    } else {
+        res.render('not_logged')
+    }
+
+})
+app.post('/editarDisciplina', function (req, res) { // Rota que edita os dados de um curso
     const { nomeC, sigla, descricao } = req.body;
 
     if (!nomeC || !sigla) {
@@ -283,29 +357,10 @@ app.post('/editarCurso', function (req, res) { // Rota que edita os dados de um 
     connection.query(sql, [nomeC, sigla, descricao], function (err, results) {
         if (err) {
             console.log(err);
-            return res.json({ success: false, message: 'Erro ao criar curso.' });
+            return res.json({ success: false, message: 'Erro ao editar disciplina.' });
         } else {
             console.log(results);
-            return res.json({ success: true, message: 'Curso criado com sucesso!' })
-        }
-    });
-})
-app.post('/criarDisciplina', function (req, res) { // Rota que cria uma nova disciplina
-    const { nomeD, curso, semestre, professor } = req.body;
-
-    if (!nomeD || !curso || !semestre) {
-        return res.json({ success: false, message: 'Por favor, preencha todos os campos necessários!' });
-    }
-
-    let sql = "INSERT INTO disciplina (nm_disciplina, qt_semestre, id_curso, url_disciplina, nm_professor) VALUES (?,?, ?, REPLACE(?, ' ', '-'), ?);"
-
-    connection.query(sql, [nomeD, semestre, curso, nomeD, professor], function (err, results) {
-        if (err) {
-            console.log(err);
-            return res.json({ success: false, message: 'Erro ao criar curso.' });
-        } else {
-            console.log(results);
-            return res.json({ success: true, message: 'Curso criado com sucesso!' })
+            return res.json({ success: true, message: 'Disciplina editada com sucesso!' })
         }
     });
 })
