@@ -8,12 +8,12 @@
     <style>
         /* informações ao passar o mouse por cima!
         Colocar em uma pagína CSS e estilizar melhor */
-        .curso .editar {
+        .disciplina .editar {
             visibility: hidden;
             position: absolute;
         }
 
-        .curso .editar.mostrar {
+        .disciplina .editar.mostrar {
             visibility: visible;
         }
     </style>
@@ -22,26 +22,32 @@
 <body>
     <button onclick="history.back()">Voltar</button>
 
-    <input type="text" id="procura" onkeyup="myFunction()" placeholder="Insira o nome do curso:">
+    <input type="text" id="procura" onkeyup="myFunction()" placeholder="Insira o nome da disciplina:">
 
-    <ul id="cursos">
-        <% for(var i=0; i < nm_curso.length; i++){%>
+    <ul id="disciplinas">
+        <% for(var i=0; i < nm_disciplina.length; i++){%>
             <li>
-                <div style="display:inline" class="curso">
-                    <a><%= nm_curso[i] %></a> <button class="alternarVisib">&#9998</button>
+                <div style="display:inline" class="disciplina">
+                    <a><%= nm_disciplina[i] %> | <%= sg_curso[i] %></a> <button class="alternarVisib">&#9998</button>
                         <span class="editar">
-                            <form id="editarCurso<%=i%>">
-                                <h1>Editar Curso <%= nm_curso[i] %>:</h1>
-                                <input id="id" name="id" value="<%= id_curso[i]%>" hidden>
-                                <label for="nomeC">Nome: <span style="color: red;">*</span></label>
-                                <input type="text" value="<%= nm_curso[i] %>" disabled>
-                                <input type="text" id="nomeC" name="nomeC" required>
-                                <label for="sigla">Sigla: <span style="color: red;">*</span></label>
+                            <form id="editarDisciplina<%=i%>">
+                                <h1>Editar Disciplina <%= nm_disciplina[i] %>:</h1>
+                                <input id="id" name="id" value="<%= id_disciplina[i]%>" hidden>
+                                <label for="nomeD">Nome: <span style="color: red;">*</span></label>
+                                <input type="text" value="<%= nm_disciplina[i] %>" disabled>
+                                <input type="text" id="nomeD" name="nomeD" required>
+
+                                <label for="semestre">Semestre: <span style="color: red;">*</span></label>
+                                <input type="text" value="<%= qt_semestre[i] %>" disabled>
+                                <input type="text" id="semestre" name="semestre" required>
+
+                                <label for="curso">Curso:</label>
                                 <input type="text" value="<%= sg_curso[i] %>" disabled>
-                                <input type="text" id="sigla" name="sigla" required>
-                                <label for="descricao">Descrição:</label>
-                                <textarea disabled placeholder="<%= ds_curso[i] %>" rows="1" cols="30"></textarea>
-                                <textarea name="descricao" id="descricao" rows="1" cols="30"></textarea>
+                                <input type="text" name="curso" id="curso" required>
+
+                                <label for="professor">Professor: <span style="color: red;">*</span></label>
+                                <input type="text" value="<%= nm_professor[i] %>" disabled>
+                                <input type="text" id="professor" name="professor" required>
 
                                 <button type="submit">Enviar</button>
 
@@ -59,7 +65,7 @@
             var input, filter, ul, li, a, i, txtValue;
             input = document.getElementById('procura');
             filter = input.value.toUpperCase();
-            ul = document.getElementById("cursos");
+            ul = document.getElementById("disciplinas");
             li = ul.getElementsByTagName('li');
 
             for (i = 0; i < li.length; i++) {
@@ -87,7 +93,7 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            const forms = document.querySelectorAll('form[id^="editarCurso"]');
+            const forms = document.querySelectorAll('form[id^="editarDisciplina"]');
             forms.forEach(function (form) {
                 form.addEventListener('submit', function (e) {
                     e.preventDefault();
@@ -96,7 +102,7 @@
                     const formObject = {};
                     formData.forEach((value, key) => formObject[key] = value);
 
-                    fetch('/editarCurso', {
+                    fetch('/editarDisciplina', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
