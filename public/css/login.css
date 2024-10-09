@@ -1,16 +1,23 @@
 body {
-    background-image: url("../img/fachada.png");
+    background-image: url("../img/fundo.png");
     background-repeat: no-repeat;
     background-position: 50% 15%;
     background-size: cover;
     background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
 }
-
+p{
+    height: 10px;
+    text-align: left;    
+}
 .logo {
     position: relative;
     top: 4%;
     left: 50%;
-    translate: -50%;
+    transform: translateX(-50%);
     margin-top: 20px;
     margin-bottom: 40px;
 }
@@ -20,14 +27,33 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-}
+}   
 
 .fundo {
-    background: rgba(214, 32, 32, 0.904);
+    background: rgba(175, 175, 175, 0.5);
+    color: rgb(0, 0, 0);
     height: 50%;
+    width: 40%;
+    max-width: 600px;
+    border-radius: 10px;
+    padding: 20px;
 }
 
 .botao {
+    color: black;
     display: flex;
-    margin-top: 15px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+input[type=text],
+input[type=password]{
+    color: black;
+    background: rgba(131, 126, 126, 0.904);
+    border-color: rgba(131, 126, 126, 0.904);
+}
+input[type=text]:focus,
+input[type=password]:focus{
+    background: rgba(131, 126, 126, 0.904);
+    border-color: rgba(131, 126, 126, 0.904);
 }

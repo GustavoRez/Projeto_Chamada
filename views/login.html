@@ -12,18 +12,18 @@
 <body>
     <center>
         <div class="container">
-            <div class="card border-2 border-danger col-sm-4 fundo">
+            <div class="card border-2 col-sm-4 fundo">
                 <div class="card-body">
                     <center>
                         <h3 class="card-title">LOGIN:</h3>
                     </center>
                     <form id="login" method="post">
                         <div class="row">
-                            <label class="col-sm-3 col-form-label">Nome:</label>
-                            <input class="form-control border-danger" type="text" id="username" name="username"
+                            <label class="col-sm-3 col-form-label"><strong>Nome:</strong></label>
+                            <input class="form-control" type="text" id="username" name="username"
                                 maxlength="45" placeholder="Insira seu nome:" autocomplete="off" autofocus required>
-                            <label class="col-sm-3 col-form-label">Senha:</label>
-                            <input class="form-control border-danger" type="password" id="senha" name="senha"
+                            <label class="col-sm-3 col-form-label"><strong>Senha:</strong></label>
+                            <input class="form-control" type="password" id="senha" name="senha"
                                 maxlength="45" placeholder="Insira sua senha:" required>
                             <hr />
                             <p id="message"></p>
@@ -60,10 +60,12 @@
                 .then(data => {
                     const messageDiv = document.getElementById('message');
                     if (data.success) {
-                        messageDiv.innerHTML = `<p">${data.message}</p>`;
+                        messageDiv.style.color = 'rgb(0, 255, 0)';
+                        messageDiv.innerHTML = `<p><strong>${data.message}</strong></p>`;
                         window.location.href = ('/home');
                     } else {
-                        messageDiv.innerHTML = `<p">${data.message}</p>`;
+                        messageDiv.style.color = 'red';
+                        messageDiv.innerHTML = `<p"><strong>${data.message}</strong></p>`;
                     }
                 })
 

@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;    
+    height: 100vh;
+    margin: 0;
+    background: url("../imgAdm/fundoAdm.jpg") no-repeat center center fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.navbar{
+    display: block;
+    /*colocar as mesmas coisas do cssAdm/create.css*/
+}
+.fundo{
+    background-color: yellow;
+}
+.more .info {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.more:hover .info {
+    visibility: visible;
+}
