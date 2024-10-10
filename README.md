@@ -42,9 +42,9 @@ Projeto Chamada para o Trabalho de Graduação da Fatec Praia Grande 2º Semestr
   <li><a href="https://dev.mysql.com/downloads/workbench/">Site MySQL Workbench</a>
   <li>Execute o instalador e siga as instruções na tela.
   <li>Crie uma conexão,dê um nome a conexação,  em hostname coloque "localhost"
-  <li> Crie um esquema com o nome que você colocou
+  <li> Crie um esquema com o nome "chamada_database" ou altere o nome da base da dados no arquivo database.js
   <li>Defina o esquema como padrão
-  <li>Cllque em "data importe", importe os dados do diretório <b>SQL</b>
+  <li>Clique em "data importe", importe os dados do diretório <b>SQL</b>
   <li> Defina o esquema para importar
   <li> Após importar todos, teste com um Desc
 </ol>
