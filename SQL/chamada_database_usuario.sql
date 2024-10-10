@@ -4,7 +4,7 @@ CREATE TABLE `usuario` (
   `nm_usuario` varchar(45) NOT NULL,
   `senha_usuario` varchar(45) NOT NULL,
   `cargo_usuario` varchar(5) DEFAULT 'ALUNO',
-  `imgPerfil` longblob DEFAULT NULL,
+  `img_perfil` longblob DEFAULT 'uploads/1726149312658-127124321-avatar.jpg',
   PRIMARY KEY (`id_usuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
