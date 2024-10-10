@@ -55,8 +55,8 @@ app.post('/login', function (req, res) { //Rota login
                 if (err) throw err;
                 if (results.length) {
                     req.session.loggedin = true;
-                    req.session.username = username;
-                    req.session.avatar = results[0].imgPerfil.toString();
+                    req.session.username = results[0].nm_usuario;
+                    req.session.avatar = results[0].img_perfil.toString();
                     req.session.cargo = results[0].cargo_usuario;
                     return res.json({ success: true, message: 'Login concluído! Redirecionando...' });
                 } else {
@@ -87,7 +87,7 @@ app.get('/home', function (req, res) { //Rota principal.
             var disciplinas = [];
             var semestre = [];
 
-            let sql = "SELECT a.id_ra, a.nm_aluno, g.qt_falta, d.nm_disciplina, d.qt_semestre, DATE_FORMAT(f.dt_falta, '%d/%m/%Y') datas ";
+            let sql = "SELECT a.id_ra, a.nm_aluno, g.qt_falta, d.nm_disciplina, d.qt_semestre, DATE_FORMAT(g.ultima_chamada, '%d/%m/%Y') datas ";
             sql += "FROM grade g NATURAL JOIN aluno a NATURAL JOIN disciplina d LEFT JOIN faltas f ON f.id_ra = a.id_ra WHERE nm_aluno = ? ORDER BY qt_semestre";
 
             connection.query(sql, [username], function (err, results) {
@@ -203,7 +203,7 @@ app.post('/criarUsuario', function (req, res) { // Rota que cria um novo usuári
         return res.json({ success: false, message: 'Por favor, preencha todos os campos!' });
     }
 
-    let sql = "INSERT INTO usuario (nm_usuario, senha_usuario, cargo_usuario) VALUES (?, ?, ?);"
+    let sql = "INSERT INTO usuario (nm_usuario, senha_usuario, cargo_usuario) VALUES (?, MD5(?), ?);"
 
     connection.query(sql, [nome, pass, role], function (err, results) {
         if (err) {
@@ -219,11 +219,11 @@ app.post('/criarUsuario', function (req, res) { // Rota que cria um novo usuári
                         return res.json({ success: false, message: 'Erro ao registrar o aluno.' });
                     } else {
                         console.log(results);
-                        return res.json({ success: true, message: 'Usuário e aluno criados com sucesso!' });
+                        return res.json({ success: true, message: 'Aluno criado com sucesso! Redirecionando para tela inicial.' });
                     }
                 });
             } else {
-                return res.json({ success: true, message: 'Usuário criado com sucesso!' });
+                return res.json({ success: true, message: 'Professor criado com sucesso! Redirecionando para tela inicial.' });
             }
         }
     });
@@ -277,7 +277,7 @@ app.get('/editarCurso', function (req, res) {
 
 })
 app.post('/editarCurso', function (req, res) { // Rota que edita os dados de um curso
-    const { id, nomeC, sigla, descricao } = req.body;    
+    const { id, nomeC, sigla, descricao } = req.body;
 
     if (!nomeC || !sigla) {
         return res.json({ success: false, message: 'Por favor, preencha todos os campos necessários!' });
@@ -396,7 +396,7 @@ app.post('/adicionarFaltas', function (req, res) { //Rota que adiciona falta aos
         sql += ' WHEN id_ra = ' + RA + ' THEN ' + faltas[RA];
     }
 
-    sql += ' END, dt_falta = CURDATE() WHERE id_ra IN (' + Object.keys(faltas).map(reg => `'${reg}'`).join(', ') + ') AND id_disciplina = ' + id;
+    sql += ' END, ultima_chamada = CURDATE() WHERE id_ra IN (' + Object.keys(faltas).map(reg => `'${reg}'`).join(', ') + ') AND id_disciplina = ' + id;
 
     connection.query(sql, function (err, results) {
         if (err) {
