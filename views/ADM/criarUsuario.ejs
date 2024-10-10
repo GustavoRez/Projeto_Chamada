@@ -46,6 +46,9 @@
                     const messageDiv = document.getElementById('messageUser');
                     if (data.success) {
                         messageDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
+                        setTimeout(() => {
+                            window.location.href = ('/home');
+                    }, 3000);
                     } else {
                         messageDiv.innerHTML = `<p style="color: red;">${data.message}</p>`;
                     }
