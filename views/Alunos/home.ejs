@@ -15,7 +15,10 @@
         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="<%= imgPerfil %>" style="width: 3rem; height: 3rem;" alt="Perfil de <%= username %>">
         </button>
-        <h1>Olá, <%= username %>! RA: <%= ra %>
+        <h1>
+            <%if(hora> 5 && hora < 12){%> Bom dia, <%=username %>! RA: <%= ra %>
+            <%} else if(hora> 5 && hora < 18){%> Boa tarde, <%=username %>! RA: <%= ra %>
+            <%} else {%> Boa noite, <%=username %>! RA: <%= ra %><%}%>
         </h1>
         <ul class="dropdown-menu">
             <form action="/editar" method="get">

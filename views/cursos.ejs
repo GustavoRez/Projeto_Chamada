@@ -19,7 +19,10 @@
             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <img src="<%= imgPerfil %>" style="width: 3rem; height: 3rem;" alt="Perfil de <%= username %>">
-                Olá, <%=username %>!
+                <%if(hora> 5 && hora < 12){%> Bom dia, <%=username %>!
+                <%} else if(hora> 5 && hora < 18){%> Boa tarde, <%=username %>!
+                <%} else {%> Boa noite, <%=username %>!<%}%>
+
             </button>
             <ul class="dropdown-menu">
                 <% if( cargo=='ADMIN' ){ %>
