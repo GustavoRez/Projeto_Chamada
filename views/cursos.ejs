@@ -11,30 +11,32 @@
 </head>
 
 <body>
-
     <div>
-        <a href="/home"><img src="img/logo.png" alt="Logo Fatec-PG" width="230" height="85.57" class="logo"></a>
-
         <div class="btn-group dropstart">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-                aria-expanded="false">
+            <button type="button" class="btn btn-dark" data-bs-toggle="dropdown">
                 <img src="<%= imgPerfil %>" style="width: 3rem; height: 3rem;" alt="Perfil de <%= username %>">
                 Olá, <%=username %>!
             </button>
-            <ul class="dropdown-menu">
-                <% if( cargo=='ADMIN' ){ %>
-                    <form action="/criar" method="get">
-                        <input type="submit" value="Criar">
-                    </form>
-                    <% } %>
-                        <form action="/quit" method="post">
-                            <input type="submit" value="Sair">
-                        </form>
-            </ul>
+            <table>
+                <tr class="dropdown-menu">
+                    <% if( cargo=='ADMIN' ){ %>
+                        <th>
+                            <form action="/criar" method="get">
+                                <input class="botao" type="submit" value="Criar">
+                            </form>
+                        </th>
+                        <% } %>
+                            <th>
+                                <form action="/quit" method="post">
+                                    <input class="botao" type="submit" value="Sair">
+                                </form>
+                            </th>
+                </tr>
+            </table>
         </div>
 
     </div>
-
+    <!--Pensando em adcionar uma tabela aqui-->
     <div class="container">
         <div class="linha">
             <% for(var i=0; i < nm_curso.length; i++){%>
