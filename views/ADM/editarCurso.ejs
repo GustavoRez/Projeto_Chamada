@@ -106,12 +106,10 @@
                         .then(response => response.json())
                         .then(data => {
                             const messageDiv = this.querySelector('.messageCurso');
-                            if (data.success) {
-                                console.log('for')
+                            if (data.success) {                                
                                 messageDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
                                 alert('Atualize a página para ver os resultados!')
-                            } else {
-                                console.log('numfor')
+                            } else {                                
                                 messageDiv.innerHTML = `<p style="color: red;">${data.message}</p>`;
                             }
                         })
