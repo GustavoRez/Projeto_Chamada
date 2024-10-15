@@ -22,46 +22,60 @@
 <body>
     <button onclick="history.back()">Voltar</button>
 
-    <input type="text" id="procura" onkeyup="myFunction()" placeholder="Insira o nome da disciplina:">
+    <input type="text" id="procura" onkeyup="procura()" placeholder="Insira o nome da disciplina:">
+    <div id="messageExcluir"></div>
 
     <ul id="disciplinas">
         <% for(var i=0; i < nm_disciplina.length; i++){%>
             <li>
                 <div style="display:inline" class="disciplina">
-                    <a><%= nm_disciplina[i] %> | <%= sg_curso[i] %></a> <button class="alternarVisib">&#9998</button>
-                        <span class="editar">
-                            <form id="editarDisciplina<%=i%>">
-                                <h1>Editar Disciplina <%= nm_disciplina[i] %>:</h1>
-                                <input id="id" name="id" value="<%= id_disciplina[i]%>" hidden>
-                                <label for="nomeD">Nome: <span style="color: red;">*</span></label>
-                                <input type="text" value="<%= nm_disciplina[i] %>" disabled>
-                                <input type="text" id="nomeD" name="nomeD" required>
+                    <a>
+                        <%= nm_disciplina[i] %> | <%= sg_curso[i] %>
+                    </a> <button onclick="confirmDelete('<%= id_disciplina[i] %>')">&#9747</button> <button
+                        class="alternarVisib">&#9998</button>
+                    <span class="editar">
+                        <form id="editarDisciplina<%=i%>">
+                            <h1>Editar Disciplina <%= nm_disciplina[i] %>:</h1>
+                            <input id="id<%= id_disciplina[i]%>" name="id" value="<%= id_disciplina[i]%>" hidden>
+                            <label for="nomeD">Nome: <span style="color: red;">*</span></label>
+                            <input type="text" value="<%= nm_disciplina[i] %>" disabled>
+                            <input type="text" id="nomeD" name="nomeD" required>
 
-                                <label for="semestre">Semestre: <span style="color: red;">*</span></label>
-                                <input type="text" value="<%= qt_semestre[i] %>" disabled>
-                                <input type="text" id="semestre" name="semestre" required>
+                            <label for="semestre">Semestre: <span style="color: red;">*</span></label>
+                            <input type="text" value="<%= qt_semestre[i] %>" disabled>
+                            <input type="number" min="1" max="6" id="semestre" name="semestre" required>
 
-                                <label for="curso">Curso:</label>
-                                <input type="text" value="<%= sg_curso[i] %>" disabled>
-                                <input type="text" name="curso" id="curso" required>
+                            <label for="curso">Curso: <span style="color: red;">*</span></label>
+                            <select disabled>
+                                <option>
+                                    <%= sg_curso[i] %>
+                                </option>
+                            </select>
+                            <select name="curso" id="curso">
+                                <option value=1>ADS</option>
+                                <option value=2>PQ</option>
+                                <option value=3>COMEX</option>
+                                <option value=4>GE</option>
+                                <option value=5>DSM</option>
+                            </select>
 
-                                <label for="professor">Professor: <span style="color: red;">*</span></label>
-                                <input type="text" value="<%= nm_professor[i] %>" disabled>
-                                <input type="text" id="professor" name="professor" required>
+                            <label for="professor">Professor: </label>
+                            <input type="text" value="<%= nm_professor[i] %>" disabled>
+                            <input type="text" id="professor" name="professor" value=" ">
 
-                                <button type="submit">Enviar</button>
+                            <button type="submit">Enviar</button>
 
-                                <div class="messageCurso"></div>
-                            </form>
-                        </span>
-                        
+                            <div class="messageCurso"></div>
+                        </form>
+                    </span>
+
                 </div>
             </li><br>
             <% } %>
     </ul>
 
     <script>
-        function myFunction() {
+        function procura() {
             var input, filter, ul, li, a, i, txtValue;
             input = document.getElementById('procura');
             filter = input.value.toUpperCase();
@@ -92,6 +106,32 @@
             });
         });
 
+        function confirmDelete(idDisciplina) {
+            if (confirm("Deseja realmente excluir essa disciplina?")) {
+                fetch('/deletarDisciplina', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: idDisciplina })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const messageDiv = document.getElementById('messageExcluir');
+                        if (data.success) {
+                            messageDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
+                            setTimeout(() => {
+                                window.location.href = ('/criar');
+                            }, 1500);
+                        } else {
+                            messageDiv.innerHTML = `<p style="color: red;">${data.message}</p>`;
+                        }
+                    })
+            } else {
+                alert('Exclusão de disciplina cancelada!');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             const forms = document.querySelectorAll('form[id^="editarDisciplina"]');
             forms.forEach(function (form) {
@@ -113,11 +153,8 @@
                         .then(data => {
                             const messageDiv = this.querySelector('.messageCurso');
                             if (data.success) {
-                                console.log('for')
                                 messageDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
-                                alert('Atualize a página para ver os resultados!')
                             } else {
-                                console.log('numfor')
                                 messageDiv.innerHTML = `<p style="color: red;">${data.message}</p>`;
                             }
                         })
