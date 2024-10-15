@@ -79,6 +79,7 @@ app.get('/home', function (req, res) { //Rota principal.
         const username = req.session.username;
         const imgPerfil = req.session.avatar;
         const cargo = req.session.cargo;
+        const hora = new Date().getHours();
 
         if (req.session.cargo == 'ALUNO') {
             var ra;
@@ -101,7 +102,7 @@ app.get('/home', function (req, res) { //Rota principal.
                         semestre[i] = results[i].qt_semestre;
 
                     }
-                    res.render('Alunos/home', { username, imgPerfil, ra, faltas, disciplinas, semestre, dtFaltas })
+                    res.render('Alunos/home', { username, imgPerfil, ra, faltas, disciplinas, semestre, dtFaltas, hora })
                 }
             })
 
@@ -114,7 +115,7 @@ app.get('/home', function (req, res) { //Rota principal.
                     nm_curso[i] = results[i].nm_curso;
                     sg_curso[i] = results[i].sg_curso;
                 }
-                res.render('cursos', { username, imgPerfil, nm_curso, sg_curso, cargo });
+                res.render('cursos', { username, imgPerfil, nm_curso, sg_curso, cargo, hora});
             });
         }
         else {
@@ -126,7 +127,7 @@ app.get('/home', function (req, res) { //Rota principal.
                     nm_curso[i] = results[i].nm_curso;
                     sg_curso[i] = results[i].sg_curso;
                 }
-                res.render('cursos', { username, imgPerfil, nm_curso, sg_curso, cargo });
+                res.render('cursos', { username, imgPerfil, nm_curso, sg_curso, cargo, hora});
             });
 
         }
