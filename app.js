@@ -115,7 +115,7 @@ app.get('/home', function (req, res) { //Rota principal.
                     nm_curso[i] = results[i].nm_curso;
                     sg_curso[i] = results[i].sg_curso;
                 }
-                res.render('cursos', { username, imgPerfil, nm_curso, sg_curso, cargo, hora});
+                res.render('cursos', { username, imgPerfil, nm_curso, sg_curso, cargo, hora });
             });
         }
         else {
@@ -127,7 +127,7 @@ app.get('/home', function (req, res) { //Rota principal.
                     nm_curso[i] = results[i].nm_curso;
                     sg_curso[i] = results[i].sg_curso;
                 }
-                res.render('cursos', { username, imgPerfil, nm_curso, sg_curso, cargo, hora});
+                res.render('cursos', { username, imgPerfil, nm_curso, sg_curso, cargo, hora });
             });
 
         }
@@ -296,6 +296,19 @@ app.post('/editarCurso', function (req, res) { // Rota que edita os dados de um 
         }
     });
 })
+app.post('/deletarCurso', function (req, res) {
+    const id = req.body.id;
+
+    connection.query('DELETE FROM curso WHERE id_curso = ?', [id], function (err, results) {
+        if (err) {
+            console.log(err);
+            return res.json({ success: false, message: 'Erro ao deletar seu curso.' });
+        } else {
+            console.log(results);
+            return res.json({ success: true, message: 'Curso deletado com sucesso. Redirecionando...' });
+        }
+    })
+})
 app.get('/criarDisciplina', function (req, res) {
     const username = req.session.username;
     const ftPerfil = req.session.avatar;
@@ -347,15 +360,24 @@ app.get('/editarDisciplina', function (req, res) {
 
 })
 app.post('/editarDisciplina', function (req, res) { // Rota que edita os dados de um curso
-    const { nomeC, sigla, descricao } = req.body;
+    var id = req.body.id;
+    var nomeD = req.body.nomeD;
+    var curso = req.body.curso;
+    var semestre = req.body.semestre;
+    let professor = req.body.professor;    
 
-    if (!nomeC || !sigla) {
-        return res.json({ success: false, message: 'Por favor, preencha todos os campos necessários!' });
-    }
+    connection.query("SELECT * FROM disciplina WHERE id_disciplina = ?", [id], function (err, results) {
+        if (err) throw err;
+        else {
+            for (var i = 0; i < 1; i++) {
+                if (professor == " ") { professor = results[0].nm_professor;}
+            }
+        }
+    });
 
-    let sql = "INSERT INTO curso (nm_curso, sg_curso, ds_curso) VALUES (?, ?, ?);"
+    let sql = "UPDATE disciplina SET nm_disciplina = ?, qt_semestre = ?, id_curso = ?, nm_professor = ? WHERE id_disciplina = ?;"
 
-    connection.query(sql, [nomeC, sigla, descricao], function (err, results) {
+    connection.query(sql, [nomeD, semestre, curso, 'Nycolas Guia', id], function (err, results) {
         if (err) {
             console.log(err);
             return res.json({ success: false, message: 'Erro ao editar disciplina.' });
@@ -364,6 +386,20 @@ app.post('/editarDisciplina', function (req, res) { // Rota que edita os dados d
             return res.json({ success: true, message: 'Disciplina editada com sucesso!' })
         }
     });
+});
+
+app.post('/deletarDisciplina', function (req, res) {
+    const id = req.body.id;
+
+    connection.query('DELETE FROM disciplina WHERE id_disciplina = ?', [id], function (err, results) {
+        if (err) {
+            console.log(err);
+            return res.json({ success: false, message: 'Erro ao deletar sua disciplina.' });
+        } else {
+            console.log(results);
+            return res.json({ success: true, message: 'Disciplina deletada com sucesso. Redirecionando...' });
+        }
+    })
 })
 
 // Para Professores
