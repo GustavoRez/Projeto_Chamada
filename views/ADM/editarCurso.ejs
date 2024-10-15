@@ -28,30 +28,34 @@
         <% for(var i=0; i < nm_curso.length; i++){%>
             <li>
                 <div style="display:inline" class="curso">
-                    <a><%= nm_curso[i] %></a> <button class="alternarVisib">&#9998</button>
-                        <span class="editar">
-                            <form id="editarCurso<%=i%>">
-                                <h1>Editar Curso <%= nm_curso[i] %>:</h1>
-                                <input id="id" name="id" value="<%= id_curso[i]%>" hidden>
-                                <label for="nomeC">Nome: <span style="color: red;">*</span></label>
-                                <input type="text" value="<%= nm_curso[i] %>" disabled>
-                                <input type="text" id="nomeC" name="nomeC" required>
-                                <label for="sigla">Sigla: <span style="color: red;">*</span></label>
-                                <input type="text" value="<%= sg_curso[i] %>" disabled>
-                                <input type="text" id="sigla" name="sigla" required>
-                                <label for="descricao">Descrição:</label>
-                                <textarea disabled placeholder="<%= ds_curso[i] %>" rows="1" cols="30"></textarea>
-                                <textarea name="descricao" id="descricao" rows="1" cols="30"></textarea>
+                    <a>
+                        <%= nm_curso[i] %>
+                    </a> <button onclick="confirmDelete('<%= id_curso[i] %>')">&#9747</button> <button
+                        class="alternarVisib">&#9998</button>
+                    <span class="editar">
+                        <form id="editarCurso<%=i%>">
+                            <h1>Editar Curso <%= nm_curso[i] %>:</h1>
+                            <input id="id<%= id_curso[i]%>" name="id" value="<%= id_curso[i]%>" hidden>
+                            <label for="nomeC">Nome: <span style="color: red;">*</span></label>
+                            <input type="text" value="<%= nm_curso[i] %>" disabled>
+                            <input type="text" id="nomeC" name="nomeC" required>
+                            <label for="sigla">Sigla: <span style="color: red;">*</span></label>
+                            <input type="text" value="<%= sg_curso[i] %>" disabled>
+                            <input type="text" id="sigla" name="sigla" required>
+                            <label for="descricao">Descrição:</label>
+                            <textarea disabled placeholder="<%= ds_curso[i] %>" rows="1" cols="30"></textarea>
+                            <textarea name="descricao" id="descricao" rows="1" cols="30"></textarea>
 
-                                <button type="submit">Enviar</button>
+                            <button type="submit">Enviar</button>
 
-                                <div class="messageCurso"></div>
-                            </form>
-                        </span>
-                        
+                            <div class="messageCurso"></div>
+                        </form>
+                    </span>
+
                 </div>
             </li><br>
             <% } %>
+                <div id="messageExcluir"></div>
     </ul>
 
     <script>
@@ -86,6 +90,32 @@
             });
         });
 
+        function confirmDelete(idCurso) {
+            if (confirm("Deseja realmente excluir o curso?")) {
+                fetch('/deletarCurso', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: idCurso })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const messageDiv = document.getElementById('messageExcluir');
+                        if (data.success) {
+                            messageDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
+                            setTimeout(() => {
+                                window.location.href = ('/criar');
+                            }, 1500);
+                        } else {
+                            messageDiv.innerHTML = `<p style="color: red;">${data.message}</p>`;
+                        }
+                    })
+            } else {
+                alert('Exclusão de curso cancelada!');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             const forms = document.querySelectorAll('form[id^="editarCurso"]');
             forms.forEach(function (form) {
@@ -106,10 +136,10 @@
                         .then(response => response.json())
                         .then(data => {
                             const messageDiv = this.querySelector('.messageCurso');
-                            if (data.success) {                                
+                            if (data.success) {
                                 messageDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
                                 alert('Atualize a página para ver os resultados!')
-                            } else {                                
+                            } else {
                                 messageDiv.innerHTML = `<p style="color: red;">${data.message}</p>`;
                             }
                         })
