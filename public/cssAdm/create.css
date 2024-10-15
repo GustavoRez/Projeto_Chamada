@@ -3,6 +3,7 @@ body {
     height: 100vh;
     margin: 0;
     background: url("../imgAdm/fundoAdm.jpg") no-repeat center center fixed;
+    background-size: cover;
     display: flex;
     flex-direction: column;
     align-items: center;
