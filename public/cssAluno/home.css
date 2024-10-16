@@ -1,8 +1,11 @@
+:root {
+    --botao--cor: #000000;
+}
+
 body {
     font-family: Arial, sans-serif;    
     height: 100vh;
     margin: 0;
-    background: url("../imgAdm/fundoAdm.jpg") no-repeat center center fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,4 +32,31 @@ body {
 
 .more:hover .info {
     visibility: visible;
+}
+
+.dropdown-menu{
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.botao {
+	background:linear-gradient(to bottom,var(--botao--cor) 5%,var(--botao--cor) 100%);
+	background-color:var(--botao--cor);
+	border-radius: 0.7rem;
+	display:inline-block;
+	cursor:pointer;
+	color:#f0f0f0;
+	font-family:Arial;
+	font-size:0.93rem;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+}
+.botao:hover {
+	background:linear-gradient(to bottom,var(--botao--cor) 5%, var(--botao--cor)100%);
+	background-colorvar(--botao--cor);
+}
+.botao:active {
+	position:relative;
+	top:1px;
 }

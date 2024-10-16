@@ -1,3 +1,7 @@
+:root {
+  --botao--cor: #000000;
+}
+
 body {
   background-image: url("../img/fachada.png");
   background-repeat: no-repeat;
@@ -14,7 +18,7 @@ body {
 }
 
 p {
-  background: rgb(167, 50, 50);
+  background: rgba(65, 105, 225, 1);
   border-radius: 10px;
   font-size: 20px;
   margin: 10px;
@@ -25,7 +29,7 @@ p {
 }
 
 li {
-  background: rgb(167, 50, 50);
+  background: rgba(65, 105, 225, 1);
   border-radius: 10px;
   font-size: 20px;
   margin: 10px;
@@ -117,4 +121,41 @@ input[type="range"]:active::-webkit-slider-thumb {
 
 input[type="range"]::-webkit-slider-runnable-track {
   background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center / 100% calc(var(--track-height) + 1px);
+}
+
+
+.voltar {
+	background:linear-gradient(to bottom,var(--botao--cor) 5%,var(--botao--cor) 100%);
+	background-color:var(--botao--cor);
+	border-radius: 0.7rem;
+	display:inline-block;
+	cursor:pointer;
+	color:#f0f0f0;
+	font-family:Arial;
+	font-size:0.93rem;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+}
+.voltar:hover {
+	background:linear-gradient(to bottom,var(--botao--cor) 5%, var(--botao--cor)100%);
+	background-colorvar(--botao--cor);
+}
+.voltar:active {
+	position:relative;
+	top:1px;
+}
+
+.fundo {
+    background: rgba(255, 255, 255, 0.5);
+    color: rgb(0, 0, 0);
+    max-width: 600px;
+} 
+
+.Disc{
+    background: rgba(65, 105, 225);
+    color: rgb(255, 255, 255);
+    border-radius:0.93rem;
+    min-width: 21rem;
+    max-width:25rem;
 }

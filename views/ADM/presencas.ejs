@@ -12,9 +12,9 @@
 
 <body>
     <center>
-        <h1>RA e nome dos alunos:</h1>
+        <h1>Nome dos alunos e RA:</h1>
     </center>
-    <button type="button" onclick="history.back()">Voltar</button>
+    <button onclick="history.back()" class="voltar">Voltar</button>
 
     <!--RA e Nomes aparecendo em uma lista-->
 
@@ -28,7 +28,7 @@
 
     <ul class="fundo" id="alunos">
         <% for(var i=0; i < nomes.length; i++){ %>
-            <li id="list">RA: <%= ra[i] %> | <a>Nome: <%= nomes[i] %></a> | Faltas: <%= faltas[i]%>
+            <li id="list"><a>Nome: <%= nomes[i] %></a> RA: <%= ra[i] %> | Faltas: <%= faltas[i]%>
             </li>
             <% } %>
     </ul>

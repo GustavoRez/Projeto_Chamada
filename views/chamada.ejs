@@ -13,14 +13,15 @@
 <body>
 
     <center>
-        <h1>RA e nome dos alunos:</h1>
+        <h1>Nome dos Alunos</h1>
     </center>
-    <button onclick="history.back()">Voltar</button>
-    <form class="form-inline" action="/home">
+    <button onclick="history.back()" class="voltar">Voltar</button>
+    <center><form class="form-inline" action="/home">
         <!--RA e Nomes aparecendo em uma lista-->
         <div class="fundo">
             <% for(var i=0; i < nomes.length; i++){ %>
-                <p>RA: <%= ra[i] %> | Nome: <%= nomes[i] %>
+                <p> Nome: <%= nomes[i] %> 
+                    RA: <%= ra[i] %>
                             <input type="range" min="0" max="4" RA="<%= ra[i]%>" value="0" id="range-<%= ra[i] %>" />
                             <span>Faltas: <strong id="value-<%= ra[i] %>">0</strong></span>
                             <span>Total: <strong>
@@ -28,10 +29,9 @@
                                 </strong></span>
                 </p>
                 <% } %>
-        </div>
+        </div></center>
 
-
-        <button type="submit" onclick="enviarValores()" class="btn btn-danger">Enviar</button>
+        <center><button type="submit" onclick="enviarValores()" class="btn voltar">Enviar</button></center>
     </form>
 
     <script>
