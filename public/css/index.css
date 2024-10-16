@@ -26,11 +26,9 @@ a {
 
 .PQ {
     color: var(--cor--primaria);
-    font-size: 30px;
+    font-size: 1.87rem;
     text-align: center;
     font-family: American Typewriter, serif;
-    padding: 37px;
-    margin: 10px;
 
     background-image: url(../img/lousa.png);
     background-size: 150%;
@@ -41,11 +39,14 @@ a {
 
     width: 13.75rem;
     height: 11rem;
+
+    padding: 2.31rem;
+    margin:  0.62rem;
 }
 
 .COMEX {
     color: var(--cor--primaria);
-    font-size: 30px;
+    font-size: 1.87rem;
     text-align: center;
     font-family: American Typewriter, serif;
 
@@ -59,13 +60,13 @@ a {
     width: 13.75rem;
     height: 11rem;
 
-    padding: 37px 10px;
-    margin: 10px;
+    padding: 2.31rem;
+    margin:  0.62rem;
 }
 
 .GE {
     color: var(--cor--primaria);
-    font-size: 30px;
+    font-size:  1.87rem;
     text-align: center;
     font-family: American Typewriter, serif;
 
@@ -79,13 +80,13 @@ a {
     width: 13.75rem;
     height: 11rem;
 
-    padding: 37px 10px;
-    margin: 10px;
+    padding: 2.31rem;
+    margin:  0.62rem;
 }
 
 .ADS {
     color: var(--cor--primaria);
-    font-size: 23px;
+    font-size: 1.56rem;
     text-align: center;
     font-family: American Typewriter, serif;
 
@@ -99,8 +100,8 @@ a {
     width: 13.75rem;
     height: 11rem;
 
-    padding: 37px 10px;
-    margin: 10px;
+    padding: 2.31rem;
+    margin:  0.62rem;
 }
 
 .DSM {
@@ -119,8 +120,8 @@ a {
     width: 13.75rem;
     height: 11rem;
 
-    padding: 37px 10px;
-    margin: 10px;
+    padding: 2.31rem;
+    margin:  0.62rem;
 }
 
 .dropdown-menu{
@@ -131,12 +132,12 @@ a {
 .botao {
 	background:linear-gradient(to bottom,var(--botao--cor) 5%,var(--botao--cor) 100%);
 	background-color:var(--botao--cor);
-	border-radius:6px;
+	border-radius: 0.7rem;
 	display:inline-block;
 	cursor:pointer;
 	color:#f0f0f0;
 	font-family:Arial;
-	font-size:15px;
+	font-size:0.93rem;
 	font-weight:bold;
 	padding:6px 24px;
 	text-decoration:none;
