@@ -144,7 +144,7 @@ a {
 }
 .botao:hover {
 	background:linear-gradient(to bottom,var(--botao--cor) 5%, var(--botao--cor)100%);
-	background-colorvar(--botao--cor);
+	background-color: var(--botao--cor);
 }
 .botao:active {
 	position:relative;
