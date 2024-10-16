@@ -16,22 +16,30 @@
         <h1>Nome dos Alunos</h1>
     </center>
     <button onclick="history.back()" class="voltar">Voltar</button>
-    <center><form class="form-inline" action="/home">
-        <!--RA e Nomes aparecendo em uma lista-->
-        <div class="fundo">
-            <% for(var i=0; i < nomes.length; i++){ %>
-                <p> Nome: <%= nomes[i] %> 
-                    RA: <%= ra[i] %>
+    <center>
+        <form class="form-inline" action="/home">
+            <!--RA e Nomes aparecendo em uma lista-->
+            <div class="fundo">
+                <% for(var i=0; i < nomes.length; i++){ %>
+                    <div class="chamada">
+                        <!--Fazer uma tabela-->
+                        <p> Nome: <%= nomes[i] %><br>
+                                RA: <%= ra[i] %>
+                        </p>
+                        <br>
+                        <p>
                             <input type="range" min="0" max="4" RA="<%= ra[i]%>" value="0" id="range-<%= ra[i] %>" />
-                            <span>Faltas: <strong id="value-<%= ra[i] %>">0</strong></span>
+                            <br><span>Faltas: <strong id="value-<%= ra[i] %>">0</strong></span>
                             <span>Total: <strong>
                                     <%= faltas[i]%>
                                 </strong></span>
-                </p>
-                <% } %>
-        </div></center>
+                        </p>
+                    </div>
+                    <% } %>
+            </div>
+    </center>
 
-        <center><button type="submit" onclick="enviarValores()" class="btn voltar">Enviar</button></center>
+    <center><button type="submit" onclick="enviarValores()" class="btn voltar">Enviar</button></center>
     </form>
 
     <script>
@@ -73,10 +81,9 @@
         }
     </script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
 </body>
-
 </html>

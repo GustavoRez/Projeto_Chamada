@@ -1,5 +1,7 @@
 :root {
     --botao--cor: #000000;
+    --borda--cor: #000000;
+    --fundo--cor: #4169ff;
 }
 
 body {
@@ -16,8 +18,14 @@ body {
     /*colocar as mesmas coisas do cssAdm/create.css*/
 }
 .fundo{
-    background-color: yellow;
+    background: rgba(175, 175, 175, 0.5);
+    color: var(--botao--cor);
+    max-width: 600px;
+    border-radius: 10px;
+    padding: 20px;
 }
+
+/* Para que isso?
 .more .info {
     visibility: hidden;
     width: 120px;
@@ -29,11 +37,10 @@ body {
     position: absolute;
     z-index: 1;
 }
-
 .more:hover .info {
     visibility: visible;
 }
-
+*/
 .dropdown-menu{
     background-color: transparent;
     border-color: transparent;
@@ -54,9 +61,34 @@ body {
 }
 .botao:hover {
 	background:linear-gradient(to bottom,var(--botao--cor) 5%, var(--botao--cor)100%);
-	background-colorvar(--botao--cor);
+	background-color: var(--botao--cor);
 }
 .botao:active {
 	position:relative;
 	top:1px;
 }
+
+.Perfil{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px;
+}
+
+.aluno{
+    width: 9.37rem; 
+    height: 12.5rem; 
+    object-fit: cover;
+    border: 2px solid var(--borda--cor);
+}
+
+.chamada{
+    background: var(--fundo--cor);
+    border-radius: 10px;
+    font-size: 20px;
+    margin: 10px;
+    padding: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }

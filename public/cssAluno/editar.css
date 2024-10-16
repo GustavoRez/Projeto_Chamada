@@ -1,0 +1,33 @@
+:root {
+    --botao--cor: #000000;
+    --borda--cor: #000000;
+}
+
+.aluno{
+    width: 9.37rem; 
+    height: 12.5rem; 
+    object-fit: cover;
+    border: 2px solid var(--borda--cor);
+}
+
+.voltar {
+	background:linear-gradient(to bottom,var(--botao--cor) 5%,var(--botao--cor) 100%);
+	background-color:var(--botao--cor);
+	border-radius: 0.7rem;
+	display:inline-block;
+	cursor:pointer;
+	color:#f0f0f0;
+	font-family:Arial;
+	font-size:0.93rem;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+}
+.voltar:hover {
+	background:linear-gradient(to bottom,var(--botao--cor) 5%, var(--botao--cor)100%);
+	background-colorvar(--botao--cor);
+}
+.voltar:active {
+	position:relative;
+	top:1px;
+}

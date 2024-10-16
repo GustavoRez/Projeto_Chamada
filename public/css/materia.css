@@ -17,7 +17,7 @@ body {
   padding: 5px;
 }
 
-p {
+.chamada{
   background: rgba(65, 105, 225, 1);
   border-radius: 10px;
   font-size: 20px;
@@ -27,6 +27,7 @@ p {
   align-items: center;
   justify-content: space-between;
 }
+
 
 li {
   background: rgba(65, 105, 225, 1);

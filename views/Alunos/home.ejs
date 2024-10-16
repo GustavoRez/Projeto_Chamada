@@ -11,36 +11,30 @@
 </head>
 
 <body>
-    <div class="btn-group dropstart diva">
-        <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="<%= imgPerfil %>" style="width: 3rem; height: 3rem;" alt="Perfil de <%= username %>">
-            <%if(hora> 5 && hora < 12){%> Bom dia, <%=username %>!
-            <%} else if(hora> 5 && hora < 18){%> Boa tarde, <%=username %>!
-            <%} else {%> Boa noite, <%=username %>!<%}%>
-
-        </button>
-        <table>
-            <tr class="dropdown-menu">
-                    <th>
-                        <form action="/editar" method="get">
-                            <input  class="botao" type="submit" value="Editar Perfil">
-                        </form>
-                    </th>
-                        <th>
-                            <form action="/quit" method="post">
-                                <input  class="botao" type="submit" value="Sair">
-                            </form>
-                        </th>
-            </tr>
-        </table>
+    <div class="Perfil">
+        <!--<img src="<%= imgPerfil %>" class="aluno" alt="Perfil de <%= username %>"><br>-->
+        <img src="https://www.pngitem.com/pimgs/m/227-2271053_usuario-persona-genrico-solo-general-smbolo-user-clipart.png"
+            class="aluno" alt="Perfil de <%= username %>"><br>
+        <%=username %><br>
+            RA: <%= ra[i] %>
+                <form action="/editar" method="get">
+                    <input class="botao" type="submit" value="Editar Perfil">
+                </form>
+                <form action="/quit" method="post">
+                    <input class="botao" type="submit" value="X">
+                </form>
     </div>
+
 
     <div class="fundo">
         <% for(var i=0; i < disciplinas.length; i++){ %>
-            <div class="more"> Matéria: <%= disciplinas[i] %> - Faltas: <%= faltas[i] %>
-                        <%if(faltas[i] !=0){%>
-                            <span class="info"> Falta recebida dia: <%= dtFaltas[i] %> <br></span>
-                            <%}%>
+            <div class="chamada">
+                <div class="more">
+                    <%= disciplinas[i] %> - Faltas: <%= faltas[i] %>
+                            <%if(faltas[i] !=0){%>
+                                <span class="info"> Falta recebida dia: <%= dtFaltas[i] %> <br></span>
+                                <%}%>
+                </div>
             </div>
             <% } %>
     </div>
