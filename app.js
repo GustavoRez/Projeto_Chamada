@@ -56,7 +56,7 @@ app.post('/login', function (req, res) { //Rota login
                 if (results.length) {
                     req.session.loggedin = true;
                     req.session.username = results[0].nm_usuario;
-                    req.session.avatar = results[0].img_perfil.toString();
+                    req.session.avatar = String(results[0].imgPerfil);
                     req.session.cargo = results[0].cargo_usuario;
                     return res.json({ success: true, message: 'Login concluído! Redirecionando...' });
                 } else {
