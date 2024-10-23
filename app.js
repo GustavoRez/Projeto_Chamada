@@ -406,11 +406,12 @@ app.post('/deletarDisciplina', function (req, res) {
 app.get('/alunos-:URL', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
     const URL = req.params.URL;
     if (req.session.loggedin && req.session.cargo != "ALUNO") {
-        let sql = "SELECT id_ra, nm_aluno, qt_falta, id_disciplina FROM aluno NATURAL JOIN grade NATURAL JOIN disciplina WHERE url_disciplina = ?";
+        let sql = "SELECT id_ra, nm_aluno, qt_falta, id_disciplina, nm_disciplina FROM aluno NATURAL JOIN grade NATURAL JOIN disciplina WHERE url_disciplina = ? ORDER BY nm_aluno";
         var ra = [];
         var nomes = [];
         var faltas = [];
         var idDisciplina;
+        var nmDisciplina;
         connection.query(sql, [URL], function (err, results) {
             if (err) throw err;
             for (var i = 0; i < results.length; i++) {
@@ -418,8 +419,9 @@ app.get('/alunos-:URL', function (req, res) { //Rota que mostra o nome e RA dos 
                 nomes[i] = results[i].nm_aluno;
                 faltas[i] = results[i].qt_falta;
                 idDisciplina = results[0].id_disciplina
+                nmDisciplina = results[0].nm_disciplina
             }
-            res.render("chamada", { ra, nomes, faltas, idDisciplina });
+            res.render("chamada", { ra, nomes, faltas, idDisciplina, nmDisciplina });
         });
     } else res.render('not_logged')
 })

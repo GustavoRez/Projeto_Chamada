@@ -11,18 +11,13 @@
 </head>
 
 <body>
-
-    <center>
-        <h1>Nome dos Alunos</h1>
-    </center>
-    <button onclick="history.back()" class="voltar">Voltar</button>
-    <center>
-        <form class="form-inline" action="/home">
-            <!--RA e Nomes aparecendo em uma lista-->
+    <!--Colocar nome do professor, data atual(seria bom falar qual semestre), tabela com os elementos-->
+    <!--        <form class="form-inline" action="/home">
+            RA e Nomes aparecendo em uma lista
             <div class="fundo">
                 <% for(var i=0; i < nomes.length; i++){ %>
                     <div class="chamada">
-                        <!--Fazer uma tabela-->
+                        Fazer uma tabela para ficar tipo excell
                         <p> Nome: <%= nomes[i] %><br>
                                 RA: <%= ra[i] %>
                         </p>
@@ -36,11 +31,59 @@
                         </p>
                     </div>
                     <% } %>
-            </div>
+            </div>-->
+    <center>
+        <h1>
+            <%= nmDisciplina %>
+                <!--%= username %-->
+        </h1>
     </center>
+    <button onclick="history.back()" class="voltar">Voltar</button>
+    <center>
+        <form class="form-inline" action="/home">
+            <table class="tabela">
+                <tr class="Linha"> <!-- linha -->
+                    <th class="header"><center><p> Nome </p></center></th> <!--coluna header-->
+                    <th class="header"><center><p> RA </p></center></th>
+                    </p></th><th><p>
+                    <th class="header"><center><p> </p></th><th><p> Presença </p></center></th>
+                    <th class="header"><center><p> Presenças Totais </p></center></th>
+                </tr>
+                <tr class="Linha"><% for(var i=0; i < nomes.length; i++){ %>
+                        <td class="ColunaNormal"><p><%= nomes[i] %> </p> </td> <!--coluna normal-->
+                        <td class="ColunaNormal"><p><%= ra[i] %></p>     </td>
+                        <td class="ColunaNormal"><p> <input type="range" min="0" max="4" RA="<%= ra[i]%>" value="0" id="range-<%= ra[i] %>" /> </p></td>
+                        <td class="ColunaNormal"><p> <span>Faltas: <strong id="value-<%= ra[i] %>">0</strong></span> </p></td>
+                        <td class="ColunaNormal"><p> <span>Total: <strong><%= faltas[i]%></strong></span> </p></td>
+                    
+                </tr>
+                <% } %>
+                </table>
+    </center>
+    </form><br>
+    <!--Fazer tabela-->
 
-    <center><button type="submit" onclick="enviarValores()" class="btn voltar">Enviar</button></center>
-    </form>
+    <center>
+        <table>
+            <tr>
+                <td><button type="submit" onclick="enviarValores()" class="btn voltar">Enviar</button></th>
+                <td>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-dark voltar">Histórico
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-journal-bookmark" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M6 8V1h1v6.117L8.743 6.07a.5.5 0 0 1 .514 0L11 7.117V1h1v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8" />
+                                <path
+                                    d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                                <path
+                                    d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                            </svg>
+                        </button>
+                </td>
+            </tr>
+        </table>
+    </center>
 
     <script>
         var ranges = document.querySelectorAll('input[type="range"]');
@@ -81,9 +124,10 @@
         }
     </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
 </body>
+
 </html>

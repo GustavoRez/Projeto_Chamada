@@ -160,3 +160,26 @@ input[type="range"]::-webkit-slider-runnable-track {
     min-width: 21rem;
     max-width:25rem;
 }
+
+.tabela {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+}
+
+.ColunaNormal, .header {
+  border: 1px solid black;
+  text-align: left;
+  padding: 8px;
+}
+
+.ColunaNormal, .header {
+  border: 1px solid black;
+  text-align: left;
+  padding: 8px;
+  background-color: white;
+}
+
+.Linha {
+  background-color: white;
+}
