@@ -167,11 +167,6 @@ input[type="range"]::-webkit-slider-runnable-track {
   width: 80%;
 }
 
-.ColunaNormal, .header {
-  border: 1px solid black;
-  text-align: left;
-  padding: 8px;
-}
 
 .ColunaNormal, .header {
   border: 1px solid black;

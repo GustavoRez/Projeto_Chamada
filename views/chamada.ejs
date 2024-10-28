@@ -12,26 +12,6 @@
 
 <body>
     <!--Colocar nome do professor, data atual(seria bom falar qual semestre), tabela com os elementos-->
-    <!--        <form class="form-inline" action="/home">
-            RA e Nomes aparecendo em uma lista
-            <div class="fundo">
-                <% for(var i=0; i < nomes.length; i++){ %>
-                    <div class="chamada">
-                        Fazer uma tabela para ficar tipo excell
-                        <p> Nome: <%= nomes[i] %><br>
-                                RA: <%= ra[i] %>
-                        </p>
-                        <br>
-                        <p>
-                            <input type="range" min="0" max="4" RA="<%= ra[i]%>" value="0" id="range-<%= ra[i] %>" />
-                            <br><span>Faltas: <strong id="value-<%= ra[i] %>">0</strong></span>
-                            <span>Total: <strong>
-                                    <%= faltas[i]%>
-                                </strong></span>
-                        </p>
-                    </div>
-                    <% } %>
-            </div>-->
     <center>
         <h1>
             <%= nmDisciplina %>
@@ -45,8 +25,8 @@
                 <tr class="Linha"> <!-- linha -->
                     <th class="header"><center><p> Nome </p></center></th> <!--coluna header-->
                     <th class="header"><center><p> RA </p></center></th>
-                    </p></th><th><p>
-                    <th class="header"><center><p> </p></th><th><p> Presença </p></center></th>
+                    <th class="header"><p> </p></th>
+                    <th class="header"><center><p> Presença </p></center></th>
                     <th class="header"><center><p> Presenças Totais </p></center></th>
                 </tr>
                 <tr class="Linha"><% for(var i=0; i < nomes.length; i++){ %>
@@ -54,14 +34,12 @@
                         <td class="ColunaNormal"><p><%= ra[i] %></p>     </td>
                         <td class="ColunaNormal"><p> <input type="range" min="0" max="4" RA="<%= ra[i]%>" value="0" id="range-<%= ra[i] %>" /> </p></td>
                         <td class="ColunaNormal"><p> <span>Faltas: <strong id="value-<%= ra[i] %>">0</strong></span> </p></td>
-                        <td class="ColunaNormal"><p> <span>Total: <strong><%= faltas[i]%></strong></span> </p></td>
-                    
+                        <td class="ColunaNormal"><p> <span>Total: <strong><%= faltas[i]%></strong></span> </p></td> 
                 </tr>
                 <% } %>
                 </table>
     </center>
     </form><br>
-    <!--Fazer tabela-->
 
     <center>
         <table>
