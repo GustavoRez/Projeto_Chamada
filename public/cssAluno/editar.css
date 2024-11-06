@@ -1,33 +1,29 @@
 :root {
-    --botao--cor: #000000;
-    --borda--cor: #000000;
+    --cor--preta: #000000;
+	--cor--branco: #f0f0f0;
+	--cor--fundo: #fdfd96;
 }
 
 .aluno{
     width: 9.37rem; 
     height: 12.5rem; 
     object-fit: cover;
-    border: 2px solid var(--borda--cor);
+    border: 0.12rem solid var(--cor--preta);
 }
 
-.voltar {
-	background:linear-gradient(to bottom,var(--botao--cor) 5%,var(--botao--cor) 100%);
-	background-color:var(--botao--cor);
+.botao  {
+	background:linear-gradient(to bottom,var(--cor--preta) 5%,var(--cor--preta) 100%);
 	border-radius: 0.7rem;
 	display:inline-block;
 	cursor:pointer;
-	color:#f0f0f0;
+	color:var(--cor--branco);
 	font-family:Arial;
 	font-size:0.93rem;
 	font-weight:bold;
-	padding:6px 24px;
+	padding:0.37rem 1.5rem;
 	text-decoration:none;
 }
-.voltar:hover {
-	background:linear-gradient(to bottom,var(--botao--cor) 5%, var(--botao--cor)100%);
-	background-colorvar(--botao--cor);
-}
-.voltar:active {
-	position:relative;
-	top:1px;
+
+body{
+background-color: var(--cor--fundo);
 }

@@ -1,5 +1,7 @@
 :root {
-  --botao--cor: #000000;
+  --cor--preta: #000000;
+  --cor--branca: #f0f0f0;
+  --cor--azul: rgba(65, 105, 225, 1);;
 }
 
 body {
@@ -17,8 +19,9 @@ body {
   padding: 5px;
 }
 
+/* Para que isso?
 .chamada{
-  background: rgba(65, 105, 225, 1);
+  background: var(--cor--azul);
   border-radius: 10px;
   font-size: 20px;
   margin: 10px;
@@ -27,11 +30,11 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-
+*/
 
 li {
-  background: rgba(65, 105, 225, 1);
-  border-radius: 10px;
+  background: var(--cor--azul);
+  border-radius: 5px;
   font-size: 20px;
   margin: 10px;
   padding: 7px;
@@ -59,9 +62,9 @@ input[type="range"] {
   font-size: 1.5rem;
   width: 12.5em;
   color: #f07167;
-  background: #fff0;
+  background: var(--cor--branca);
   overflow: hidden;
-  --track-color: rgba(255, 255, 255, 0.1);
+  --track-color: var(--cor--branca);
   --thumb-height: 1.125em;
   --track-height: 0.125em;
   --brightness-hover: 180%;
@@ -126,36 +129,27 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 
 .voltar {
-	background:linear-gradient(to bottom,var(--botao--cor) 5%,var(--botao--cor) 100%);
-	background-color:var(--botao--cor);
+	background:linear-gradient(to bottom,var(--cor--preta) 5%,var(--cor--preta) 100%);
 	border-radius: 0.7rem;
 	display:inline-block;
 	cursor:pointer;
-	color:#f0f0f0;
+	color:var(--cor--branca);
 	font-family:Arial;
 	font-size:0.93rem;
 	font-weight:bold;
 	padding:6px 24px;
 	text-decoration:none;
 }
-.voltar:hover {
-	background:linear-gradient(to bottom,var(--botao--cor) 5%, var(--botao--cor)100%);
-	background-colorvar(--botao--cor);
-}
-.voltar:active {
-	position:relative;
-	top:1px;
-}
 
 .fundo {
     background: rgba(255, 255, 255, 0.5);
-    color: rgb(0, 0, 0);
+    color:var(--cor--preta);
     max-width: 600px;
 } 
 
 .Disc{
-    background: rgba(65, 105, 225);
-    color: rgb(255, 255, 255);
+    background: var(--cor--azul);
+    color: var(--cor--branca);
     border-radius:0.93rem;
     min-width: 21rem;
     max-width:25rem;
@@ -169,12 +163,12 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 
 .ColunaNormal, .header {
-  border: 1px solid black;
+  border: 0.06rem solid var(--cor--preta);
   text-align: left;
-  padding: 8px;
-  background-color: white;
+  padding: 0.5rem;
+  background-color: var(--cor--branca);
 }
 
 .Linha {
-  background-color: white;
+  background-color: var(--cor--branca);
 }

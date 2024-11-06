@@ -10,20 +10,16 @@
     <link rel="stylesheet" href="cssAluno/editar.css">
     <title>Edite seu perfil!</title>
 </head>
-
 <body>
-    <!--<a href="/home"><img src="<%= imgPerfil %>" style="width: 3rem; height: 3rem;" alt="Perfil de <%= username %>"></a> -->
-    
     <form action="/editarImagem" method="post" enctype="multipart/form-data">
         <h1>Foto de Perfil</h1>
         <label>Foto Antiga:</label><br>
-        <!-- Tinha imgPerfil aqui-->
         <img src="https://www.pngitem.com/pimgs/m/227-2271053_usuario-persona-genrico-solo-general-smbolo-user-clipart.png" style="width: 5rem; height: 5rem;" alt="Perfil de <%= username %>"> <br><br>
+        
         <label>Foto Atual:</label><br>
-
         <input type="file" id="newImage" name="newImage" accept="image/*">
         <div id="preview"></div>
-        <button onclick="confirma()" type="submit">Alterar</button>
+        <button class="botao" onclick="confirma()" type="submit">Alterar</button>
 
     </form>
 <br><br>
@@ -32,8 +28,8 @@
         <label for="nmAntigo">Nome Antigo:</label>
         <input type="text" id="nmAntigo" value="<%= username %>" disabled /><br><br>
         <label for="nmAtual">Nome Atual:</label>
-        <input type="text" id="nmAtual">
-        <button type="button" onclick="alterarNome()">Alterar</button>
+        <input type="text" id="nmAtual"><br>
+        <button class="botao" type="button" onclick="alterarNome()">Alterar</button>
     </form>
 
     <form>
@@ -42,8 +38,8 @@
         <input type="password" id="passAntiga" value="<%= senha %>" disabled /><br><br>
         <label for="passAtual">Senha Atual:</label>
         <input type="password" id="passAtual">
-        <button type="button" onclick="verSenha()"><i class="bi bi-eye"></i></button>
-        <button type="button" onclick="alterarSenha()">Alterar</button>
+        <button class="botao" type="button" onclick="verSenha()"><i class="bi bi-eye"></i></button><br>
+        <button class="botao" type="button" onclick="alterarSenha()">Alterar</button>
     </form>
 
     <script>
@@ -135,9 +131,9 @@
             confirm('Para atualizar a foto, será necessário reiniciar sua sessão!')
         }
 
-    </script>
+    </script><br><br>
 
-<button onclick="history.back()" class="voltar">Voltar</button>
+<button onclick="history.back()" class="botao">Voltar</button>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

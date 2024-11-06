@@ -12,16 +12,15 @@
 
 <body>
     <div class="Perfil">
-        <!--<img src="<%= imgPerfil %>" class="aluno" alt="Perfil de <%= username %>"><br>-->
         <img src="https://www.pngitem.com/pimgs/m/227-2271053_usuario-persona-genrico-solo-general-smbolo-user-clipart.png"
             class="aluno" alt="Perfil de <%= username %>"><br>
         <%=username %><br>
-            RA: <%= ra[i] %>
+            RA: <%= ra %>
                 <form action="/editar" method="get">
                     <input class="botao" type="submit" value="Editar Perfil">
                 </form>
                 <form action="/quit" method="post">
-                    <input class="botao" type="submit" value="X">
+                    <input class="botaoSair" type="submit" value="Sair">
                 </form>
     </div>
 
@@ -44,5 +43,4 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

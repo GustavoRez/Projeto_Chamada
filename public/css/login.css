@@ -1,3 +1,8 @@
+:root {
+    --cor-preta: #000000;
+    --fundo--painel:rgba(175, 175, 175, 0.5);
+}
+
 body {
     background-image: url("../img/fundo.png");
     background-repeat: no-repeat;
@@ -10,7 +15,7 @@ body {
     font-family: Arial, sans-serif;
 }
 p{
-    height: 10px;
+    height: 0.62rem;
     text-align: left;    
 }
 .logo {
@@ -18,8 +23,8 @@ p{
     top: 4%;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 20px;
-    margin-bottom: 40px;
+    margin-top: 1.25rem;
+    margin-bottom: 2.5rem;
 }
 
 .container {
@@ -30,29 +35,30 @@ p{
 }   
 
 .fundo {
-    background: rgba(175, 175, 175, 0.5);
-    color: rgb(0, 0, 0);
+    background: var(--fundo--painel);
+    color: var( --cor-preta);
     height: 50%;
     width: 40%;
-    max-width: 600px;
-    border-radius: 10px;
-    padding: 20px;
+    max-width: 37.5rem;
+    border-radius: 0.62rem;
+    padding: 1.25rem;
 }
 
 .botao {
-    color: black;
+    color: var( --cor-preta);
     background: lightskyblue;
     display: flex;
     justify-content: center;
-    margin-top: 8px;
+    margin-top: 0.5rem;
 }
 
 input[type=text],
 input[type=password]{
-    color: black;
-    border-color: rgba(131, 126, 126, 0.904);
+    color:var( --cor-preta);
+    border-color:var(--fundo--painel);
 }
+
 input[type=text]:focus,
 input[type=password]:focus{
-    border-color: rgba(131, 126, 126, 0.904);
+    border-color: var(--fundo--painel);
 }

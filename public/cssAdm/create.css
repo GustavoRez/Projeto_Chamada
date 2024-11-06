@@ -1,5 +1,8 @@
 :root {
-    --botao--cor: #000000;
+    --cor--preta: #000000;
+    --cor--branco: #f0f0f0;
+    --fundo--painel:rgba(175, 175, 175, 0.5);
+    --cor--azul: #007bff ;
 }
 
 body {
@@ -16,21 +19,21 @@ body {
 
 #imgPerfil {
     display: block;
-    margin: 10px auto;
+    margin: 0.62rem auto;
     border-radius: 50%;
-    width: 150px;
-    height: 150px;
+    width: 9.37rem;
+    height: 9.37rem;
     object-fit: cover;
-    border: 3px solid #333;
+    border: 3px solid var(--cor--preta);
 }
 
 .slider {
-    width: 300px;
-    height: 100px;
-    background-color: #F6F4F7;
-    border: 2px solid #000;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 18.75rem;
+    height: 6.25rem;    
+    background-color: var(--cor--branco);
+    border: 0.12rem solid var(--cor--preta);
+    border-radius: 0.62rem;
+    box-shadow: 0 0.25rem 0.5rem var(--cor--preta);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,14 +45,14 @@ body {
 }
 
 .slider:hover {
-    height: 200px;
+    height: 12.5rem;
 }
 
 .slider-options {
     display: none;
     flex-direction: column;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 0.62rem;
     width: 100%;
 }
 
@@ -62,56 +65,47 @@ body {
 }
 
 .slider-text {
-    font-size: 18px;
-    color: #333;
+    font-size: 1.12rem;
+    color: var(--cor--preta);
 }
 
 .slider-options a {
     text-decoration: none;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    margin: 5px;
+    padding: 0.62rem;
+    background-color: var(--cor--azul);
+    color: var(--cor--branco);
+    border-radius: 0.31rem;
+    margin: 0.31rem;
     transition: background-color 0.2s ease;
 }
 
 .slider-options a:hover {
-    background-color: #0056b3;
+    background-color: var(--cor--azul);
 }
 
 .voltar {
-	background:linear-gradient(to bottom,var(--botao--cor) 5%,var(--botao--cor) 100%);
-	background-color:var(--botao--cor);
+	background:linear-gradient(to bottom,var(--cor--preta) 5%,var(--cor--preta) 100%);
+	background-color:var(--cor--preta);
 	border-radius: 0.7rem;
 	display:inline-block;
 	cursor:pointer;
-	color:#f0f0f0;
+	color:var(--cor--branco);
 	font-family:Arial;
 	font-size:0.93rem;
 	font-weight:bold;
-	padding:6px 24px;
+	padding:0.37rem 1.5rem;
 	text-decoration:none;
 }
-.voltar:hover {
-	background:linear-gradient(to bottom,var(--botao--cor) 5%, var(--botao--cor)100%);
-	background-colorvar(--botao--cor);
-}
-.voltar:active {
-	position:relative;
-	top:1px;
-}
-  
 
 .fundo {
-    background: rgba(255, 255, 255, 0.5);
-    color: rgb(0, 0, 0);
-    max-width: 600px;
+    background: var(--fundo--painel);
+    color: var(--cor--preta);
+    max-width: 37.5rem;
 } 
 
 .Disc{
-    background: rgba(65, 105, 225);
-    color: rgb(255, 255, 255);
+    background: var(--cor--azul);
+    color: var(--cor--branco);
     border-radius:0.93rem;
     min-width: 21rem;
     max-width:25rem;
