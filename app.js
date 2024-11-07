@@ -406,22 +406,29 @@ app.post('/deletarDisciplina', function (req, res) {
 app.get('/alunos-:URL', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
     const URL = req.params.URL;
     if (req.session.loggedin && req.session.cargo != "ALUNO") {
-        let sql = "SELECT id_ra, nm_aluno, qt_falta, id_disciplina, nm_disciplina FROM aluno NATURAL JOIN grade NATURAL JOIN disciplina WHERE url_disciplina = ? ORDER BY nm_aluno";
+        let sql = "SELECT id_ra, nm_aluno, qt_falta, id_disciplina, nm_disciplina, nm_professor FROM aluno NATURAL JOIN grade NATURAL JOIN disciplina WHERE url_disciplina = ? ORDER BY nm_aluno";
         var ra = [];
         var nomes = [];
         var faltas = [];
         var idDisciplina;
         var nmDisciplina;
+        var nmProfessor;
+        var dataAtual = new Date();
+        const dia = dataAtual.getDate().toString().padStart(2, '0');
+        const mes = (dataAtual.getMonth() + 1).toString().padStart(2, '0'); // Meses começam do 0
+        const ano = dataAtual.getFullYear();
+        const dataFormatada = `${dia}/${mes}/${ano}`;
         connection.query(sql, [URL], function (err, results) {
             if (err) throw err;
             for (var i = 0; i < results.length; i++) {
                 ra[i] = results[i].id_ra;
                 nomes[i] = results[i].nm_aluno;
                 faltas[i] = results[i].qt_falta;
-                idDisciplina = results[0].id_disciplina
-                nmDisciplina = results[0].nm_disciplina
+                idDisciplina = results[0].id_disciplina;
+                nmDisciplina = results[0].nm_disciplina;
+                nmProfessor = results[0].nm_professor;
             }
-            res.render("chamada", { ra, nomes, faltas, idDisciplina, nmDisciplina });
+            res.render("chamada", { ra, nomes, faltas, idDisciplina, nmDisciplina, nmProfessor, dataFormatada });
         });
     } else res.render('not_logged')
 })
