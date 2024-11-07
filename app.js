@@ -89,7 +89,7 @@ app.get('/home', function (req, res) { //Rota principal.
             var semestre = [];
 
             let sql = "SELECT a.id_ra, a.nm_aluno, g.qt_falta, d.nm_disciplina, d.qt_semestre, DATE_FORMAT(g.ultima_chamada, '%d/%m/%Y') datas ";
-            sql += "FROM grade g NATURAL JOIN aluno a NATURAL JOIN disciplina d LEFT JOIN faltas f ON f.id_ra = a.id_ra WHERE nm_aluno = ? ORDER BY qt_semestre";
+            sql += "FROM turma g NATURAL JOIN aluno a NATURAL JOIN disciplina d LEFT JOIN faltas f ON f.id_ra = a.id_ra WHERE nm_aluno = ? ORDER BY qt_semestre";
 
             connection.query(sql, [username], function (err, results) {
                 if (err) throw err;
@@ -165,7 +165,7 @@ app.get('/disciplina-:SG', function (req, res) { //Rota que mostra as disciplina
 app.get('/presencas-:URL', function (req, res) { // Rota que mostra o nome, RA e faltas dos alunos cadastrados no BD
     const URL = req.params.URL;
     if (req.session.loggedin && req.session.cargo == "ADMIN") {
-        let sql = "SELECT id_ra, nm_aluno, qt_falta, id_disciplina FROM aluno NATURAL JOIN grade NATURAL JOIN disciplina WHERE url_disciplina = ?";
+        let sql = "SELECT id_ra, nm_aluno, qt_falta, id_disciplina FROM aluno NATURAL JOIN turma NATURAL JOIN disciplina WHERE url_disciplina = ?";
         var ra = [];
         var nomes = [];
         var faltas = [];
@@ -406,7 +406,7 @@ app.post('/deletarDisciplina', function (req, res) {
 app.get('/alunos-:URL', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
     const URL = req.params.URL;
     if (req.session.loggedin && req.session.cargo != "ALUNO") {
-        let sql = "SELECT id_ra, nm_aluno, qt_falta, id_disciplina, nm_disciplina, nm_professor FROM aluno NATURAL JOIN grade NATURAL JOIN disciplina WHERE url_disciplina = ? ORDER BY nm_aluno";
+        let sql = "SELECT id_ra, nm_aluno, qt_falta, id_disciplina, nm_disciplina, nm_professor FROM aluno NATURAL JOIN turma NATURAL JOIN disciplina WHERE url_disciplina = ? ORDER BY nm_aluno";
         var ra = [];
         var nomes = [];
         var faltas = [];
@@ -436,7 +436,7 @@ app.post('/adicionarFaltas', function (req, res) { //Rota que adiciona falta aos
     const faltas = req.body.faltasAlunos;
     const id = req.body.idDisciplina;
 
-    let sql = "UPDATE grade SET qt_falta = qt_falta + CASE";
+    let sql = "UPDATE turma SET qt_falta = qt_falta + CASE";
 
     for (let RA in faltas) {
         sql += ' WHEN id_ra = ' + RA + ' THEN ' + faltas[RA];
