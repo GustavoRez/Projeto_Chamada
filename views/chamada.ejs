@@ -11,11 +11,9 @@
 </head>
 
 <body>
-    <!--Colocar nome do professor, data atual(seria bom falar qual semestre), tabela com os elementos-->
     <center>
         <h1>
             <%= nmDisciplina %>
-                <!--%= username %-->
         </h1>
         <h3>
             <%= nmProfessor %>
@@ -29,21 +27,57 @@
         <form class="form-inline" action="/home">
             <table class="tabela">
                 <tr class="Linha"> <!-- linha -->
-                    <th class="header"><center><p> Nome </p></center></th> <!--coluna header-->
-                    <th class="header"><center><p> RA </p></center></th>
-                    <th class="header"><p> </p></th>
-                    <th class="header"><center><p> Presença </p></center></th>
-                    <th class="header"><center><p> Presenças Totais </p></center></th>
+                    <th class="header">
+                        <center>
+                            <p> Nome </p>
+                        </center>
+                    </th> <!--coluna header-->
+                    <th class="header">
+                        <center>
+                            <p> RA </p>
+                        </center>
+                    </th>
+                    <th class="header">
+                        <p> </p>
+                    </th>
+                    <th class="header">
+                        <center>
+                            <p> Presença </p>
+                        </center>
+                    </th>
+                    <th class="header">
+                        <center>
+                            <p> Presenças Totais </p>
+                        </center>
+                    </th>
                 </tr>
-                <tr class="Linha"><% for(var i=0; i < nomes.length; i++){ %>
-                        <td class="ColunaNormal"><p><%= nomes[i] %> </p> </td> <!--coluna normal-->
-                        <td class="ColunaNormal"><p><%= ra[i] %></p>     </td>
-                        <td class="ColunaNormal"><p> <input type="range" min="0" max="4" RA="<%= ra[i]%>" value="0" id="range-<%= ra[i] %>" /> </p></td>
-                        <td class="ColunaNormal"><p> <span>Faltas: <strong id="value-<%= ra[i] %>">0</strong></span> </p></td>
-                        <td class="ColunaNormal"><p> <span>Total: <strong><%= faltas[i]%></strong></span> </p></td> 
+                <tr class="Linha">
+                    <% for(var i=0; i < nomes.length; i++){ %>
+                        <td class="ColunaNormal">
+                            <p>
+                                <%= nomes[i] %>
+                            </p>
+                        </td> <!--coluna normal-->
+                        <td class="ColunaNormal">
+                            <p>
+                                <%= ra[i] %>
+                            </p>
+                        </td>
+                        <td class="ColunaNormal">
+                            <p> <input type="range" min="0" max="4" RA="<%= ra[i]%>" value="0"
+                                    id="range-<%= ra[i] %>" /> </p>
+                        </td>
+                        <td class="ColunaNormal">
+                            <p> <span>Faltas: <strong id="value-<%= ra[i] %>">0</strong></span> </p>
+                        </td>
+                        <td class="ColunaNormal">
+                            <p> <span>Total: <strong>
+                                        <%= faltas[i]%>
+                                    </strong></span> </p>
+                        </td>
                 </tr>
                 <% } %>
-                </table>
+            </table>
     </center>
     </form><br>
 
@@ -53,7 +87,7 @@
                 <td><button type="submit" onclick="enviarValores()" class="btn voltar">Enviar</button></th>
                 <td>
                     <div class="d-flex gap-2">
-                        <button type="button" class="btn btn-dark voltar">Histórico
+                        <button type="button" onclick="historico()" class="btn voltar">Histórico
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-journal-bookmark" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
@@ -73,6 +107,27 @@
         var ranges = document.querySelectorAll('input[type="range"]');
         var faltasAlunos = {};
         var idDisciplina = '<%= idDisciplina %>';
+        var nmDisciplina = '<%= nmDisciplina %>';
+
+        function historico() {
+            const nomes = '<%= nomes %>';
+            const ra = '<%= ra %>';
+            const nmDisciplina = '<%= nmDisciplina %>';
+            const dtFalta = '<%= dt_falta %>';
+
+            const params = new URLSearchParams();
+
+            nomes.split(',').forEach(nome => { params.append('nomes', nome.trim()) });
+            ra.split(',').forEach(ra => { params.append('ra', ra.trim()) });
+            dtFalta.split(',').forEach(faltas => { params.append('dtFalta', faltas.trim()) });
+
+            params.append('id', idDisciplina);
+            params.append('nmDisciplina', nmDisciplina);
+
+            const url = `/historico-<%= URL %>?${params.toString()}`;
+            window.location.href = url;
+        }
+
 
         ranges.forEach(function (range, index) {
             var RA = range.getAttribute('RA');

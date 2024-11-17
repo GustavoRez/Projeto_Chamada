@@ -57,7 +57,6 @@ app.post('/login', function (req, res) { //Rota login
                     req.session.loggedin = true;
                     req.session.username = results[0].nm_usuario;
                     req.session.avatar = String(results[0].img_perfil);
-                    console.log(String(results[0].img_perfil));
                     req.session.cargo = results[0].cargo_usuario;
                     return res.json({ success: true, message: 'Login concluído! Redirecionando...' });
                 } else {
@@ -160,6 +159,26 @@ app.get('/disciplina-:SG', function (req, res) { //Rota que mostra as disciplina
             else res.render("disciplinas", { disciplina, curso, URL });
         });
     } else res.render('not_logged')
+})
+
+app.get('/historico-:URL', function (req, res) {
+    const nome = req.query.nomes;
+    const nmDisciplina = req.query.nmDisciplina;
+    const id = req.query.id;
+    const ra = req.query.ra;
+    var dtFalta = [];
+
+    let sql = "SELECT * FROM faltas WHERE id_ra = ? AND id_disciplina = ?";
+    
+    connection.query(sql, [ra, id], function(err, results){
+        if (err) throw err;
+        for (var i = 0; i < results.length; i++) {
+            dtFalta[i] = results[i].dt_falta; // Ainda preciso arrumar
+
+        }
+    })
+
+    res.render('historico', { nmDisciplina, nome, ra, dtFalta })
 })
 
 // Para ADM's
@@ -365,13 +384,13 @@ app.post('/editarDisciplina', function (req, res) { // Rota que edita os dados d
     var nomeD = req.body.nomeD;
     var curso = req.body.curso;
     var semestre = req.body.semestre;
-    let professor = req.body.professor;    
+    let professor = req.body.professor;
 
     connection.query("SELECT * FROM disciplina WHERE id_disciplina = ?", [id], function (err, results) {
         if (err) throw err;
         else {
             for (var i = 0; i < 1; i++) {
-                if (professor == " ") { professor = results[0].nm_professor;}
+                if (professor == " ") { professor = results[0].nm_professor; }
             }
         }
     });
@@ -411,6 +430,7 @@ app.get('/alunos-:URL', function (req, res) { //Rota que mostra o nome e RA dos 
         var ra = [];
         var nomes = [];
         var faltas = [];
+        var dt_falta = [];
         var idDisciplina;
         var nmDisciplina;
         var nmProfessor;
@@ -429,10 +449,11 @@ app.get('/alunos-:URL', function (req, res) { //Rota que mostra o nome e RA dos 
                 nmDisciplina = results[0].nm_disciplina;
                 nmProfessor = results[0].nm_professor;
             }
-            res.render("chamada", { ra, nomes, faltas, idDisciplina, nmDisciplina, nmProfessor, dataFormatada });
+            res.render("chamada", { ra, nomes, URL, faltas, idDisciplina, nmDisciplina, nmProfessor, dataFormatada, dt_falta });
         });
     } else res.render('not_logged')
-})
+});
+
 app.post('/adicionarFaltas', function (req, res) { //Rota que adiciona falta aos alunos
     const faltas = req.body.faltasAlunos;
     const id = req.body.idDisciplina;
@@ -441,6 +462,12 @@ app.post('/adicionarFaltas', function (req, res) { //Rota que adiciona falta aos
 
     for (let RA in faltas) {
         sql += ' WHEN id_ra = ' + RA + ' THEN ' + faltas[RA];
+
+        connection.query("INSERT INTO faltas (id_ra, dt_falta, id_disciplina) VALUES (" + RA + ", CURDATE(), " + id + ")", function (err) {
+            if (err) {
+                console.log(err);
+            }
+        })
     }
 
     sql += ' END, ultima_chamada = CURDATE() WHERE id_ra IN (' + Object.keys(faltas).map(reg => `'${reg}'`).join(', ') + ') AND id_disciplina = ' + id;
