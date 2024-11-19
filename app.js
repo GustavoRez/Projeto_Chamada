@@ -162,23 +162,44 @@ app.get('/disciplina-:SG', function (req, res) { //Rota que mostra as disciplina
 })
 
 app.get('/historico-:URL', function (req, res) {
-    const nome = req.query.nomes;
+    const nomes = req.query.nomes;
     const nmDisciplina = req.query.nmDisciplina;
     const id = req.query.id;
     const ra = req.query.ra;
     var dtFalta = [];
 
-    let sql = "SELECT * FROM faltas WHERE id_ra = ? AND id_disciplina = ?";
-    
-    connection.query(sql, [ra, id], function(err, results){
+    const nome = {};
+    ra.forEach((ra, index) => {
+        nome[ra] = nomes[index];
+    });
+
+    let sql = "SELECT id_ra, DATE_FORMAT(dt_falta, '%d/%m/%Y') dtFalta FROM faltas NATURAL JOIN aluno WHERE id_ra IN (?) AND id_disciplina = ? ORDER BY nm_aluno";
+
+    connection.query(sql, [ra, id], function (err, results) {
         if (err) throw err;
         for (var i = 0; i < results.length; i++) {
-            dtFalta[i] = results[i].dt_falta; // Ainda preciso arrumar
+            dtFalta[i] = results[i].dtFalta;
 
         }
-    })
+        const faltasPorAluno = {};
 
-    res.render('historico', { nmDisciplina, nome, ra, dtFalta })
+        results.forEach((row) => {
+            const { id_ra, dtFalta } = row;
+
+            if (!faltasPorAluno[id_ra]) {
+                faltasPorAluno[id_ra] = [];
+            }
+            faltasPorAluno[id_ra].push(dtFalta);
+        });
+
+        const raOrdenado = ra.slice().sort((a, b) => {
+            if (nome[a] < nome[b]) return -1;
+            if (nome[a] > nome[b]) return 1;
+            return 0;
+        });
+
+        res.render('historico', { nmDisciplina, nome, raOrdenado, faltasPorAluno })
+    })
 })
 
 // Para ADM's
@@ -463,11 +484,13 @@ app.post('/adicionarFaltas', function (req, res) { //Rota que adiciona falta aos
     for (let RA in faltas) {
         sql += ' WHEN id_ra = ' + RA + ' THEN ' + faltas[RA];
 
-        connection.query("INSERT INTO faltas (id_ra, dt_falta, id_disciplina) VALUES (" + RA + ", CURDATE(), " + id + ")", function (err) {
-            if (err) {
-                console.log(err);
-            }
-        })
+        if (faltas[RA] != 0) {
+            connection.query("INSERT INTO faltas (id_ra, dt_falta, id_disciplina) VALUES (" + RA + ", CURDATE(), " + id + ")", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            })
+        }
     }
 
     sql += ' END, ultima_chamada = CURDATE() WHERE id_ra IN (' + Object.keys(faltas).map(reg => `'${reg}'`).join(', ') + ') AND id_disciplina = ' + id;

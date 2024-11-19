@@ -9,11 +9,16 @@
 </head>
 
 <body>
-    <ul>
-        <% for(let i=0; i < ra.length; i++){ %>
-            <li>RA: <%= ra[i] %> | Nome: <%= nome[i] %> | <%= dtFalta[i] %>
-                            <%}%>
-    </ul>
+    <% raOrdenado.forEach(ra=> { %>
+        <h2>RA: <%= ra %> | Nome: <%= nome[ra] %>
+        </h2>
+        <ul>
+            <% (faltasPorAluno[ra] || []).forEach((falta, index)=> { %>
+                <li>Falta <%= index + 1 %>: <%= falta %>
+                </li>
+                <% }); %>
+        </ul>
+        <% }); %>
 </body>
 
 </html>
