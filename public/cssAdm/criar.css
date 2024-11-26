@@ -1,0 +1,99 @@
+:root {
+    --cor--preta: #000000;
+    --cor--branco: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}   
+
+.card-body{
+    background-color: white;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+    background: url("../imgAdm/fundoAdm.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    flex: 1;
+    min-width: 100px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    flex: 2;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-group textarea {
+    resize: vertical; /* Permite ajuste de altura apenas */
+    min-height: 80px;
+}
+
+.form-group input[type="radio"] {
+    flex: 0;
+    margin-left: 5px;
+}
+
+.ponto {
+    color: red;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.note {
+    font-size: 12px;
+    color: gray;
+    margin-top: 15px;
+}
+
+.voltar {
+	background:linear-gradient(to bottom,var(--cor--preta) 5%,var(--cor--preta) 100%);
+	background-color:var(--cor--preta);
+	border-radius: 0.7rem;
+	display:inline-block;
+	cursor:pointer;
+	color:var(--cor--branco);
+	font-family:Arial;
+	font-size:0.93rem;
+	font-weight:bold;
+	padding:0.37rem 1.5rem;
+	text-decoration:none;
+}
