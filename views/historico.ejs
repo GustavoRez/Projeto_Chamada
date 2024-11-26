@@ -7,11 +7,10 @@
     <title>Historico - <%= nmDisciplina %>
     </title>
 </head>
-
 <body>
+    <button onclick="history.back()" class="voltar">Voltar</button>
     <% raOrdenado.forEach(ra=> { %>
-        <h2>RA: <%= ra %> | Nome: <%= nome[ra] %>
-        </h2>
+        <h2><%= nome[ra]%> | RA: <%= ra %> </h2>
         <ul>
             <% if (faltasPorAluno[ra] != null) { %>
                 <% (faltasPorAluno[ra] || []).forEach((falta, index)=> { %>
