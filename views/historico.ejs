@@ -13,10 +13,14 @@
         <h2>RA: <%= ra %> | Nome: <%= nome[ra] %>
         </h2>
         <ul>
-            <% (faltasPorAluno[ra] || []).forEach((falta, index)=> { %>
-                <li>Falta <%= index + 1 %>: <%= falta %>
-                </li>
-                <% }); %>
+            <% if (faltasPorAluno[ra] != null) { %>
+                <% (faltasPorAluno[ra] || []).forEach((falta, index)=> { %>
+                    <li>Falta <%= index + 1 %>: <%= falta %>
+                    </li>
+                    <% }); %>
+                        <% } else {%>
+                            <li>Faltas: 0
+                                    <% } %>
         </ul>
         <% }); %>
 </body>
