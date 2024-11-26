@@ -8,25 +8,26 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    max-width: 93.75rem;
 }   
 
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    margin: 1.25rem;
     padding: 0;
     background: url("../imgAdm/fundoAdm.jpg") no-repeat center center fixed;
     background-size: cover;
 }
 
 form {
-    max-width: 400px;
+    max-width: 25rem;
     margin: 0 auto;
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
 }
 
 form h1 {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
     font-size: 24px;
     text-align: center;
 }
