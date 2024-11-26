@@ -15,9 +15,7 @@
     <div class="container">
         <div class="card border-2 col-sm-4 fundo">
             <form id="criarCurso">
-                <div class="card-body">
                     <h1>Criar curso:</h1>
-
                     <div class="form-group">
                         <label for="nomeC">Nome: <span class="ponto">*</span></label>
                         <input type="text" id="nomeC" name="nomeC" required>
@@ -34,14 +32,16 @@
                     </div>
 
                     <div class="note">*Preenchimento obrigatório</div>
-            </form>
+                </form>
+            
 
             <center>
                 <div id="messageCurso"></div>
                 <button type="submit" class="voltar">Enviar</button>
                 <button onclick="history.back()" class="voltar">Voltar</button>
             </center>
-
+        </div>
+    </div>
             <script>
                 document.getElementById('criarCurso').addEventListener('submit', function (e) {
 
@@ -79,5 +79,4 @@
             </script>
 
 </body>
-
 </html>

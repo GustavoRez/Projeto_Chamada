@@ -14,7 +14,6 @@
 
     <div class="container">
         <div class="card border-2 col-sm-4 fundo">
-            <div class="card-body">
                 <form id="criarUsuario">
                     <h1>Criar Usuário</h1>
                     <div class="form-group">
@@ -39,7 +38,7 @@
 
                     <div class="note">*Preenchimento obrigatório</div>
                 </form>
-            </div>
+                
             <center>
                 <div id="messageUser"></div>
                 <button type="submit" class="voltar">Enviar</button>
@@ -47,6 +46,7 @@
             </center>
         </div>
     </div>
+
         <script>
             document.getElementById('criarUsuario').addEventListener('submit', function (e) {
                 e.preventDefault();
