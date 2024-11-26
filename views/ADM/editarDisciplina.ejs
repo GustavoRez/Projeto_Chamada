@@ -4,19 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="cssAdm/editar.css">
     <title>Editar Curso</title>
-    <style>
-        /* informações ao passar o mouse por cima!
-        Colocar em uma pagína CSS e estilizar melhor */
-        .disciplina .editar {
-            visibility: hidden;
-            position: absolute;
-        }
-
-        .disciplina .editar.mostrar {
-            visibility: visible;
-        }
-    </style>
 </head>
 
 <body>
@@ -37,15 +28,15 @@
                         <form id="editarDisciplina<%=i%>">
                             <h1>Editar Disciplina <%= nm_disciplina[i] %>:</h1>
                             <input id="id<%= id_disciplina[i]%>" name="id" value="<%= id_disciplina[i]%>" hidden>
-                            <label for="nomeD">Nome: <span style="color: red;">*</span></label>
+                            <label for="nomeD">Nome: <span class="ponto">*</span></label>
                             <input type="text" value="<%= nm_disciplina[i] %>" disabled>
                             <input type="text" id="nomeD" name="nomeD" required>
 
-                            <label for="semestre">Semestre: <span style="color: red;">*</span></label>
+                            <label for="semestre">Semestre: <span class="ponto">*</span></label>
                             <input type="text" value="<%= qt_semestre[i] %>" disabled>
                             <input type="number" min="1" max="6" id="semestre" name="semestre" required>
 
-                            <label for="curso">Curso: <span style="color: red;">*</span></label>
+                            <label for="curso">Curso: <span class="ponto">*</span></label>
                             <select disabled>
                                 <option>
                                     <%= sg_curso[i] %>
@@ -61,7 +52,7 @@
 
                             <label for="professor">Professor: </label>
                             <input type="text" value="<%= nm_professor[i] %>" disabled>
-                            <input type="text" id="professor" name="professor" value=" ">
+                            <input type="text" id="professor" name="professor" value=" "><br>
 
                             <button type="submit">Enviar</button>
 
