@@ -25,87 +25,26 @@ a {
     justify-content: center;
 }
 
-.PQ {
-    color: var(--cor--primaria);
-    font-size: 1.87rem;
-    font-family: American Typewriter, serif;
-
-    background-image: url(../img/lousa.png);
-    background-size: 150%;
-    background-position: 50%;
-    background-repeat: no-repeat;
-
-    border-radius: 1rem;
-
-    width: 13.75rem;
-    height: 11rem;
-
-    padding: 2.31rem;
-    margin:  0.62rem;
-}
-
-.COMEX {
-    color: var(--cor--primaria);
-    font-size: 1.87rem;
-    font-family: American Typewriter, serif;
-
-    background-image: url(../img/lousa.png);
-    background-size: 150%;
-    background-position: 50%;
-    background-repeat: no-repeat;
-
-    border-radius: 1rem;
-
-    width: 13.75rem;
-    height: 11rem;
-
-    padding: 2.31rem;
-    margin:  0.62rem;
-}
-
+.PQ,
+.COMEX,
 .GE {
     color: var(--cor--primaria);
-    font-size:  1.87rem;
+    font-size: 1.87rem;
     font-family: American Typewriter, serif;
-
-    background-image: url(../img/lousa.png);
-    background-size: 150%;
-    background-position: 50%;
-    background-repeat: no-repeat;
-
-    border-radius: 1rem;
-
-    width: 13.75rem;
-    height: 11rem;
-
-    padding: 2.31rem;
-    margin:  0.62rem;
 }
 
-.ADS {
-    color: var(--cor--primaria);
-    font-size: 1.5rem;
-    font-family: American Typewriter, serif;
-
-    background-image: url(../img/lousa.png);
-    background-size: 150%;
-    background-position: 50%;
-    background-repeat: no-repeat;
-
-    border-radius: 1rem;
-
-    width: 13.75rem;
-    height: 11rem;
-
-    padding: 2.31rem;
-    margin:  0.62rem;
-}
-
+.ADS,
 .DSM {
     color: var(--cor--primaria);
     font-size: 1.5rem;
     font-family: American Typewriter, serif;
+}
 
+.ADS,
+.DSM,
+.PQ,
+.COMEX,
+.GE {
     background-image: url(../img/lousa.png);
     background-size: 150%;
     background-position: 50%;
@@ -118,6 +57,7 @@ a {
 
     padding: 2.31rem;
     margin:  0.62rem;
+    text-align: center;
 }
 
 .dropdown-menu{

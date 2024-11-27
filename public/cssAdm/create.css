@@ -110,3 +110,7 @@ body {
     min-width: 21rem;
     max-width:25rem;
 }
+
+.card-body{
+    text-align: center;
+}

@@ -115,7 +115,6 @@ input[type="range"]::-webkit-slider-runnable-track {
   background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center / 100% calc(var(--track-height) + 1px);
 }
 
-
 .voltar {
 	background:linear-gradient(to bottom,var(--cor--preta) 5%,var(--cor--preta) 100%);
 	border-radius: 0.7rem;

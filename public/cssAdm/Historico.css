@@ -1,6 +1,7 @@
 :root {
     --cor--preta: #000000;
-    --cor--branco: #f0f0f0;
+    --cor--branco: white;
+    --cor--primaria: #4169E1;
 }
 
 body {
@@ -16,7 +17,7 @@ body {
     margin: 20px;
     padding: 10px 20px;
     background-color:var(--cor--preta);
-    color: white;
+    color: var(--cor--branco);
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -27,8 +28,8 @@ body {
 
 
 h2 {
-    background-color: #007bff;
-    color: white;
+    background-color: var(--cor--primaria);
+    color: var(--cor--branco);
     padding: 10px;
     border-radius: 5px;
     margin: 20px auto;
@@ -43,7 +44,7 @@ ul {
 }
 
 li {
-    background-color: #ffffff;
+    background-color: var(--cor--branco);
     margin: 5px 0;
     padding: 10px;
     border: 1px solid #ddd;

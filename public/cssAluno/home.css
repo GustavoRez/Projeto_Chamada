@@ -58,6 +58,7 @@ body {
 .botao {
     background-color: #007bff;
     color: var(--cor--branco);
+    border-radius: 0.7rem;
 }
 
 .botao:hover {
@@ -67,6 +68,7 @@ body {
 .botaoSair {
     background-color: var(--cor--sair);
     color: white;
+    border-radius: 0.7rem;
 }
 
 
