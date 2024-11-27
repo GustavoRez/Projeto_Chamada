@@ -1,29 +1,94 @@
 :root {
     --cor--preta: #000000;
-	--cor--branco: #f0f0f0;
+	--cor--branco: white;
 	--cor--fundo: #fdfd96;
 }
 
-.aluno{
-    width: 9.37rem; 
-    height: 12.5rem; 
-    object-fit: cover;
-    border: 0.12rem solid var(--cor--preta);
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f4f4f4;
+	color: #333;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-.botao  {
-	background:linear-gradient(to bottom,var(--cor--preta) 5%,var(--cor--preta) 100%);
-	border-radius: 0.7rem;
-	display:inline-block;
-	cursor:pointer;
-	color:var(--cor--branco);
-	font-family:Arial;
-	font-size:0.93rem;
-	font-weight:bold;
-	padding:0.37rem 1.5rem;
-	text-decoration:none;
+h1 {
+	color: #007bff;
+	font-size: 24px;
+	text-align: center;
 }
 
-body{
-background-color: var(--cor--fundo);
+form {
+	background-color: var(--cor--branco);
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	margin: 20px 0;
+	width: 90%;
+	max-width: 400px;
+}
+
+label {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="file"] {
+	display: block;
+	width: 100%;
+	padding: 8px;
+	margin: 10px 0;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	font-size: 14px;
+}
+
+button {
+	background-color: #007bff;
+	color: #ffffff;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 15px;
+	font-size: 14px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+button:hover {
+	background-color: #0056b3;
+}
+
+.botaoSair {
+	background-color: #dc3545;
+}
+
+.botaoSair:hover {
+	background-color: #a71d2a;
+}
+
+
+img {
+	border-radius: 50%;
+	margin: 10px auto;
+	display: block;
+}
+
+#preview img {
+	border-radius: 10px;
+	max-height: 100px;
+	margin: 10px auto;
+}
+
+.voltar {
+	background-color: #6c757d;
+}
+
+.voltar:hover {
+	background-color: #5a6268;
 }

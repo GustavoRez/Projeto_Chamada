@@ -26,12 +26,12 @@
     <center>
         <form class="form-inline" action="/home">
             <table class="tabela">
-                <tr class="Linha"> <!-- linha -->
+                <tr class="Linha"> 
                     <th class="header">
                         <center>
                             <p> Nome </p>
                         </center>
-                    </th> <!--coluna header-->
+                    </th>
                     <th class="header">
                         <center>
                             <p> RA </p>
@@ -42,12 +42,12 @@
                     </th>
                     <th class="header">
                         <center>
-                            <p> Presença </p>
+                            <p> Falta </p>
                         </center>
                     </th>
                     <th class="header">
                         <center>
-                            <p> Presenças Totais </p>
+                            <p> Falta Totais </p>
                         </center>
                     </th>
                 </tr>
@@ -57,7 +57,7 @@
                             <p>
                                 <%= nomes[i] %>
                             </p>
-                        </td> <!--coluna normal-->
+                        </td>
                         <td class="ColunaNormal">
                             <p>
                                 <%= ra[i] %>
@@ -68,7 +68,7 @@
                                     id="range-<%= ra[i] %>" /> </p>
                         </td>
                         <td class="ColunaNormal">
-                            <p> <span>Presença: <strong id="value-<%= ra[i] %>">0</strong></span> </p>
+                            <p> <span>Falta: <strong id="value-<%= ra[i] %>">0</strong></span> </p>
                         </td>
                         <td class="ColunaNormal">
                             <p> <span>Total: <strong>

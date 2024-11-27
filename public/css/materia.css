@@ -19,18 +19,6 @@ body {
   padding: 5px;
 }
 
-/* Para que isso?
-.chamada{
-  background: var(--cor--azul);
-  border-radius: 10px;
-  font-size: 20px;
-  margin: 10px;
-  padding: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-*/
 
 li {
   background: var(--cor--azul);

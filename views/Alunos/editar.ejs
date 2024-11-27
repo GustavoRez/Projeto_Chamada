@@ -19,7 +19,7 @@
         <label>Foto Atual:</label><br>
         <input type="file" id="newImage" name="newImage" accept="image/*">
         <div id="preview"></div>
-        <button class="botao" onclick="confirma()" type="submit">Alterar</button>
+        <center><button class="botao" onclick="confirma()" type="submit">Alterar</button></center>
 
     </form>
 <br><br>
@@ -29,7 +29,7 @@
         <input type="text" id="nmAntigo" value="<%= username %>" disabled /><br><br>
         <label for="nmAtual">Nome Atual:</label>
         <input type="text" id="nmAtual"><br>
-        <button class="botao" type="button" onclick="alterarNome()">Alterar</button>
+        <center><button class="botao" type="button" onclick="alterarNome()">Alterar</button></center>
     </form>
 
     <form>
@@ -38,8 +38,8 @@
         <input type="password" id="passAntiga" value="<%= senha %>" disabled /><br><br>
         <label for="passAtual">Senha Atual:</label>
         <input type="password" id="passAtual">
-        <button class="botao" type="button" onclick="verSenha()"><i class="bi bi-eye"></i></button><br>
-        <button class="botao" type="button" onclick="alterarSenha()">Alterar</button>
+        <center><button class="botao" type="button" onclick="verSenha()"><i class="bi bi-eye"></i></button>
+        <button class="botao" type="button" onclick="alterarSenha()">Alterar</button></center>
     </form>
 
     <script>
