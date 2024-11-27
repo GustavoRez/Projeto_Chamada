@@ -88,8 +88,8 @@ app.get('/home', function (req, res) { //Rota principal.
             var disciplinas = [];
             var semestre = [];
 
-            let sql = "SELECT a.id_ra, a.nm_aluno, g.qt_falta, d.nm_disciplina, d.qt_semestre, DATE_FORMAT(g.ultima_chamada, '%d/%m/%Y') datas ";
-            sql += "FROM turma g NATURAL JOIN aluno a NATURAL JOIN disciplina d LEFT JOIN faltas f ON f.id_ra = a.id_ra WHERE nm_aluno = ? ORDER BY qt_semestre";
+            let sql = "SELECT a.id_ra, a.nm_aluno, f.qt_falta, d.nm_disciplina, d.qt_semestre, DATE_FORMAT(g.ultima_chamada, '%d/%m/%Y') datas ";
+            sql += "FROM turma g NATURAL JOIN aluno a NATURAL JOIN disciplina d NATURAL JOIN faltas f ON f.id_ra = a.id_ra WHERE nm_aluno = ? ORDER BY qt_semestre";
 
             connection.query(sql, [username], function (err, results) {
                 if (err) throw err;

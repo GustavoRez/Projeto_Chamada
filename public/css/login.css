@@ -37,7 +37,7 @@ p{
 .fundo {
     background: var(--fundo--painel);
     color: var( --cor-preta);
-    height: 50%;
+    height: 60%;
     width: 40%;
     max-width: 37.5rem;
     border-radius: 0.62rem;
