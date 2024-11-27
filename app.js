@@ -580,7 +580,8 @@ app.post('/editarImagem', upload.single('newImage'), async (req, res) => { // Ro
         return res.status(400).send('Nenhuma imagem foi detectada!');
     }
 
-    connection.query("UPDATE usuario SET imgPerfil = ? WHERE nm_usuario = ?",
+    console.log(path);
+    connection.query("UPDATE usuario SET img_perfil = ? WHERE nm_usuario = ?",
         [path, username], function (err, results) {
             if (err) {
                 console.log(err);
