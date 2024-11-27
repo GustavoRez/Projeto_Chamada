@@ -14,7 +14,7 @@
     <form action="/editarImagem" method="post" enctype="multipart/form-data">
         <h1>Foto de Perfil</h1>
         <label>Foto Antiga:</label><br>
-        <img src="https://www.pngitem.com/pimgs/m/227-2271053_usuario-persona-genrico-solo-general-smbolo-user-clipart.png" style="width: 5rem; height: 5rem;" alt="Perfil de <%= username %>"> <br><br>
+        <img src="<%= imgPerfil %>" style="width: 5rem; height: 5rem;" alt="Perfil de <%= username %>"> <br><br>
         
         <label>Foto Atual:</label><br>
         <input type="file" id="newImage" name="newImage" accept="image/*">
