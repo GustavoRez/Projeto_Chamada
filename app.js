@@ -447,7 +447,7 @@ app.post('/deletarDisciplina', function (req, res) {
 app.get('/alunos-:URL', function (req, res) { //Rota que mostra o nome e RA dos alunos cadastrados no BD
     const URL = req.params.URL;
     if (req.session.loggedin && req.session.cargo != "ALUNO") {
-        let sql = "SELECT id_ra, nm_aluno, qt_falta, id_disciplina, nm_disciplina, nm_professor FROM aluno NATURAL JOIN turma NATURAL JOIN disciplina WHERE url_disciplina = ? ORDER BY nm_aluno";
+        let sql = "SELECT aluno.id_ra, nm_aluno, qt_falta, disciplina.id_disciplina, nm_disciplina, nm_professor, DATE_FORMAT(dt_falta, '%d/%m/%Y') data FROM disciplina NATURAL JOIN turma NATURAL JOIN aluno LEFT JOIN faltas ON faltas.id_ra = aluno.id_ra AND dt_falta = DATE_FORMAT(SYSDATE(), '%Y-%m-%d') WHERE url_disciplina = ? ORDER BY nm_aluno;";
         var ra = [];
         var nomes = [];
         var faltas = [];
@@ -466,6 +466,7 @@ app.get('/alunos-:URL', function (req, res) { //Rota que mostra o nome e RA dos 
                 ra[i] = results[i].id_ra;
                 nomes[i] = results[i].nm_aluno;
                 faltas[i] = results[i].qt_falta;
+                dt_falta[i] = results[i].data;
                 idDisciplina = results[0].id_disciplina;
                 nmDisciplina = results[0].nm_disciplina;
                 nmProfessor = results[0].nm_professor;
