@@ -60,7 +60,7 @@ app.post('/login', function (req, res) { //Rota login
                     req.session.cargo = results[0].cargo_usuario;
                     return res.json({ success: true, message: 'Login concluído! Redirecionando...' });
                 } else {
-                    return res.json({ success: false, message: 'Senha incorreta.' });
+                    return res.json({ success: false, message: 'Login e/ou senha incorreto(s).' });
                 }
                 res.end();
             });

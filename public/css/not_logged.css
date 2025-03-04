@@ -1,0 +1,55 @@
+:root {
+    --cor-preta: #000000;
+    --fundo--painel: rgba(175, 175, 175, 0.5);
+}
+
+body {
+    background-image: url("../img/fundo.png");
+    background-repeat: no-repeat;
+    background-position: 50% 15%;
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.fundo {
+    background: var(--fundo--painel);
+    color: var(--cor-preta);
+    height: 50%;
+    width: 40%;
+    max-width: 37.5rem;
+    border-radius: 0.62rem;
+    padding: 1.25rem;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 42vh;
+    text-align: center;
+}
+
+.voltar {
+    color: var(--cor-preta);
+    background: lightskyblue;
+    margin-top: 0.5rem;
+    border-radius: 0.62rem;
+    width: 10rem;
+    transition: 0.5s;
+}
+.voltar:hover{
+    transition: 0.5s;
+    background-color: rgb(178, 223, 250);
+}
