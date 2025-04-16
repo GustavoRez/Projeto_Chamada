@@ -1,0 +1,29 @@
+:root {
+    --cor--preta: #000000;
+    --cor--branco: #ffffff;
+    --cor--cinza:#f0f0f0;
+    --fundo--painel:rgba(175, 175, 175, 0.5);
+    --cor--azul: #007bff ;
+    --cor--vermelha: red;
+}
+
+body{
+    font-family: Arial, sans-serif;    
+}
+
+.voltar{
+    margin: 1.25rem;
+    padding: 0.62rem 1.25rem;
+    background-color:var(--cor--preta);
+    color: var(--cor--branco);
+    border: none;
+    border-radius: 0.7rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family:Arial;
+	font-size:0.93rem;
+	font-weight:bold;
+	padding:0.37rem 1.5rem;
+	text-decoration:none;
+}

@@ -1,12 +1,5 @@
-:root {
-    --cor--preta: #000000;
-    --cor--branco: #f0f0f0;
-    --fundo--painel:rgba(175, 175, 175, 0.5);
-    --cor--azul: #007bff ;
-}
 
 body {
-    font-family: Arial, sans-serif;    
     height: 100vh;
     margin: 0;
     background: url("../imgAdm/fundoAdm.jpg") no-repeat center center fixed;
@@ -24,7 +17,7 @@ body {
     width: 9.37rem;
     height: 9.37rem;
     object-fit: cover;
-    border: 3px solid var(--cor--preta);
+    border: 0.18rem solid var(--cor--preta);
 }
 
 .slider {
@@ -73,7 +66,7 @@ body {
     text-decoration: none;
     padding: 0.62rem;
     background-color: var(--cor--azul);
-    color: var(--cor--branco);
+    color: var(--cor--cinza);
     border-radius: 0.31rem;
     margin: 0.31rem;
     transition: background-color 0.2s ease;
@@ -83,7 +76,7 @@ body {
     background-color: var(--cor--azul);
 }
 
-.voltar {
+.opcao {
 	background:linear-gradient(to bottom,var(--cor--preta) 5%,var(--cor--preta) 100%);
 	background-color:var(--cor--preta);
 	border-radius: 0.7rem;
@@ -104,11 +97,12 @@ body {
 } 
 
 .Disc{
-    background: var(--cor--azul);
+    background: var(--cor--preta);
     color: var(--cor--branco);
     border-radius:0.93rem;
     min-width: 21rem;
     max-width:25rem;
+    text-decoration: none;
 }
 
 .card-body{

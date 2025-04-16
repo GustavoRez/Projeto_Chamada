@@ -15,7 +15,7 @@ body {
 .fundo {
   background: rgb(184, 4, 4);
   margin: 0% 20%;
-  border-radius: 15px;
+  border-radius: 0.93rem;
   padding: 5px;
 }
 
@@ -23,8 +23,8 @@ body {
 li {
   background: var(--cor--azul);
   border-radius: 5px;
-  font-size: 20px;
-  margin: 10px;
+  font-size: 1.25rem;
+  margin: 0.62rem;
   padding: 7px;
   display: flex;
   align-items: center;
@@ -116,22 +116,18 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 .voltar {
-	background:linear-gradient(to bottom,var(--cor--preta) 5%,var(--cor--preta) 100%);
-	border-radius: 0.7rem;
 	display:inline-block;
-	cursor:pointer;
-	color:var(--cor--branca);
 	font-family:Arial;
 	font-size:0.93rem;
 	font-weight:bold;
-	padding:6px 24px;
+	padding:6px 1.5rem;
 	text-decoration:none;
 }
 
 .fundo {
     background: rgba(255, 255, 255, 0.5);
     color:var(--cor--preta);
-    max-width: 600px;
+    max-width: 37.5rem;
 } 
 
 .Disc{
