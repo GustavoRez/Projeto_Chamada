@@ -1,23 +1,16 @@
-:root {
-    --cor--preta: #000000;
-	--cor--branco: white;
-	--cor--fundo: #fdfd96;
-}
-
 body {
-	font-family: Arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	background-color: #f4f4f4;
-	color: #333;
+	background-color:var(--cor--branco);
+	color: var(--cor--preta);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
 h1 {
-	color: #007bff;
-	font-size: 24px;
+	color: var(--cor--azul);
+	font-size: 1.5rem;
 	text-align: center;
 }
 
@@ -25,15 +18,15 @@ form {
 	background-color: var(--cor--branco);
 	border: 1px solid #ddd;
 	border-radius: 10px;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-	padding: 20px;
-	margin: 20px 0;
+	box-shadow: 0 2px 5px var(--fundo--painel);
+	padding: 1.25rem;
+	margin: 1.25rem 0;
 	width: 90%;
-	max-width: 400px;
+	max-width: 25rem;
 }
 
 label {
-	font-size: 14px;
+	font-size: 0.87rem;
 	font-weight: bold;
 }
 
@@ -50,8 +43,8 @@ input[type="file"] {
 }
 
 button {
-	background-color: #007bff;
-	color: #ffffff;
+	background-color: var(--cor--azul);
+	color: var(--cor--branco);
 	border: none;
 	border-radius: 5px;
 	padding: 10px 15px;
@@ -81,7 +74,7 @@ img {
 
 #preview img {
 	border-radius: 10px;
-	max-height: 100px;
+	max-height: 6.25rem;
 	margin: 10px auto;
 }
 
