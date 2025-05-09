@@ -1,33 +1,18 @@
-:root {
-    --cor-preta: #000000;
-    --fundo--cor: #4169ff;
-    --cor--branco: white;
-    --cor--sair: red;
-    --cor--fundo: #fdfd96;
-    --fundo:rgba(0, 0, 0, 0.1);
-}
-
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-color: var(--cor--branco);
+    color: var(--cor--preta)
 }
 
 .Perfil {
     text-align: center;
-    margin: 20px;
-    padding: 20px;
+    margin: 1.25rem;
+    padding: 1.25rem;
     background-color: var(--cor--branco);
     border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 2px 5px var(--fundo);
+    box-shadow: 0 2px 5px var(--fundo--painel);
     width: 60%;
-    max-width: 300px;
+    max-width: 18.75rem;
     position: absolute;
     top: 0;
     left: 0;
@@ -37,8 +22,8 @@ body {
 
 .Perfil .aluno {
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
+    width: 7.5rem;
+    height: 7.5rem;
     object-fit: cover;
     margin-bottom: 10px;
 }
@@ -50,13 +35,13 @@ body {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .botao {
-    background-color: #007bff;
+    background-color:var(--cor--azul);
     color: var(--cor--branco);
     border-radius: 0.7rem;
 }
@@ -66,33 +51,81 @@ body {
 }
 
 .botaoSair {
-    background-color: var(--cor--sair);
-    color: white;
+    background-color: var(--cor--vermelha);
+    color:var(--cor--branco);
     border-radius: 0.7rem;
 }
 
 
 .fundo {
     width: 90%;
-    max-width: 500px;
-    margin: 20px auto;
+    max-width: 31.25rem;
+    margin: 1.25rem auto;
 }
 
 
 .chamada {
     background-color: var(--cor--branco);
     margin: 10px 0;
-    padding: 15px;
+    padding: 1.12rem;
     border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 2px 5px var(--fundo);
+    box-shadow: 0 2px 5px var(--fundo--painel);
 }
 
 .more {
-    font-size: 18px;
+    font-size: 1.12rem;
 }
 
 .info {
     font-size: 14px;
     color: #888;
 }
+
+/* Novo CSS possível
+.card {
+    width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    background: white;
+  }
+  
+  .card-header {
+    background: #4a4f56;
+    color: white;
+    padding: 10px;
+  }
+  
+  .card-header .code {
+    font-size: 12px;
+  }
+  
+  .card-header .title {
+    font-weight: bold;
+  }
+  
+  .card-body {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .docente {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #444;
+  }
+  
+  .info {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #ddd;
+    padding: 6px 0;
+  }
+  
+  .frequency .warning {
+    color: #c0392b;
+    margin-right: 5px;
+  }
+
+  */

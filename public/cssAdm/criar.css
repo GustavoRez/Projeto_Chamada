@@ -1,7 +1,3 @@
-:root {
-    --cor--preta: #000000;
-    --cor--branco: #f0f0f0;
-}
 
 .container {
     display: flex;
@@ -12,7 +8,6 @@
 }   
 
 body {
-    font-family: Arial, sans-serif;
     margin: 1.25rem;
     padding: 0;
     background: url("../imgAdm/fundoAdm.jpg") no-repeat center center fixed;
@@ -28,19 +23,19 @@ form {
 
 form h1 {
     margin-bottom: 1.25rem;
-    font-size: 24px;
+    font-size: 1.5rem;
     text-align: center;
 }
 
 .form-group {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 0.93rem;
 }
 
 .form-group label {
     flex: 1;
-    min-width: 100px;
+    min-width: 6.25rem;
     font-weight: bold;
 }
 
@@ -48,47 +43,42 @@ form h1 {
 .form-group textarea,
 .form-group select {
     flex: 2;
-    padding: 5px;
+    padding: 0.31rem;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .form-group textarea {
     resize: vertical; /* Permite ajuste de altura apenas */
-    min-height: 80px;
+    min-height: 5rem;
 }
 
 .form-group input[type="radio"] {
     flex: 0;
-    margin-left: 5px;
+    margin-left: 0.31rem;
 }
 
 .ponto {
-    color: red;
+    color:var(--cor--vermelha)
 }
 
 .radio-group {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 0.62rem;
 }
 
 .note {
-    font-size: 12px;
+    font-size: 0.75rem;
     color: gray;
-    margin-top: 15px;
+    margin-top: 0.93rem;
+    color: var(--cor--vermelha);
 }
 
 .voltar {
-	background:linear-gradient(to bottom,var(--cor--preta) 5%,var(--cor--preta) 100%);
-	background-color:var(--cor--preta);
-	border-radius: 0.7rem;
 	display:inline-block;
-	cursor:pointer;
-	color:var(--cor--branco);
 	font-family:Arial;
 	font-size:0.93rem;
 	font-weight:bold;
-	padding:0.37rem 1.5rem;
 	text-decoration:none;
 }

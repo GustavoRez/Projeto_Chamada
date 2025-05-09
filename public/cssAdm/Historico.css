@@ -1,38 +1,23 @@
-:root {
-    --cor--preta: #000000;
-    --cor--branco: white;
-    --cor--primaria: #4169E1;
-}
 
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: var(--cor--branco);
+    color: var(--cor--preta);
 }
 
 .voltar {
     display: inline-block;
-    margin: 20px;
-    padding: 10px 20px;
-    background-color:var(--cor--preta);
-    color: var(--cor--branco);
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
     text-decoration: none;
-    transition: background-color 0.3s ease;
 }
 
 
 h2 {
-    background-color: var(--cor--primaria);
+    background-color: var(--cor--azul);
     color: var(--cor--branco);
-    padding: 10px;
+    padding: 0.62rem;
     border-radius: 5px;
-    margin: 20px auto;
+    margin: 1.25rem auto;
     width: fit-content;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -40,13 +25,13 @@ h2 {
 ul {
     list-style-type: none;
     padding: 0;
-    margin: 0 20px 20px 40px;
+    margin: 0 1.25rem 1.25rem 2.5rem;
 }
 
 li {
     background-color: var(--cor--branco);
     margin: 5px 0;
-    padding: 10px;
+    padding: 0.62rem;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
