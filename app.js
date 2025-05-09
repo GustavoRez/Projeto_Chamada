@@ -39,7 +39,6 @@ app.use(session({ // Configurando a sessão
 app.get('/', function (req, res) { //Rota 'index'. Quando abrir o localhost:3000 manda essa função
     res.sendFile(path.join(__dirname + '/views/login.html'));
 });
-
 app.post('/login', function (req, res) { //Rota login
     let username = req.body.username;
     let senha = req.body.senha;
@@ -136,8 +135,6 @@ app.get('/home', function (req, res) { //Rota principal.
         res.render('not_logged')
     }
 })
-
-
 app.get('/disciplina-:SG', function (req, res) { //Rota que mostra as disciplinas, tanto para os ADM's como para professores
     if (req.session.loggedin && req.session.cargo != "ALUNO") {
         var username = req.session.username;
@@ -160,7 +157,6 @@ app.get('/disciplina-:SG', function (req, res) { //Rota que mostra as disciplina
         });
     } else res.render('not_logged')
 })
-
 app.get('/historico-:URL', function (req, res) {
     const nomes = req.query.nomes;
     const nmDisciplina = req.query.nmDisciplina;
@@ -428,7 +424,6 @@ app.post('/editarDisciplina', function (req, res) { // Rota que edita os dados d
         }
     });
 });
-
 app.post('/deletarDisciplina', function (req, res) {
     const id = req.body.id;
 
